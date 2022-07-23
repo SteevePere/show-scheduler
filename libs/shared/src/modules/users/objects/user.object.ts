@@ -21,6 +21,9 @@ export class UserObject {
   @IsEmail()
   email: string;
 
+  @IsOptional()
+  password?: string;
+
   @IsString()
   @IsNotEmpty()
   @IsDateString()

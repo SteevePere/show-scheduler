@@ -4,7 +4,10 @@
 
 export * from './modules/authentication/objects/tokens.object';
 export * from './modules/authentication/requests/registration.request';
+export * from './modules/authentication/requests/sign-in.request';
+export * from './modules/authentication/responses/authentication.response';
 export * from './modules/authentication/responses/registration.response';
+export * from './modules/authentication/responses/sign-in.response';
 export * from './modules/files/enums/file-source-type.enum';
 export * from './modules/users/enums/user-gender.enum';
 export * from './modules/users/enums/user-role.enum';

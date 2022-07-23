@@ -1,19 +1,21 @@
 import { Response } from 'express';
 
-export function getAuthenticationCookie(
-  cookieName: string,
-  cookieValue: string,
-  maxAge: number,
-) {
+interface ICreateCookie {
+  cookieName: string;
+  cookieValue: string;
+  expiresIn: number;
+}
+
+interface ISetCookie extends ICreateCookie {
+  response: Response;
+}
+
+export function createCookie(data: ICreateCookie) {
+  const { cookieName, cookieValue, expiresIn: maxAge } = data;
   return `${cookieName}=${cookieValue}; HttpOnly; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
 }
 
-export function setCookies(
-  response: Response,
-  accessToken: string,
-  accessExpiration: number,
-) {
-  response.setHeader('Set-Cookie', [
-    getAuthenticationCookie('Authentication', accessToken, accessExpiration),
-  ]);
+export function setCookie(data: ISetCookie) {
+  const { response } = data;
+  response.setHeader('Set-Cookie', [createCookie(data)]);
 }

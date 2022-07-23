@@ -4,7 +4,7 @@ export const AuthenticationConfig = registerAs('authentication', () => ({
   jwt: {
     accessToken: {
       secret: process.env.JWT_ACCESS_TOKEN_SECRET,
-      expiration: +process.env.JWT_ACCESS_TOKEN_EXPIRATION,
+      expiresIn: +process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
     },
   },
 }));

@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
+import { AuthenticationConfig } from './config/authentication.config';
 import { ServerConfig } from './config/server.config';
+import { JwtAuthenticationGuard } from './core/guards/authentication.guard';
+import { JwtStrategy } from './core/strategies/jwt.strategy';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { FilesModule } from './modules/files/files.module';
 import { ShowsModule } from './modules/shows/shows.module';
@@ -11,7 +15,7 @@ import { UsersModule } from './modules/users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [ServerConfig],
+      load: [ServerConfig, AuthenticationConfig],
       envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
@@ -26,6 +30,12 @@ import { UsersModule } from './modules/users/users.module';
     FilesModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthenticationGuard,
+    },
+  ],
 })
 export class AppModule {}

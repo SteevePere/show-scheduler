@@ -173,6 +173,262 @@
 							"body": "{\n    \"statusCode\": 409,\n    \"message\": \"User with this email already exists\",\n    \"error\": \"Conflict\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Sign In",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authentication/sign-in",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authentication",
+								"sign-in"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sign In - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/sign-in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"sign-in"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "Authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjVkOTdlOWY3LWZjYTUtNDhjMS05NGQ2LTMxMmVmYjc4NjY1ZSIsImlhdCI6MTY1ODYxMTk5NywiZXhwIjoxNjU4NjQ3OTk3fQ.QoOnqjlSoe5Ltbt7xHhYmNf41W8bLVLSlfbuWn_7ONg; HttpOnly; Path=/; Max-Age=36000; SameSite=Lax"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "586"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24a-mrDtm984NU0Yh7bT1FdsPmWmCRY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Jul 2022 21:33:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": \"5d97e9f7-fca5-48c1-94d6-312efb78665e\",\n        \"email\": \"steevepere@gmail.com\",\n        \"password\": \"$2b$10$pgKDH3LvAHGtMjASNM3NuefvNYzGjNB9eBpwCRxQTZi.eOCFRQsAS\",\n        \"firstName\": \"Steeve\",\n        \"lastName\": \"Péré\",\n        \"role\": \"USER\",\n        \"gender\": \"MALE\",\n        \"birthDate\": \"1991-10-16T21:50:00.000Z\",\n        \"createdAt\": \"2022-07-23T15:05:53.541Z\",\n        \"updatedAt\": \"2022-07-23T15:05:53.541Z\"\n    },\n    \"tokens\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjVkOTdlOWY3LWZjYTUtNDhjMS05NGQ2LTMxMmVmYjc4NjY1ZSIsImlhdCI6MTY1ODYxMTk5NywiZXhwIjoxNjU4NjQ3OTk3fQ.QoOnqjlSoe5Ltbt7xHhYmNf41W8bLVLSlfbuWn_7ONg\"\n    }\n}"
+						},
+						{
+							"name": "Sign In - Invalid Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makavelis\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/sign-in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"sign-in"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"46-Z7PFGT3YZFw5WeWmKnoU4OGgjXw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Jul 2022 21:33:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 401,\n    \"message\": \"Invalid password\",\n    \"error\": \"Unauthorized\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Sign Out",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authentication/sign-out",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authentication",
+								"sign-out"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sign Out",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/sign-out",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"sign-out"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "Authentication=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Jul 2022 21:40:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			]
 		}
