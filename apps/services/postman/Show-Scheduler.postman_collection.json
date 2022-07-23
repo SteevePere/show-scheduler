@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "fc858879-3a8d-455c-b955-b267d84dc34f",
+		"name": "Show-Scheduler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4773955"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Steeve\",\n    \"lastName\": \"Péré\",\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\",\n    \"birthDate\": \"1991-10-16 21:50:00.0000\",\n    \"gender\": \"MALE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authentication/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authentication",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register - Sucess",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Steeve\",\n    \"lastName\": \"Péré\",\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\",\n    \"birthDate\": \"1991-10-16 21:50:00.0000\",\n    \"gender\": \"MALE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "Authentication=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "636"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27c-WufdbYxYqxxT7GmkeI750IPRgyU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Jul 2022 14:49:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": \"21f8f909-3b96-429b-bb80-83f88152c144\",\n        \"email\": \"steevepere@gmail.com\",\n        \"firstName\": \"Steeve\",\n        \"lastName\": \"Péré\",\n        \"role\": \"USER\",\n        \"gender\": \"MALE\",\n        \"birthDate\": \"1991-10-16 21:50:00.0000\",\n        \"resetPasswordToken\": null,\n        \"createdAt\": \"2022-07-23T14:49:29.792Z\",\n        \"updatedAt\": \"2022-07-23T14:49:29.792Z\"\n    },\n    \"tokens\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjIxZjhmOTA5LTNiOTYtNDI5Yi1iYjgwLTgzZjg4MTUyYzE0NCIsInBhc3N3b3JkIjoiJDJiJDEwJFpRNkE1WVM4N2RGeThIM29ablhkbmU1L015V1dTcjhnd2VFMkZtY3RaS0FMcVpvOHhLNnl5IiwiaWF0IjoxNjU4NTg3NzY5LCJleHAiOjE2NTg2MjM3Njl9.E00RPKfahT_naQBrHvift_M24fPk7quJUEEMaJtak5w\"\n    }\n}"
+						},
+						{
+							"name": "Register - Conflict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Steeve\",\n    \"lastName\": \"Péré\",\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\",\n    \"birthDate\": \"1991-10-16 21:50:00.0000\",\n    \"gender\": \"MALE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"register"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"55-n4B3q9wuhTRhkzdw94/dQx4QNUs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 23 Jul 2022 14:51:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 409,\n    \"message\": \"User with this email already exists\",\n    \"error\": \"Conflict\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}

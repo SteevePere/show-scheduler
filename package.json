@@ -1,0 +1,53 @@
+{
+  "name": "ampup",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "libs/*",
+      "apps/*"
+    ],
+    "nohoist": [
+      "**/@nestjsx",
+      "**/@nestjsx/**",
+      "**/class-validator",
+      "**/class-validator/**",
+      "**/class-transformer",
+      "**/class-transformer/**",
+      "**/@nestjs",
+      "**/@nestjs/**",
+      "**/jwt-decode",
+      "**/jwt-decode/**",
+      "**/@nestjs-modules",
+      "**/@nestjs-modules/**",
+      "**/@invertase/",
+      "**/@invertase/**",
+      "swagger-ui-express",
+      "**/swagger-ui-express",
+      "**/swagger-ui-express/**"
+    ]
+  },
+  "scripts": {
+    "create-app": "node scripts/setup-app.js",
+    "release": "node scripts/release.js",
+    "lint": "lerna run lint --parallel",
+    "test": "echo true",
+    "watch": "lerna run watch --parallel",
+    "watch:cdk": "lerna run watch --stream --scope=@ampup/cdk",
+    "watch:shared": "lerna run watch --stream --scope=@ampup/shared",
+    "prewatch": "yarn build --scope=@ampup/shared --scope=@ampup/cdk",
+    "build": "lerna run build --stream",
+    "build:libs": "lerna run build --stream --stream --scope=@ampup/shared --scope=@ampup/cdk",
+    "watch:api": "lerna run watch --stream --scope=@ampup/ampup-api",
+    "start:admin": "lerna run start --stream --scope=@ampup/ampup-admin",
+    "start:mobile": "lerna run start --stream --scope=@ampup/ampup-mobile",
+    "open:ios": "lerna run ios --stream --scope=@ampup/ampup-mobile",
+    "open:android": "lerna run android --stream --scope=@ampup/ampup-mobile"
+  },
+  "devDependencies": {
+    "js-convert-case": "^4.2.0",
+    "lerna": "^4.0.0",
+    "tmp-promise": "^3.0.3",
+    "typescript": "4.4.4",
+    "yurnalist": "^2.1.0"
+  }
+}
