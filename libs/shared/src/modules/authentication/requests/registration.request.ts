@@ -1,8 +1,9 @@
-import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
 
 import { UserGenderEnum } from "../../users/enums/user-gender.enum";
+import { PasswordObject } from "../objects/password.object";
 
-export class RegistrationRequest {
+export class RegistrationRequest extends PasswordObject {
   @IsString()
   @IsNotEmpty()
   firstName: string;
@@ -15,11 +16,6 @@ export class RegistrationRequest {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-  
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(6)
-  password: string;
 
   @IsDateString()
   birthDate: Date;

@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Inject, Post, Res } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import {
+  ForgotPasswordRequest,
   RegistrationRequest,
   RegistrationResponse,
+  ResetPasswordRequest,
   SignInRequest,
   SignInResponse,
 } from '@scheduler/shared';
@@ -16,6 +18,8 @@ import { createFromClass } from 'src/core/utils/transformers.util';
 import { ConfigType } from '@nestjs/config';
 import { AuthenticationConfig } from 'src/config/authentication.config';
 import { SignInData } from '../dtos/sign-in.dto';
+import { ForgotPasswordData } from '../dtos/forgot-password.dto';
+import { ResetPasswordData } from '../dtos/reset-password.dto';
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -81,8 +85,25 @@ export class AuthenticationController {
     });
   }
 
-  @Get('test')
-  async test() {
-    return 'Ok';
+  @Public()
+  @Post('forgot-password')
+  async handleForgotPassword(
+    @Body() data: ForgotPasswordRequest,
+  ): Promise<void> {
+    await this.authenticationService.handleForgotPassword(
+      createFromClass(ForgotPasswordData, {
+        ...data,
+      }),
+    );
+  }
+
+  @Public()
+  @Post('reset-password')
+  async resetPassword(@Body() data: ResetPasswordRequest): Promise<void> {
+    await this.authenticationService.resetPassword(
+      createFromClass(ResetPasswordData, {
+        ...data,
+      }),
+    );
   }
 }

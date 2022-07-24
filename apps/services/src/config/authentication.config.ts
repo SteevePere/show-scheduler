@@ -7,4 +7,11 @@ export const AuthenticationConfig = registerAs('authentication', () => ({
       expiresIn: +process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
     },
   },
+  password: {
+    emails: {
+      urls: {
+        forgotPassword: `${process.env.APP_BASE_URL}/${process.env.APP_FORGOT_PASSWORD_PATH}`,
+      },
+    },
+  },
 }));

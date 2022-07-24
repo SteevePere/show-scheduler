@@ -8,6 +8,7 @@ import { ServerConfig } from './config/server.config';
 import { JwtAuthenticationGuard } from './core/guards/authentication.guard';
 import { JwtStrategy } from './core/strategies/jwt.strategy';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { EmailsModule } from './modules/emails/emails.module';
 import { FilesModule } from './modules/files/files.module';
 import { ShowsModule } from './modules/shows/shows.module';
 import { UsersModule } from './modules/users/users.module';
@@ -28,6 +29,7 @@ import { UsersModule } from './modules/users/users.module';
     UsersModule,
     ShowsModule,
     FilesModule,
+    EmailsModule,
   ],
   controllers: [],
   providers: [

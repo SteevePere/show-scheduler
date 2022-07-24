@@ -37,7 +37,7 @@
 					},
 					"response": [
 						{
-							"name": "Register - Sucess",
+							"name": "Register - Success",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -181,7 +181,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\"\n}",
+							"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makavelii\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -367,7 +367,7 @@
 					},
 					"response": [
 						{
-							"name": "Sign Out",
+							"name": "Sign Out - Success",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -427,6 +427,246 @@
 							],
 							"cookie": [],
 							"body": null
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"steevepere@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authentication/forgot-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authentication",
+								"forgot-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forgot Password - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"steevepere@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/forgot-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"forgot-password"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 Jul 2022 19:09:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"token\": \"4DehZaAzZn5Oc9KsLRPjD\",\n    \"password\": \"Makavelii\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authentication/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authentication",
+								"reset-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Reset Password - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"token\": \"ZaO-uKLcV9l0DWClHJZdM\",\n    \"password\": \"Makavelii\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/reset-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"reset-password"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 Jul 2022 20:27:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Reset Password - No Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"token\": \"4DehZaAzZn5Oc9KsLRPjD\",\n    \"password\": \"Makavelii\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/authentication/reset-password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"authentication",
+										"reset-password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "83"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"53-AWRkWCuAZOBmMmu50X2g2naxxhU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 Jul 2022 20:22:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 400,\n    \"message\": \"No reset request for this user\",\n    \"error\": \"Bad Request\"\n}"
 						}
 					]
 				}

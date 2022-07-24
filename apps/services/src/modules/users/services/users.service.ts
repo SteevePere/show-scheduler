@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,6 +11,7 @@ import {
   RegisterUserData,
   RegisterUserResult,
 } from '../dtos/register-user.dto';
+import { UpdateUserData, UpdateUserResult } from '../dtos/update-user.dto';
 import { UserEntity } from '../entities/user.entity';
 import { createUserObjectFromEntity } from '../transformers/user-object.transformer';
 
@@ -40,7 +42,20 @@ export class UsersService {
   }
 
   async findUser(data: FindUserData): Promise<FindUserResult> {
-    const { id, email, includePassword = false } = data;
+    const { includePassword = false, includeResetPasswordToken = false } = data;
+    const userEntity = await this.findUserEntity(data);
+
+    return {
+      user: createUserObjectFromEntity({
+        userEntity,
+        includePassword,
+        includeResetPasswordToken,
+      }),
+    };
+  }
+
+  private async findUserEntity(data: FindUserData): Promise<UserEntity> {
+    const { id, email } = data;
     const foundUser = await this.usersRepository.findOne({
       where: [{ id }, { email }],
     });
@@ -49,11 +64,17 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    return {
-      user: createUserObjectFromEntity({
-        userEntity: foundUser,
-        includePassword,
-      }),
-    };
+    return foundUser;
+  }
+
+  async updateUser(data: UpdateUserData): Promise<UpdateUserResult> {
+    const user = await this.findUserEntity({ id: data.id });
+    try {
+      Object.assign(user, { ...data.data });
+      const savedUser = await this.usersRepository.save(user);
+      return { user: createUserObjectFromEntity({ userEntity: savedUser }) };
+    } catch (error) {
+      throw new InternalServerErrorException('Unable to update User', error);
+    }
   }
 }
