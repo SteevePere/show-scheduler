@@ -12,10 +12,10 @@ import {
   FindShowsData,
   FindShowsResult,
 } from 'src/modules/shows/dtos/find-shows.dto';
-import { ProviderAbstractService } from '../provider.abstract-service';
+import { DataProviderAbstractService } from '../../abstract/data-provider.abstract-service';
 
 @Injectable()
-export class TvMazeService extends ProviderAbstractService {
+export class TvMazeService extends DataProviderAbstractService {
   private axiosInstance: AxiosInstance;
 
   constructor(
