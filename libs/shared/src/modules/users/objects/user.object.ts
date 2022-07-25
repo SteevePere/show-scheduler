@@ -1,13 +1,10 @@
 import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, ValidateIf } from "class-validator";
 
+import { BaseEntityObject } from "../../shared/objects/base-entity.object";
 import { UserGenderEnum } from "../enums/user-gender.enum";
 import { UserRoleEnum } from "../enums/user-role.enum";
 
-export class UserObject {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-
+export class UserObject extends BaseEntityObject {
   @IsString()
   @IsNotEmpty()
   firstName: string;
@@ -39,14 +36,4 @@ export class UserObject {
   @IsString()
   @ValidateIf((object, value) => value !== null)
   resetPasswordToken?: string | null;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsDateString()
-  createdAt: Date;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsDateString()
-  updatedAt: Date;
 }
