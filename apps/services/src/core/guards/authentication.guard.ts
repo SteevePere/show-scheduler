@@ -50,7 +50,7 @@ export class JwtAuthenticationGuard extends AuthGuard('jwt') {
     }
 
     try {
-      const user = await this.authenticationService.validateToken({
+      const { user } = await this.authenticationService.validateToken({
         tokenData,
       });
       request.user = user;

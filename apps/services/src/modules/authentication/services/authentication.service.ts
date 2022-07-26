@@ -71,7 +71,7 @@ export class AuthenticationService {
     } = data;
 
     try {
-      const user = await this.usersService.findUser({
+      const { user } = await this.usersService.findUser({
         id,
       });
       return { user };

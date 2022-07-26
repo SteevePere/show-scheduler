@@ -23,9 +23,11 @@ const providerNameToClass = {
     {
       provide: 'EXTERNAL_DATA_PROVIDER_SERVICE',
       useFactory(
-        config: ConfigType<typeof DataProviderConfig>,
+        dataProviderConfig: ConfigType<typeof DataProviderConfig>,
       ): DataProviderAbstractService {
-        return new providerNameToClass[process.env.DATA_PROVIDER_NAME](config);
+        return new providerNameToClass[dataProviderConfig.name](
+          dataProviderConfig,
+        );
       },
       inject: [DataProviderConfig.KEY],
     },

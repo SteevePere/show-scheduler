@@ -1,8 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { FindShowsRequest, FindShowsResponse } from '@scheduler/shared';
+import { SearchShowsRequest, SearchShowsResponse } from '@scheduler/shared';
 import { Public } from 'src/core/decorators/public.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
-import { FindShowsData } from '../dtos/find-shows.dto';
+import { SearchShowsData } from '../dtos/search-shows.dto';
 import { ShowsService } from '../services/shows.service';
 
 @Controller('shows')
@@ -11,9 +11,11 @@ export class ShowsController {
 
   @Public()
   @Get()
-  async findShows(@Query() data: FindShowsRequest): Promise<FindShowsResponse> {
-    return this.showsService.findShows(
-      createFromClass(FindShowsData, {
+  async searchShows(
+    @Query() data: SearchShowsRequest,
+  ): Promise<SearchShowsResponse> {
+    return this.showsService.searchShows(
+      createFromClass(SearchShowsData, {
         ...data,
       }),
     );

@@ -1,6 +1,8 @@
 import { IsArray, IsInt, IsNotEmpty, IsNumber, IsString, IsUrl, ValidateIf } from "class-validator";
 
-export class ShowObject {
+import { BaseEntityObject } from "../../shared/objects/base-entity.object";
+
+export class ShowObject extends BaseEntityObject {
   @IsInt()
   externalId: number;
 

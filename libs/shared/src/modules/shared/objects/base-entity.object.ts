@@ -1,17 +1,20 @@
-import { IsString, IsNotEmpty, IsDateString } from "class-validator";
+import { IsString, IsNotEmpty, IsDateString, IsOptional } from "class-validator";
 
 export class BaseEntityObject {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  id: string;
+  id?: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsDateString()
-  createdAt: Date;
+  createdAt?: Date;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @IsDateString()
-  updatedAt: Date;
+  updatedAt?: Date;
 }

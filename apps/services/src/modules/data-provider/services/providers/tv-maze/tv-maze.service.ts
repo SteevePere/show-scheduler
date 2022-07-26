@@ -7,22 +7,28 @@ import { ConfigType } from '@nestjs/config';
 import { ShowObject } from '@scheduler/shared';
 import axios, { AxiosInstance } from 'axios';
 import { DataProviderConfig } from 'src/config/data-provider.config';
-import { TvMazeShowObject } from 'src/modules/data-provider/dtos/providers/tv-maze/find-shows.dto';
 import {
-  FindShowsData,
-  FindShowsResult,
-} from 'src/modules/shows/dtos/find-shows.dto';
+  TvMazeSearchShowObject,
+  TvMazeShowObject,
+} from 'src/modules/data-provider/dtos/providers/tv-maze/find-shows.dto';
+import {
+  FindShowData,
+  FindShowResult,
+} from 'src/modules/shows/dtos/find-show.dto';
+import {
+  SearchShowsData,
+  SearchShowsResult,
+} from 'src/modules/shows/dtos/search-shows.dto';
 import { DataProviderAbstractService } from '../../abstract/data-provider.abstract-service';
 
 @Injectable()
-export class TvMazeService extends DataProviderAbstractService {
+export class TvMazeService implements DataProviderAbstractService {
   private axiosInstance: AxiosInstance;
 
   constructor(
     @Inject(DataProviderConfig.KEY)
     private readonly dataProviderConfig: ConfigType<typeof DataProviderConfig>,
   ) {
-    super();
     this.axiosInstance = this.buildAxiosInstance();
   }
 
@@ -32,10 +38,10 @@ export class TvMazeService extends DataProviderAbstractService {
     });
   }
 
-  async findShows(data: FindShowsData): Promise<FindShowsResult> {
+  async searchShows(data: SearchShowsData): Promise<SearchShowsResult> {
     try {
       const shows = await this.axiosInstance
-        .get<TvMazeShowObject[]>(`/search/shows`, {
+        .get<TvMazeSearchShowObject[]>(`/search/shows`, {
           params: {
             q: data.query,
           },
@@ -58,6 +64,33 @@ export class TvMazeService extends DataProviderAbstractService {
     } catch (error) {
       throw new InternalServerErrorException(
         'Error trying to fetch Shows from Tv Maze',
+        error,
+      );
+    }
+  }
+
+  async findShow(data: FindShowData): Promise<FindShowResult> {
+    const { externalId } = data;
+
+    try {
+      const show = await this.axiosInstance
+        .get<TvMazeShowObject>(`/shows/${externalId}`)
+        .then((response) => response.data);
+
+      return {
+        show: {
+          externalId: show.id,
+          name: show.name,
+          summary: show.summary || null,
+          language: show.language,
+          rating: show.rating.average,
+          imageUrl: show.image.medium,
+          genres: show.genres,
+        },
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Error trying to fetch Show ${externalId} from Tv Maze`,
         error,
       );
     }

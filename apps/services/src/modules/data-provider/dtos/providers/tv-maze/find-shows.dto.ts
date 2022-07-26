@@ -56,7 +56,7 @@ export interface Links {
   nextepisode: Nextepisode;
 }
 
-export interface Show {
+export interface TvMazeShowObject {
   id: number;
   url: string;
   name: string;
@@ -82,7 +82,7 @@ export interface Show {
   _links: Links;
 }
 
-export interface TvMazeShowObject {
+export interface TvMazeSearchShowObject {
   score: number;
-  show: Show;
+  show: TvMazeShowObject;
 }

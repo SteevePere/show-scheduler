@@ -1,8 +1,14 @@
 import {
-  FindShowsData,
-  FindShowsResult,
-} from 'src/modules/shows/dtos/find-shows.dto';
+  FindShowData,
+  FindShowResult,
+} from 'src/modules/shows/dtos/find-show.dto';
+import {
+  SearchShowsData,
+  SearchShowsResult,
+} from 'src/modules/shows/dtos/search-shows.dto';
 
 export abstract class DataProviderAbstractService {
-  abstract findShows(data: FindShowsData): Promise<FindShowsResult>;
+  abstract searchShows(data: SearchShowsData): Promise<SearchShowsResult>;
+
+  abstract findShow(data: FindShowData): Promise<FindShowResult>;
 }
