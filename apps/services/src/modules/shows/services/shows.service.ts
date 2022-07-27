@@ -1,15 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
+import { FilesService } from 'src/modules/files/services/files-service';
 import { Repository } from 'typeorm';
-import { CreateShowGenreData } from '../dtos/create-show-genre.dto';
 import { FindShowGenreData } from '../dtos/find-show-genre.dto';
 import { FindShowData, FindShowResult } from '../dtos/find-show.dto';
+import {
+  SaveSeasonEpisodesData,
+  SaveSeasonEpisodesResult,
+} from '../dtos/save-season-episodes.dto';
+import { SaveShowGenreData } from '../dtos/save-show-genre.dto';
+import {
+  SaveShowSeasonsData,
+  SaveShowSeasonsResult,
+} from '../dtos/save-show-seasons.dto';
 import { SaveShowData, SaveShowResult } from '../dtos/save-show.dto';
 import { SearchShowsData, SearchShowsResult } from '../dtos/search-shows.dto';
 import { GenreEntity } from '../entities/genre.entity';
 import { ShowEntity } from '../entities/show.entity';
 import { createShowObjectFromEntity } from '../transformers/show-object.transformer';
+import { EpisodesService } from './episodes.service';
+import { SeasonsService } from './seasons.service';
 
 @Injectable()
 export class ShowsService {
@@ -19,19 +30,27 @@ export class ShowsService {
     @InjectRepository(GenreEntity)
     private readonly genresRepository: Repository<GenreEntity>,
     private readonly dataProviderService: DataProviderService,
+    private readonly seasonsService: SeasonsService,
+    private readonly episodesService: EpisodesService,
+    private readonly filesService: FilesService,
   ) {}
 
   async searchShows(data: SearchShowsData): Promise<SearchShowsResult> {
     return this.dataProviderService.searchShows(data);
   }
 
-  async findShow(data: FindShowData): Promise<FindShowResult> {
+  async findShow(data: FindShowData): Promise<FindShowResult> | undefined {
+    const { externalId, ignoreNotFound = false, onlyInternal = false } = data;
+
     const savedShow = await this.findShowEntity({
       ...data,
-      ignoreNotFound: true,
+      ignoreNotFound,
     });
     if (!savedShow) {
-      return this.dataProviderService.findShow({ externalId: data.externalId });
+      if (!onlyInternal) {
+        return this.dataProviderService.findShow({ externalId });
+      }
+      return undefined;
     }
 
     return { show: createShowObjectFromEntity({ showEntity: savedShow }) };
@@ -52,6 +71,7 @@ export class ShowsService {
 
   async saveShow(data: SaveShowData): Promise<SaveShowResult> {
     const { externalId } = data;
+
     const { show: externalShow } = await this.dataProviderService.findShow({
       externalId,
     });
@@ -60,11 +80,15 @@ export class ShowsService {
       summary,
       language,
       rating,
+      imageUrl,
       genres: stringGenres,
     } = externalShow;
 
-    const genres = await this.findOrCreateShowGenreEntities({
+    const genres = await this.findOrSaveShowGenreEntities({
       names: stringGenres,
+    });
+    const { file: image } = await this.filesService.saveFile({
+      filePath: imageUrl,
     });
 
     const showToSave = this.showsRepository.create({
@@ -73,6 +97,7 @@ export class ShowsService {
       summary,
       language,
       rating,
+      imageId: image.id,
       genres,
     });
     const showEntity = await this.showsRepository.save(showToSave);
@@ -80,12 +105,25 @@ export class ShowsService {
     return {
       show: createShowObjectFromEntity({
         showEntity,
+        imageUrl: image.filePath,
       }),
     };
   }
 
-  async findOrCreateShowGenreEntities(
-    data: CreateShowGenreData,
+  async saveShowSeasons(
+    data: SaveShowSeasonsData,
+  ): Promise<SaveShowSeasonsResult> {
+    return this.seasonsService.saveShowSeasons(data);
+  }
+
+  async saveSeasonEpisodes(
+    data: SaveSeasonEpisodesData,
+  ): Promise<SaveSeasonEpisodesResult> {
+    return this.episodesService.saveSeasonEpisodes(data);
+  }
+
+  async findOrSaveShowGenreEntities(
+    data: SaveShowGenreData,
   ): Promise<GenreEntity[]> {
     return await Promise.all(
       data.names.map(async (name) => {

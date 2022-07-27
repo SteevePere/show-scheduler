@@ -1,11 +1,11 @@
 import { BaseEntity } from 'src/core/entities/base.entity';
 import { FileEntity } from 'src/modules/files/entities/file.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
 import { SeasonEntity } from './season.entity';
 
 @Entity('episodes')
 export class EpisodeEntity extends BaseEntity {
-  @Column({ type: 'int' })
+  @Column({ type: 'int', unique: true })
   externalId: number;
 
   @Column({ nullable: true })
@@ -20,9 +20,19 @@ export class EpisodeEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   airDate: Date;
 
+  @Column({ type: 'uuid' })
+  @RelationId((episode: EpisodeEntity) => episode.season)
+  seasonId: string;
+
   @ManyToOne(() => SeasonEntity)
   season: SeasonEntity;
 
-  @ManyToOne(() => FileEntity)
+  @Column({ type: 'uuid' })
+  @RelationId((episode: EpisodeEntity) => episode.image)
+  imageId: string;
+
+  @ManyToOne(() => FileEntity, {
+    eager: true,
+  })
   image: FileEntity;
 }

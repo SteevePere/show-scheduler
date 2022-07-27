@@ -12,7 +12,7 @@ export class ShowObject extends BaseEntityObject {
 
   @ValidateIf((object, value) => value !== null)
   @IsString()
-  summary: string;
+  summary: string | null;
 
   @IsNotEmpty()
   @IsString()
@@ -20,7 +20,7 @@ export class ShowObject extends BaseEntityObject {
 
   @ValidateIf((object, value) => value !== null)
   @IsNumber()
-  rating: number;
+  rating: number | null;
 
   @IsUrl()
   imageUrl: string;

@@ -1,18 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ShowObject } from '@scheduler/shared';
 import { ShowsService } from 'src/modules/shows/services/shows.service';
 import { Repository } from 'typeorm';
 import {
   CreateFavoriteData,
   CreateFavoriteResult,
 } from '../dtos/create-favorite.dto';
-import { UserShowEntity } from '../entities/user-show.entity';
+import { UserFavoriteShowEntity } from '../entities/user-show.entity';
 
 @Injectable()
 export class FavoritesService {
   constructor(
-    @InjectRepository(UserShowEntity)
-    private readonly userShowsRepository: Repository<UserShowEntity>,
+    @InjectRepository(UserFavoriteShowEntity)
+    private readonly userFavoriteShowsRepository: Repository<UserFavoriteShowEntity>,
     private readonly showsService: ShowsService,
   ) {}
 
@@ -20,18 +21,47 @@ export class FavoritesService {
     data: CreateFavoriteData,
   ): Promise<CreateFavoriteResult> {
     const { currentUser, showExternalId, isNotificationEnabled } = data;
+    let favoriteShow: ShowObject;
 
-    const { show } = await this.showsService.findShow({
+    const findShowResult = await this.showsService.findShow({
       externalId: showExternalId,
+      ignoreNotFound: true,
+      onlyInternal: true,
     });
 
-    const favorite = this.userShowsRepository.create({
-      userId: currentUser.id,
-      showId: 'oto',
-      isNotificationEnabled,
-    });
-    await this.userShowsRepository.save(favorite);
+    if (findShowResult) {
+      favoriteShow = findShowResult.show;
+    } else {
+      const saveShowResult = await this.showsService.saveShow({
+        externalId: showExternalId,
+      });
+      favoriteShow = saveShowResult.show;
+      const { seasons } = await this.showsService.saveShowSeasons({
+        showId: favoriteShow.id,
+        showExternalId: favoriteShow.externalId,
+      });
+      seasons.map((season) => {
+        this.showsService.saveSeasonEpisodes({
+          seasonId: season.id,
+          seasonExternalId: season.externalId,
+        });
+      });
+    }
 
-    return { show };
+    try {
+      const favorite = this.userFavoriteShowsRepository.create({
+        userId: currentUser.id,
+        showId: favoriteShow.id,
+        isNotificationEnabled,
+      });
+      await this.userFavoriteShowsRepository.save(favorite);
+
+      return { show: favoriteShow };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Error when trying to create favorite',
+        error,
+      );
+    }
   }
 }

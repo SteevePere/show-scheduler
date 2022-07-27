@@ -4,15 +4,13 @@ import { Column, Entity } from 'typeorm';
 
 @Entity('files')
 export class FileEntity extends BaseEntity {
-  @Column({ type: 'int' })
-  externalId: number;
-
   @Column()
   filePath: string;
 
   @Column({
     type: 'enum',
     enum: FileSourceTypeEnum,
+    default: FileSourceTypeEnum.WEB,
   })
   sourceType: FileSourceTypeEnum;
 }

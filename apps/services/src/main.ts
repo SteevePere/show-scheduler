@@ -13,6 +13,7 @@ import rateLimit from 'express-rate-limit';
 
 import 'reflect-metadata';
 import { AppModule } from './app.module';
+import { TypeOrmConflictErrorInterceptor } from './core/interceptors/typeorm-conflict-error.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -35,7 +36,10 @@ async function bootstrap() {
       exceptionFactory: (errors) => new BadRequestException(errors),
     }),
   );
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector)),
+    new TypeOrmConflictErrorInterceptor(),
+  );
 
   const configService = app.get(ConfigService);
 
