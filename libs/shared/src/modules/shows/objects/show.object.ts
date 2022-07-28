@@ -1,9 +1,10 @@
-import { IsArray, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
+import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
 
+import { IsSafeInt } from "../../../decorators/validation/is-safe-integer.decorator";
 import { BaseEntityObject } from "../../shared/objects/base-entity.object";
 
 export class ShowObject extends BaseEntityObject {
-  @IsInt()
+  @IsSafeInt()
   externalId: number;
 
   @IsNotEmpty()

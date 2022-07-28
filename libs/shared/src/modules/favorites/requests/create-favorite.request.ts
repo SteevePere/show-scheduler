@@ -1,7 +1,9 @@
-import { IsBoolean, IsInt } from 'class-validator';
+import { IsBoolean } from 'class-validator';
+
+import { IsSafeInt } from '../../../decorators/validation/is-safe-integer.decorator';
 
 export class CreateFavoriteRequest {
-  @IsInt()
+  @IsSafeInt()
   showExternalId: number;
 
   @IsBoolean()

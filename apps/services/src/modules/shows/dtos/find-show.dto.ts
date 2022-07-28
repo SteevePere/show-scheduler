@@ -1,12 +1,14 @@
-import { ShowObject } from '@scheduler/shared';
+import {
+  FindShowRequest,
+  FindShowResponse,
+  ShowObject,
+} from '@scheduler/shared';
 
-export class FindShowData {
-  id?: string;
-  externalId?: number;
+export class FindShowData extends FindShowRequest {
   ignoreNotFound?: boolean;
   onlyInternal?: boolean;
 }
 
-export class FindShowResult {
+export class FindShowResult extends FindShowResponse {
   show: ShowObject | null;
 }

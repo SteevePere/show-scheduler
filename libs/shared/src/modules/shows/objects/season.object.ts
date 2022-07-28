@@ -1,5 +1,6 @@
-import { IsDateString, IsInt, IsNotEmpty, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
+import { IsDateString, IsNotEmpty, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
 
+import { IsSafeInt } from "../../../decorators/validation/is-safe-integer.decorator";
 import { BaseEntityObject } from "../../shared/objects/base-entity.object";
 
 export class SeasonObject extends BaseEntityObject {
@@ -8,7 +9,7 @@ export class SeasonObject extends BaseEntityObject {
   @IsString()
   showId?: string;
 
-  @IsInt()
+  @IsSafeInt()
   externalId: number;
 
   @ValidateIf((object, value) => value !== null)
@@ -16,7 +17,7 @@ export class SeasonObject extends BaseEntityObject {
   @IsString()
   name: string | null;
 
-  @IsInt()
+  @IsSafeInt()
   number: number;
 
   @ValidateIf((object, value) => value !== null)

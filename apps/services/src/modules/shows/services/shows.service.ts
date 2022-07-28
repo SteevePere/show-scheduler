@@ -40,7 +40,7 @@ export class ShowsService {
     private readonly filesService: FilesService,
   ) {}
 
-  async searchShows(data: SearchShowsData): Promise<SearchShowsResult> {
+  async searchExternalShows(data: SearchShowsData): Promise<SearchShowsResult> {
     return this.dataProviderService.searchShows(data);
   }
 
