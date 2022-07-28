@@ -42,7 +42,7 @@ export class EpisodesService {
           name,
           number,
           summary,
-          image,
+          imageId: image.id,
           airDate,
         });
         const episodeEntity = await this.episodesRepository.save(episodeToSave);

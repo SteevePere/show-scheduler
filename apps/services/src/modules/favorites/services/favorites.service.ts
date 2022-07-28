@@ -43,7 +43,7 @@ export class FavoritesService {
     }
 
     try {
-      this.userFavoriteShowsRepository.save(
+      await this.userFavoriteShowsRepository.save(
         this.userFavoriteShowsRepository.create({
           userId: currentUser.id,
           showId: favoriteShow.id,

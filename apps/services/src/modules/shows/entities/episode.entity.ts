@@ -1,6 +1,13 @@
 import { BaseEntity } from 'src/core/entities/base.entity';
 import { FileEntity } from 'src/modules/files/entities/file.entity';
-import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  RelationId,
+} from 'typeorm';
 import { SeasonEntity } from './season.entity';
 
 @Entity('episodes')
@@ -24,15 +31,18 @@ export class EpisodeEntity extends BaseEntity {
   @RelationId((episode: EpisodeEntity) => episode.season)
   seasonId: string;
 
-  @ManyToOne(() => SeasonEntity)
+  @ManyToOne(() => SeasonEntity, (season) => season.episodes, {
+    onDelete: 'CASCADE',
+  })
   season: SeasonEntity;
 
   @Column({ type: 'uuid' })
   @RelationId((episode: EpisodeEntity) => episode.image)
   imageId: string;
 
-  @ManyToOne(() => FileEntity, {
+  @OneToOne(() => FileEntity, {
     eager: true,
   })
+  @JoinColumn({ name: 'imageId' })
   image: FileEntity;
 }

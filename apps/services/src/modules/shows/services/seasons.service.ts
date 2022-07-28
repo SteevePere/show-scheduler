@@ -67,7 +67,7 @@ export class SeasonsService {
           name,
           number,
           summary,
-          image,
+          imageId: image.id,
           premiereDate,
           endDate,
         });

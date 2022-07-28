@@ -3,12 +3,15 @@ import { FileEntity } from 'src/modules/files/entities/file.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
-  ManyToOne,
+  OneToMany,
+  OneToOne,
   RelationId,
 } from 'typeorm';
 import { GenreEntity } from './genre.entity';
+import { SeasonEntity } from './season.entity';
 
 @Entity('shows')
 export class ShowEntity extends BaseEntity {
@@ -34,9 +37,10 @@ export class ShowEntity extends BaseEntity {
   @RelationId((show: ShowEntity) => show.image)
   imageId: string;
 
-  @ManyToOne(() => FileEntity, {
+  @OneToOne(() => FileEntity, {
     eager: true,
   })
+  @JoinColumn({ name: 'imageId' })
   image: FileEntity;
 
   @ManyToMany(() => GenreEntity, {
@@ -48,4 +52,10 @@ export class ShowEntity extends BaseEntity {
     inverseJoinColumns: [{ name: 'genreId' }],
   })
   genres: GenreEntity[];
+
+  @OneToMany(
+    () => SeasonEntity,
+    (seasonEntity: SeasonEntity) => seasonEntity.show,
+  )
+  seasons: SeasonEntity[];
 }
