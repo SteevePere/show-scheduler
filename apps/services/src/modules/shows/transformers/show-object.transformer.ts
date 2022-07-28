@@ -19,6 +19,7 @@ export function createShowObjectFromEntity(data: IShowTransformerData) {
       rating,
       image,
       genres,
+      lastFavoritedAt,
       createdAt,
       updatedAt,
     },
@@ -34,6 +35,7 @@ export function createShowObjectFromEntity(data: IShowTransformerData) {
     rating,
     imageUrl: imageUrl || image.filePath,
     genres: genres.map((genre: GenreEntity) => genre.name),
+    lastFavoritedAt,
     createdAt,
     updatedAt,
   });

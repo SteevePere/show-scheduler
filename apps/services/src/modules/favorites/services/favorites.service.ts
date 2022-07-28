@@ -17,51 +17,66 @@ export class FavoritesService {
     private readonly showsService: ShowsService,
   ) {}
 
-  async createFavorite(
-    data: CreateFavoriteData,
-  ): Promise<CreateFavoriteResult> {
+  async saveFavorite(data: CreateFavoriteData): Promise<CreateFavoriteResult> {
     const { currentUser, showExternalId, isNotificationEnabled } = data;
     let favoriteShow: ShowObject;
 
-    const findShowResult = await this.showsService.findShow({
+    const { show: existingShow } = await this.showsService.findShow({
       externalId: showExternalId,
       ignoreNotFound: true,
       onlyInternal: true,
     });
 
-    if (findShowResult) {
-      favoriteShow = findShowResult.show;
+    if (existingShow) {
+      favoriteShow = existingShow;
     } else {
-      const saveShowResult = await this.showsService.saveShow({
-        externalId: showExternalId,
-      });
-      favoriteShow = saveShowResult.show;
-      const { seasons } = await this.showsService.saveShowSeasons({
-        showId: favoriteShow.id,
-        showExternalId: favoriteShow.externalId,
-      });
-      seasons.map((season) => {
-        this.showsService.saveSeasonEpisodes({
-          seasonId: season.id,
-          seasonExternalId: season.externalId,
-        });
-      });
+      favoriteShow = (await this.createFavoriteAndRelations(data)).show;
     }
 
     try {
-      const favorite = this.userFavoriteShowsRepository.create({
-        userId: currentUser.id,
-        showId: favoriteShow.id,
-        isNotificationEnabled,
-      });
-      await this.userFavoriteShowsRepository.save(favorite);
+      this.userFavoriteShowsRepository.save(
+        this.userFavoriteShowsRepository.create({
+          userId: currentUser.id,
+          showId: favoriteShow.id,
+          isNotificationEnabled,
+        }),
+      );
 
-      return { show: favoriteShow };
+      const { show } = await this.showsService.updateShow({
+        id: favoriteShow.id,
+        data: { lastFavoritedAt: new Date() },
+      });
+
+      return { show };
     } catch (error) {
       throw new InternalServerErrorException(
         'Error when trying to create favorite',
         error,
       );
     }
+  }
+
+  private async createFavoriteAndRelations(
+    data: CreateFavoriteData,
+  ): Promise<CreateFavoriteResult> {
+    const { showExternalId } = data;
+
+    const { show } = await this.showsService.saveShow({
+      externalId: showExternalId,
+    });
+
+    const { seasons } = await this.showsService.saveShowSeasons({
+      showId: show.id,
+      showExternalId: show.externalId,
+    });
+
+    seasons.map((season) => {
+      this.showsService.saveSeasonEpisodes({
+        seasonId: season.id,
+        seasonExternalId: season.externalId,
+      });
+    });
+
+    return { show };
   }
 }

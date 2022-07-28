@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files-service';
@@ -16,6 +20,7 @@ import {
 } from '../dtos/save-show-seasons.dto';
 import { SaveShowData, SaveShowResult } from '../dtos/save-show.dto';
 import { SearchShowsData, SearchShowsResult } from '../dtos/search-shows.dto';
+import { UpdateShowData, UpdateShowResult } from '../dtos/update-show.dto';
 import { GenreEntity } from '../entities/genre.entity';
 import { ShowEntity } from '../entities/show.entity';
 import { createShowObjectFromEntity } from '../transformers/show-object.transformer';
@@ -39,7 +44,7 @@ export class ShowsService {
     return this.dataProviderService.searchShows(data);
   }
 
-  async findShow(data: FindShowData): Promise<FindShowResult> | undefined {
+  async findShow(data: FindShowData): Promise<FindShowResult> {
     const { externalId, ignoreNotFound = false, onlyInternal = false } = data;
 
     const savedShow = await this.findShowEntity({
@@ -50,7 +55,7 @@ export class ShowsService {
       if (!onlyInternal) {
         return this.dataProviderService.findShow({ externalId });
       }
-      return undefined;
+      return { show: null };
     }
 
     return { show: createShowObjectFromEntity({ showEntity: savedShow }) };
@@ -153,5 +158,16 @@ export class ShowsService {
     }
 
     return foundGenre;
+  }
+
+  async updateShow(data: UpdateShowData): Promise<UpdateShowResult> {
+    const show = await this.findShowEntity({ id: data.id });
+    try {
+      Object.assign(show, { ...data.data });
+      const savedShow = await this.showsRepository.save(show);
+      return { show: createShowObjectFromEntity({ showEntity: savedShow }) };
+    } catch (error) {
+      throw new InternalServerErrorException('Unable to update Show', error);
+    }
   }
 }

@@ -14,11 +14,11 @@ export class FavoritesController {
   constructor(public favoritesService: FavoritesService) {}
 
   @Post()
-  async createFavorite(
+  async saveFavorite(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: CreateFavoriteRequest,
   ): Promise<CreateFavoriteResponse> {
-    return await this.favoritesService.createFavorite(
+    return await this.favoritesService.saveFavorite(
       createFromClass(CreateFavoriteData, {
         currentUser,
         ...data,

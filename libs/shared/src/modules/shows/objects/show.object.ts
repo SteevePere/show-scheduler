@@ -1,4 +1,4 @@
-import { IsArray, IsInt, IsNotEmpty, IsNumber, IsString, IsUrl, ValidateIf } from "class-validator";
+import { IsArray, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
 
 import { BaseEntityObject } from "../../shared/objects/base-entity.object";
 
@@ -27,4 +27,11 @@ export class ShowObject extends BaseEntityObject {
 
   @IsArray()
   genres: string[];
+
+  @IsOptional()
+  @ValidateIf((object, value) => value !== null)
+  @IsString()
+  @IsNotEmpty()
+  @IsDateString()
+  lastFavoritedAt?: Date | null;
 }

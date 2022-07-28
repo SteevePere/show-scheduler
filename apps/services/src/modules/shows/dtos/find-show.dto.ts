@@ -8,5 +8,5 @@ export class FindShowData {
 }
 
 export class FindShowResult {
-  show: ShowObject;
+  show: ShowObject | null;
 }

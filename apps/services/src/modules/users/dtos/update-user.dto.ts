@@ -1,9 +1,10 @@
 import { UserObject } from '@scheduler/shared';
 import { DeepPartial } from 'typeorm';
+import { UserEntity } from '../entities/user.entity';
 
 export class UpdateUserData {
   id: string;
-  data: DeepPartial<UserObject>;
+  data: DeepPartial<UserEntity>;
 }
 
 export class UpdateUserResult {

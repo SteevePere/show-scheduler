@@ -27,6 +27,9 @@ export class ShowEntity extends BaseEntity {
   @Column({ type: 'decimal', nullable: true })
   rating: number;
 
+  @Column({ type: 'timestamptz', nullable: true })
+  lastFavoritedAt: Date;
+
   @Column({ type: 'uuid' })
   @RelationId((show: ShowEntity) => show.image)
   imageId: string;
