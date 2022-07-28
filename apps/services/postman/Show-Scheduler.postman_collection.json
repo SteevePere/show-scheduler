@@ -671,6 +671,646 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Shows",
+			"item": [
+				{
+					"name": "Search All External Shows",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shows/external/search?query=breaking",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"shows",
+								"external",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "breaking"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Search All External Shows - Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/shows/external/search?query=breaking",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"shows",
+										"external",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "breaking"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7053"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b8d-/dpus80SdFMiA6WTh6V5WT35/+k\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Jul 2022 09:13:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"shows\": [\n        {\n            \"externalId\": 169,\n            \"name\": \"Breaking Bad\",\n            \"summary\": \"<p><b>Breaking Bad</b> follows protagonist Walter White, a chemistry teacher who lives in New Mexico with his wife and teenage son who has cerebral palsy. White is diagnosed with Stage III cancer and given a prognosis of two years left to live. With a new sense of fearlessness based on his medical prognosis, and a desire to secure his family's financial security, White chooses to enter a dangerous world of drugs and crime and ascends to power in this world. The series explores how a fatal diagnosis such as White's releases a typical man from the daily concerns and constraints of normal society and follows his transformation from mild family man to a kingpin of the drug trade.</p>\",\n            \"language\": \"English\",\n            \"rating\": 9.2,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg\",\n            \"genres\": [\n                \"Drama\",\n                \"Crime\",\n                \"Thriller\"\n            ]\n        },\n        {\n            \"externalId\": 510,\n            \"name\": \"Breaking In\",\n            \"summary\": \"<p>Contra Security, a high-tech security firm that takes extreme - and often questionable - measures to sell its protection services is corporate America's answer to \\\"The A-Team\\\", giving clients a sense of security by first ripping it away. In the opener, Contra's man of mystery owner, Oz, blackmails his newest recruit, computer hacker Cameron, to join his team. Cameron quickly learns that cracking into state-of-the-art security systems is a lot easier than dealing with his co-workers, including the alluring Melanie, prank-pulling Cash and competitive Josh.</p>\",\n            \"language\": \"English\",\n            \"rating\": 7.7,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/8/22035.jpg\",\n            \"genres\": [\n                \"Comedy\",\n                \"Action\",\n                \"Crime\"\n            ]\n        },\n        {\n            \"externalId\": 35848,\n            \"name\": \"Breaking Homicide\",\n            \"summary\": \"<p>Each week on <b>Breaking Homicide</b>, former Rhode Island Police Detective Derrick Levasseur and Forensic Psychologist Kris Mohandie will answer the pleas of a desperate family and investigate the cold case murder of their loved one.</p>\",\n            \"language\": \"English\",\n            \"rating\": 6.2,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/205/513139.jpg\",\n            \"genres\": [\n                \"Crime\"\n            ]\n        },\n        {\n            \"externalId\": 57880,\n            \"name\": \"Bangkok Breaking\",\n            \"summary\": \"<p>Newly arrived in Bangkok, Wanchai joins the road rescue service and unravels a city-wide conspiracy with the help of a journalist.</p>\",\n            \"language\": \"Thai\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/360/901524.jpg\",\n            \"genres\": [\n                \"Drama\",\n                \"Crime\"\n            ]\n        },\n        {\n            \"externalId\": 34677,\n            \"name\": \"Breaking Mysterious\",\n            \"summary\": \"<p><b>Breaking Mysterious</b> follows a group of truth-seekers as they investigate the biggest mysteries, extraordinary phenomena and theories in America.</p>\",\n            \"language\": \"English\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/144/361117.jpg\",\n            \"genres\": [\n                \"Mystery\",\n                \"History\"\n            ]\n        },\n        {\n            \"externalId\": 531,\n            \"name\": \"Breaking Amish\",\n            \"summary\": \"<p><b>Breaking Amish</b> follows a fresh group of young men and women as they leave their conservative, rural communities behind for a chance to live in New York and fully experience English life. The new cast of five heads to Brooklyn, N.Y., to explore life beyond their Amish culture. Throughout their journey, their relationships are tested and life-altering choices must be made. By leaving their communities, they risk changing their lives and ties with their families for good, but they all believe that the chance to live in New York and pursue their dreams is well worth it.</p><p>This season presents new and different challenges as the cast adjusts to life in Brooklyn, where the cultures are countless and the temptations are at an all-time high. Using this opportunity to find themselves, the cast navigates through the nuances of the Brooklyn lifestyle and also makes time to visit the famous New York City landmarks to enjoy all the English things that the city has to offer. While they all have similar, conservative backgrounds, they must get used to not only a new city, but also each other and endure growing pains along the way. The trip to Brooklyn chronicles the tough decisions they must make to leave their families and friends behind.</p>\",\n            \"language\": \"English\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/82/206571.jpg\",\n            \"genres\": []\n        },\n        {\n            \"externalId\": 30025,\n            \"name\": \"Breaking Greenville\",\n            \"summary\": \"<p>When a spunky young reporter from Connecticut lands her first big job in a small-town news market, an unexpected shake-up occurs. truTV's <b>Breaking Greenville</b> follows a group of local anchors as they compete for the top spot in the game. The character-driven docu-soap will spotlight the playful - and at times cut-throat - rivalry between two local news stations and the dynamic newscasters who are determined to take their jobs seriously, even when some of the news they cover is less than serious.</p>\",\n            \"language\": \"English\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/119/297605.jpg\",\n            \"genres\": [\n                \"Comedy\"\n            ]\n        },\n        {\n            \"externalId\": 1393,\n            \"name\": \"Breaking Point\",\n            \"summary\": \"<p>This show features subjects who believe they are participating in a documentary about their life of crime. What they don't know is they will soon face an intervention that offers only two choices: accept treatment or face the possibility of prison time. Each surprise intervention is conducted by top criminal defense attorney and certified intervention professional Darren Kavinoky.</p>\",\n            \"language\": \"English\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/8/22061.jpg\",\n            \"genres\": [\n                \"Crime\"\n            ]\n        },\n        {\n            \"externalId\": 7908,\n            \"name\": \"Breaking Magic\",\n            \"summary\": \"<p><b>Breaking Magic</b> fuses the showmanship and mystery of street magic with the raw power of science. Watch as each trick surprises unsuspecting bystanders with mystifying results. Breaking Magic recruited today's freshest and most creative magicians to show you how science works with shocking tricks. Hidden cameras on the streets of London, Warsaw and New York City capture bystanders completely baffled by these magicians' unexpected tricks. Immediately following these demonstrations, each magician explains the scientific reality behind each illusion.</p>\",\n            \"language\": \"English\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/28/72420.jpg\",\n            \"genres\": []\n        },\n        {\n            \"externalId\": 9739,\n            \"name\": \"Breaking Pointe\",\n            \"summary\": \"<p>A reality series that takes viewers into an elite professional ballet company in Salt Lake City, revealing not only the beauty and grace of dance, but also the competition and intensity that exist in a gritty world of extreme athleticism. Underneath the tutus, tights and perfect exteriors are tough and determined dancers who must fight through injuries and pain as they pursue the unattainable -- perfection. The dancers must navigate complicated social politics and make sacrifices while they compete for the best roles.</p>\",\n            \"language\": \"English\",\n            \"rating\": null,\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/82/206980.jpg\",\n            \"genres\": []\n        }\n    ]\n}"
+						},
+						{
+							"name": "Search All External Shows - No Data",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/shows/external/search?query=vfqrzgrsqgfregrezgrqg",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"shows",
+										"external",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "vfqrzgrsqgfregrezgrqg"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "12"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c-uYDt2U4ZzQ9qcJWEtxbBSEu23l0\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Jul 2022 09:14:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"shows\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Find A Show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shows?id=6a114ae4-0062-468f-8b68-c491abc48313",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"shows"
+							],
+							"query": [
+								{
+									"key": "externalId",
+									"value": "22",
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "6a114ae4-0062-468f-8b68-c491abc48313"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Find A Show - Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/shows?id=6a114ae4-0062-468f-8b68-c491abc48313",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"shows"
+									],
+									"query": [
+										{
+											"key": "externalId",
+											"value": "22",
+											"disabled": true
+										},
+										{
+											"key": "id",
+											"value": "6a114ae4-0062-468f-8b68-c491abc48313"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1050"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41a-Z1SjrXYZOr0W4sV1byuWHDvH0AE\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Jul 2022 09:43:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"show\": {\n        \"id\": \"6a114ae4-0062-468f-8b68-c491abc48313\",\n        \"externalId\": 169,\n        \"name\": \"Breaking Bad\",\n        \"summary\": \"<p><b>Breaking Bad</b> follows protagonist Walter White, a chemistry teacher who lives in New Mexico with his wife and teenage son who has cerebral palsy. White is diagnosed with Stage III cancer and given a prognosis of two years left to live. With a new sense of fearlessness based on his medical prognosis, and a desire to secure his family's financial security, White chooses to enter a dangerous world of drugs and crime and ascends to power in this world. The series explores how a fatal diagnosis such as White's releases a typical man from the daily concerns and constraints of normal society and follows his transformation from mild family man to a kingpin of the drug trade.</p>\",\n        \"language\": \"English\",\n        \"rating\": \"9.2\",\n        \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg\",\n        \"genres\": [\n            \"Drama\",\n            \"Crime\",\n            \"Thriller\"\n        ],\n        \"lastFavoritedAt\": null,\n        \"createdAt\": \"2022-07-27T15:15:57.835Z\",\n        \"updatedAt\": \"2022-07-27T15:15:57.835Z\"\n    }\n}"
+						},
+						{
+							"name": "Find A Show - Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/shows?id=6a114ae4-0062-468f-8b68-c491abc48314",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"shows"
+									],
+									"query": [
+										{
+											"key": "externalId",
+											"value": "22",
+											"disabled": true
+										},
+										{
+											"key": "id",
+											"value": "6a114ae4-0062-468f-8b68-c491abc48314"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41-tem1qglTOBgtizrbvBcxRCFVtAk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Jul 2022 09:44:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 404,\n    \"message\": \"Show not found\",\n    \"error\": \"Not Found\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Favorites",
+			"item": [
+				{
+					"name": "Add Show As Favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"showExternalId\": 169,\n    \"isNotificationEnabled\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/favorites",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"favorites"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add Show As Favorite - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"showExternalId\": 169,\n    \"isNotificationEnabled\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"favorites"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1025"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"401-Tow0Y/QmxiVlXlpY/ICSmD0k5lg\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 27 Jul 2022 15:15:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"show\": {\n        \"id\": \"6a114ae4-0062-468f-8b68-c491abc48313\",\n        \"externalId\": 169,\n        \"name\": \"Breaking Bad\",\n        \"summary\": \"<p><b>Breaking Bad</b> follows protagonist Walter White, a chemistry teacher who lives in New Mexico with his wife and teenage son who has cerebral palsy. White is diagnosed with Stage III cancer and given a prognosis of two years left to live. With a new sense of fearlessness based on his medical prognosis, and a desire to secure his family's financial security, White chooses to enter a dangerous world of drugs and crime and ascends to power in this world. The series explores how a fatal diagnosis such as White's releases a typical man from the daily concerns and constraints of normal society and follows his transformation from mild family man to a kingpin of the drug trade.</p>\",\n        \"language\": \"English\",\n        \"rating\": 9.2,\n        \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg\",\n        \"genres\": [\n            \"Drama\",\n            \"Crime\",\n            \"Thriller\"\n        ],\n        \"createdAt\": \"2022-07-27T15:15:57.835Z\",\n        \"updatedAt\": \"2022-07-27T15:15:57.835Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove Show From Favorites",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"showId\": \"aefc99fe-6ea8-4671-89c6-8b56761f340d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/favorites",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"favorites"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Remove Show From Favorites - Success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"showId\": \"aefc99fe-6ea8-4671-89c6-8b56761f340d\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"favorites"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1406"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"57e-VKjnU3VqRKj9PP+JEnKRV7eSaGk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Jul 2022 12:03:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"show\": {\n        \"id\": \"aefc99fe-6ea8-4671-89c6-8b56761f340d\",\n        \"externalId\": 166,\n        \"name\": \"Battlestar Galactica\",\n        \"summary\": \"<p>The world ended with no warning, and all that was left… was hope.</p><p>A truce between the humans of the Twelve Colonies and the Cylons—intelligent robots designed by humankind—lasts for 40 tense and silent years. <b>Battlestar Galactica</b> picks up just as the Cylons commit mass genocide against humanity. Only the Battlestar Galactica (an old warship about to be decommissioned and turned into a museum) and those souls fortunate enough to be aboard other starships were able to survive the attack. In the aftermath, the Galactica's commanding officer, William Adama, finds himself responsible for safeguarding the last remnants of the human race—fewer than 50,000 desperate survivors. Meanwhile, the annihilation of the Colonial government results in the succession of the Secretary of Education, Laura Roslin, to the presidency. Driven by prophetic visions and political necessity, the Galactica travels through uncharted space in hopes of finding the mythical, lost 13th colony—Earth.</p>\",\n        \"language\": \"English\",\n        \"rating\": \"8.7\",\n        \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/0/2313.jpg\",\n        \"genres\": [\n            \"Drama\",\n            \"Science-Fiction\",\n            \"War\"\n        ],\n        \"lastFavoritedAt\": \"2022-07-28T08:21:23.652Z\",\n        \"createdAt\": \"2022-07-28T08:15:32.911Z\",\n        \"updatedAt\": \"2022-07-28T08:21:23.740Z\"\n    }\n}"
+						},
+						{
+							"name": "Remove Show From Favorites - Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"showId\": \"ed48de89-d23c-4199-b248-1bb4ffbf3358\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/favorites",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"favorites"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "239"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ef-lcFgIhgQ1wgS0EQmbZwFCAOhIo0\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 28 Jul 2022 11:55:41 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 500,\n    \"message\": \"Error when trying to remove Favorite\",\n    \"error\": {\n        \"response\": {\n            \"statusCode\": 404,\n            \"message\": \"User Favorite not found\",\n            \"error\": \"Not Found\"\n        },\n        \"status\": 404,\n        \"message\": \"User Favorite not found\",\n        \"name\": \"NotFoundException\"\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {

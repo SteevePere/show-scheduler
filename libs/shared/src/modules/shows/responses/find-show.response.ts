@@ -1,9 +1,3 @@
-import { IsObject, ValidateNested } from 'class-validator';
+import { BaseShowResponse } from './base-show.response';
 
-import { ShowObject } from '../objects/show.object';
-
-export class FindShowResponse {
-  @IsObject()
-  @ValidateNested()
-  show: ShowObject;
-}
+export class FindShowResponse extends BaseShowResponse {}

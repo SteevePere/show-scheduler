@@ -1,11 +1,8 @@
 import { IsBoolean } from 'class-validator';
 
-import { IsSafeInt } from '../../../decorators/validation/is-safe-integer.decorator';
+import { BaseFavoriteRequest } from './base-favorite.request';
 
-export class CreateFavoriteRequest {
-  @IsSafeInt()
-  showExternalId: number;
-
+export class CreateFavoriteRequest extends BaseFavoriteRequest {
   @IsBoolean()
   isNotificationEnabled: boolean;
 }

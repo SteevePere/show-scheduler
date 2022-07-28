@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShowObject } from '@scheduler/shared';
 import { ShowsService } from 'src/modules/shows/services/shows.service';
@@ -7,6 +11,11 @@ import {
   CreateFavoriteData,
   CreateFavoriteResult,
 } from '../dtos/create-favorite.dto';
+import { FindUserFavoriteShowData } from '../dtos/find-favorite.dto';
+import {
+  RemoveFavoriteData,
+  RemoveFavoriteResult,
+} from '../dtos/remove-favorite.dtos';
 import { UserFavoriteShowEntity } from '../entities/user-show.entity';
 
 @Injectable()
@@ -78,5 +87,51 @@ export class FavoritesService {
     });
 
     return { show };
+  }
+
+  private async findUserFavoriteShowEntity(
+    data: FindUserFavoriteShowData,
+  ): Promise<UserFavoriteShowEntity> {
+    const { userId, showId } = data;
+    const foundUserFavorite = await this.userFavoriteShowsRepository.findOne({
+      where: {
+        userId,
+        showId,
+      },
+      relations: ['show'],
+    });
+
+    if (!foundUserFavorite) {
+      throw new NotFoundException('User Favorite not found');
+    }
+
+    return foundUserFavorite;
+  }
+
+  async removeFavorite(
+    data: RemoveFavoriteData,
+  ): Promise<RemoveFavoriteResult> {
+    const { currentUser, showId } = data;
+
+    try {
+      const { show } = await this.showsService.findShow({
+        id: showId,
+        onlyInternal: true,
+      });
+
+      const favorite = await this.findUserFavoriteShowEntity({
+        userId: currentUser.id,
+        showId,
+      });
+
+      await this.userFavoriteShowsRepository.delete(favorite.id);
+
+      return { show };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Error when trying to remove Favorite',
+        error,
+      );
+    }
   }
 }
