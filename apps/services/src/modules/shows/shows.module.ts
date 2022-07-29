@@ -8,6 +8,7 @@ import { GenreEntity } from './entities/genre.entity';
 import { SeasonEntity } from './entities/season.entity';
 import { ShowEntity } from './entities/show.entity';
 import { EpisodesService } from './services/episodes.service';
+import { SchedulerService } from './services/scheduler.service';
 import { SeasonsService } from './services/seasons.service';
 import { ShowsService } from './services/shows.service';
 
@@ -23,7 +24,7 @@ import { ShowsService } from './services/shows.service';
     DataProviderModule,
     FilesModule,
   ],
-  providers: [ShowsService, SeasonsService, EpisodesService],
+  providers: [ShowsService, SeasonsService, EpisodesService, SchedulerService],
   exports: [ShowsService],
   controllers: [ShowsController],
 })

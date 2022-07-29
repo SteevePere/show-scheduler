@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files-service';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { FindShowGenreData } from '../dtos/find-show-genre.dto';
 import { FindShowData, FindShowResult } from '../dtos/find-show.dto';
 import {
@@ -30,6 +30,7 @@ import { SeasonsService } from './seasons.service';
 @Injectable()
 export class ShowsService {
   constructor(
+    private readonly databaseConnection: Connection,
     @InjectRepository(ShowEntity)
     private readonly showsRepository: Repository<ShowEntity>,
     @InjectRepository(GenreEntity)
@@ -162,9 +163,11 @@ export class ShowsService {
 
   async updateShow(data: UpdateShowData): Promise<UpdateShowResult> {
     const show = await this.findShowEntity({ id: data.id });
+
     try {
       Object.assign(show, { ...data.data });
       const savedShow = await this.showsRepository.save(show);
+
       return { show: createShowObjectFromEntity({ showEntity: savedShow }) };
     } catch (error) {
       throw new InternalServerErrorException('Unable to update Show', error);

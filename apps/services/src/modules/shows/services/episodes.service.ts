@@ -23,10 +23,12 @@ export class EpisodesService {
     data: SaveSeasonEpisodesData,
   ): Promise<SaveSeasonEpisodesResult> {
     const { seasonId, seasonExternalId } = data;
+
     const { episodes: externalEpisodes } =
       await this.dataProviderService.findSeasonEpisodes({
         seasonExternalId,
       });
+
     const episodes = await Promise.all(
       externalEpisodes.map(async (externalEpisode) => {
         const { externalId, name, number, summary, imageUrl, airDate } =

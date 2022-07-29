@@ -18,7 +18,7 @@ export class EpisodeEntity extends BaseEntity {
   @Column({ nullable: true })
   name: string;
 
-  @Column({ type: 'int', default: 1 })
+  @Column({ type: 'int', nullable: true })
   number: number;
 
   @Column({ type: 'text', nullable: true })

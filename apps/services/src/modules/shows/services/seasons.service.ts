@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files-service';
@@ -41,10 +37,12 @@ export class SeasonsService {
     data: SaveShowSeasonsData,
   ): Promise<SaveShowSeasonsResult> {
     const { showId, showExternalId } = data;
+
     const { seasons: externalSeasons } =
       await this.dataProviderService.findShowSeasons({
         showExternalId,
       });
+
     const seasons = await Promise.all(
       externalSeasons.map(async (externalSeason) => {
         const {

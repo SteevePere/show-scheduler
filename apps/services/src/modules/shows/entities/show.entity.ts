@@ -1,4 +1,5 @@
 import { BaseEntity } from 'src/core/entities/base.entity';
+import { UserFavoriteShowEntity } from 'src/modules/favorites/entities/user-show.entity';
 import { FileEntity } from 'src/modules/files/entities/file.entity';
 import {
   Column,
@@ -58,4 +59,11 @@ export class ShowEntity extends BaseEntity {
     (seasonEntity: SeasonEntity) => seasonEntity.show,
   )
   seasons: SeasonEntity[];
+
+  @OneToMany(
+    () => UserFavoriteShowEntity,
+    (userFavoriteShowEntity: UserFavoriteShowEntity) =>
+      userFavoriteShowEntity.show,
+  )
+  userFavoriteReferences: UserFavoriteShowEntity[];
 }

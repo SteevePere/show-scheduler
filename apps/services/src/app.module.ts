@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
 import { AuthenticationConfig } from './config/authentication.config';
@@ -26,6 +27,7 @@ import { UsersModule } from './modules/users/users.module';
           autoLoadEntities: true,
         }),
     }),
+    ScheduleModule.forRoot(),
     AuthenticationModule,
     UsersModule,
     ShowsModule,
