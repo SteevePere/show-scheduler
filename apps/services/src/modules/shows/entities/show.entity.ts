@@ -1,5 +1,5 @@
 import { BaseEntity } from 'src/core/entities/base.entity';
-import { UserFavoriteShowEntity } from 'src/modules/favorites/entities/user-show.entity';
+import { UserFavoriteShowEntity } from 'src/modules/favorites/entities/user-favorite-show.entity';
 import { FileEntity } from 'src/modules/files/entities/file.entity';
 import {
   Column,

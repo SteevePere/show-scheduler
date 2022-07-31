@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ShowObject } from '@scheduler/shared';
 import { ShowsService } from 'src/modules/shows/services/shows.service';
 import { Repository } from 'typeorm';
@@ -16,15 +17,17 @@ import {
   RemoveFavoriteData,
   RemoveFavoriteResult,
 } from '../dtos/remove-favorite.dtos';
-import { UserFavoriteShowEntity } from '../entities/user-show.entity';
+import { UserFavoriteShowEntity } from '../entities/user-favorite-show.entity';
 
 @Injectable()
-export class FavoritesService {
+export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity> {
   constructor(
     @InjectRepository(UserFavoriteShowEntity)
     private readonly userFavoriteShowsRepository: Repository<UserFavoriteShowEntity>,
     private readonly showsService: ShowsService,
-  ) {}
+  ) {
+    super(userFavoriteShowsRepository);
+  }
 
   async saveFavorite(data: CreateFavoriteData): Promise<CreateFavoriteResult> {
     const { currentUser, showExternalId, isNotificationEnabled } = data;

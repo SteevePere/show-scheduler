@@ -2,7 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShowsModule } from '../shows/shows.module';
 import { FavoritesController } from './controllers/favorites.controller';
-import { UserFavoriteShowEntity } from './entities/user-show.entity';
+import { UserFavoriteShowEntity } from './entities/user-favorite-show.entity';
 import { FavoritesService } from './services/favorites.service';
 
 @Global()

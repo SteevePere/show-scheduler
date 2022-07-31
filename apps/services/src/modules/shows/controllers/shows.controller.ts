@@ -41,10 +41,4 @@ export class ShowsController {
       }),
     );
   }
-
-  @Public()
-  @Get('cleanup')
-  async removeObsoleteShows(): Promise<void> {
-    await this.schedulerService.removeObsoleteShows();
-  }
 }

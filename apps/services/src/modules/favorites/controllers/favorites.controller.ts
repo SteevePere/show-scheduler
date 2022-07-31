@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Post } from '@nestjs/common';
+import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
 import {
   CreateFavoriteRequest,
   CreateFavoriteResponse,
@@ -10,18 +11,43 @@ import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { CreateFavoriteData } from '../dtos/create-favorite.dto';
 import { RemoveFavoriteData } from '../dtos/remove-favorite.dtos';
+import { UserFavoriteShowEntity } from '../entities/user-favorite-show.entity';
 import { FavoritesService } from '../services/favorites.service';
 
+@Crud({
+  model: {
+    type: UserFavoriteShowEntity,
+  },
+  query: {
+    alwaysPaginate: true,
+    join: {
+      show: {
+        eager: true,
+      },
+      'show.seasons': {
+        eager: true,
+      },
+    },
+  },
+})
+@CrudAuth({
+  property: 'user',
+  filter: (user: UserObject) => {
+    return { userId: user.id };
+  },
+})
 @Controller('favorites')
-export class FavoritesController {
-  constructor(public favoritesService: FavoritesService) {}
+export class FavoritesController
+  implements CrudController<UserFavoriteShowEntity>
+{
+  constructor(public service: FavoritesService) {}
 
   @Post()
   async saveFavorite(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: CreateFavoriteRequest,
   ): Promise<CreateFavoriteResponse> {
-    return await this.favoritesService.saveFavorite(
+    return await this.service.saveFavorite(
       createFromClass(CreateFavoriteData, {
         currentUser,
         ...data,
@@ -34,7 +60,7 @@ export class FavoritesController {
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: RemoveFavoriteRequest,
   ): Promise<RemoveFavoriteResponse> {
-    return await this.favoritesService.removeFavorite(
+    return await this.service.removeFavorite(
       createFromClass(RemoveFavoriteData, {
         currentUser,
         ...data,
