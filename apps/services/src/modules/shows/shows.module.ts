@@ -1,5 +1,7 @@
 import { Global, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SchedulerConfig } from 'src/config/scheduler.config';
 import { DataProviderModule } from '../data-provider/data-provider.module';
 import { FilesModule } from '../files/files.module';
 import { ShowsController } from './controllers/shows.controller';
@@ -15,6 +17,10 @@ import { ShowsService } from './services/shows.service';
 @Global()
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [SchedulerConfig],
+      envFilePath: ['.env'],
+    }),
     TypeOrmModule.forFeature([
       GenreEntity,
       ShowEntity,
