@@ -42,3 +42,5 @@ export * from './modules/shows/responses/toggle-season-watched.response';
 export * from './modules/users/enums/user-gender.enum';
 export * from './modules/users/enums/user-role.enum';
 export * from './modules/users/objects/user.object';
+export * from './modules/users/requests/update-user.request';
+export * from './modules/users/responses/update-user.response';

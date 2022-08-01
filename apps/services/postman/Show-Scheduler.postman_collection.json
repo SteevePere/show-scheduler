@@ -1607,6 +1607,172 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gender\": \"MALE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/5d97e9f7-fca5-48c1-94d6-312efb78665e",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"5d97e9f7-fca5-48c1-94d6-312efb78665e"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update User - Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"gender\": \"MALE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/5d97e9f7-fca5-48c1-94d6-312efb78665e",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"5d97e9f7-fca5-48c1-94d6-312efb78665e"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "273"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"111-tSjAaOwUMWdrBgpgemONYBeuHoE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Aug 2022 20:20:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": \"5d97e9f7-fca5-48c1-94d6-312efb78665e\",\n        \"email\": \"steevepere@gmail.com\",\n        \"firstName\": \"Steeve\",\n        \"lastName\": \"Péré\",\n        \"role\": \"USER\",\n        \"gender\": \"MALE\",\n        \"birthDate\": \"1991-10-16T21:50:00.000Z\",\n        \"createdAt\": \"2022-07-23T15:05:53.541Z\",\n        \"updatedAt\": \"2022-08-01T20:20:19.664Z\"\n    }\n}"
+						},
+						{
+							"name": "Update User - Forbidden",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"gender\": \"MALE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/20822c13-b58c-4d65-9405-7c239d03afa8",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"20822c13-b58c-4d65-9405-7c239d03afa8"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "90"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5a-KkKAu5tgZNo95mH21/AsRydGkLE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Aug 2022 20:25:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 403,\n    \"message\": \"Unable to update another User's profile\",\n    \"error\": \"Forbidden\"\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {

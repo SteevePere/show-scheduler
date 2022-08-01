@@ -1,4 +1,4 @@
-import { UserObject } from '@scheduler/shared';
+import { UpdateUserResponse, UserObject } from '@scheduler/shared';
 import { DeepPartial } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 
@@ -7,6 +7,6 @@ export class UpdateUserData {
   data: DeepPartial<UserEntity>;
 }
 
-export class UpdateUserResult {
+export class UpdateUserResult extends UpdateUserResponse {
   user: UserObject;
 }
