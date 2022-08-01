@@ -77,6 +77,7 @@ export class EpisodesService {
     data: ToggleEpisodeWatchedData,
   ): Promise<ToggleEpisodeWatchedResult> {
     const { currentUser, isWatched } = data;
+
     const episodeEntity = await this.findEpisodeEntity({
       ...data,
       relations: ['watchedBy'],

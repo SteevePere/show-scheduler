@@ -1,12 +1,3 @@
-import { IsNotEmpty, IsNumberString, IsUUID, ValidateIf } from "class-validator";
+import { BaseShowRequest } from "./base-show.request";
 
-export class FindShowRequest {
-  @ValidateIf((request) => !request.externalId)
-  @IsUUID()
-  @IsNotEmpty()
-  id?: string;
-
-  @ValidateIf((request) => !request.id)
-  @IsNumberString()
-  externalId?: number;
-}
+export class FindShowRequest extends BaseShowRequest {}

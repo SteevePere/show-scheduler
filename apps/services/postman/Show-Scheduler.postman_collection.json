@@ -1407,6 +1407,206 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Episodes",
+			"item": [
+				{
+					"name": "Toggle Episode Watched",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"f9badb72-e81f-447b-ad32-acc47e0da972\",\n    \"isWatched\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/episodes/watched",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"episodes",
+								"watched"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Toggle Episode Watched - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"f9badb72-e81f-447b-ad32-acc47e0da972\",\n    \"isWatched\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/episodes/watched",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"episodes",
+										"watched"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "624"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"270-s5NYsXCmlL8Q9q0BRiZY056Pm3Y\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Aug 2022 12:32:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"episode\": {\n        \"id\": \"f9badb72-e81f-447b-ad32-acc47e0da972\",\n        \"seasonId\": \"c132cbfc-0e70-463e-90b7-7247991c6b86\",\n        \"externalId\": 12195,\n        \"number\": 4,\n        \"name\": \"Cancer Man\",\n        \"summary\": \"<p>Walter announces to the family that he has cancer; the DEA believes there is a new big-time player in the Albuquerque drug business; a depressed Walter takes his anger out on a worthy recipient; Jesse pays a surprise visit to his parents' house.</p>\",\n        \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_landscape/405/1012684.jpg\",\n        \"airDate\": \"2008-02-18T03:00:00.000Z\",\n        \"createdAt\": \"2022-07-31T19:40:53.953Z\",\n        \"updatedAt\": \"2022-07-31T19:40:53.953Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Seasons",
+			"item": [
+				{
+					"name": "Toggle Season Watched",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"c132cbfc-0e70-463e-90b7-7247991c6b86\",\n    \"isWatched\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/seasons/watched",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"seasons",
+								"watched"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Toggle Season Watched - Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"c132cbfc-0e70-463e-90b7-7247991c6b86\",\n    \"isWatched\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/seasons/watched",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"seasons",
+										"watched"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "402"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"192-QcIrTdbTixwWHcO7DlBjww1nYdA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 01 Aug 2022 13:25:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"season\": {\n        \"id\": \"c132cbfc-0e70-463e-90b7-7247991c6b86\",\n        \"showId\": \"194550bc-99ba-48b1-8464-98136b995962\",\n        \"externalId\": 753,\n        \"number\": 1,\n        \"name\": null,\n        \"summary\": null,\n        \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_portrait/405/1012791.jpg\",\n        \"premiereDate\": \"2008-01-20T00:00:00.000Z\",\n        \"endDate\": \"2008-03-09T00:00:00.000Z\",\n        \"createdAt\": \"2022-07-31T19:40:53.257Z\",\n        \"updatedAt\": \"2022-07-31T19:40:53.257Z\"\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"auth": {

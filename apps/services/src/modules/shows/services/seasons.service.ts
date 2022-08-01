@@ -8,8 +8,13 @@ import {
   SaveShowSeasonsData,
   SaveShowSeasonsResult,
 } from '../dtos/save-show-seasons.dto';
+import {
+  ToggleSeasonWatchedData,
+  ToggleSeasonWatchedResult,
+} from '../dtos/toggle-season-watched.dto';
 import { SeasonEntity } from '../entities/season.entity';
 import { createSeasonObjectFromEntity } from '../transformers/season-object.transformer';
+import { EpisodesService } from './episodes.service';
 
 @Injectable()
 export class SeasonsService {
@@ -17,13 +22,15 @@ export class SeasonsService {
     @InjectRepository(SeasonEntity)
     private readonly seasonsRepository: Repository<SeasonEntity>,
     private readonly dataProviderService: DataProviderService,
+    private readonly episodesService: EpisodesService,
     private readonly filesService: FilesService,
   ) {}
 
   private async findSeasonEntity(data: FindSeasonData): Promise<SeasonEntity> {
-    const { id, externalId, ignoreNotFound = false } = data;
+    const { id, externalId, relations = [], ignoreNotFound = false } = data;
     const foundSeason = await this.seasonsRepository.findOne({
       where: [{ id }, { externalId }],
+      relations,
     });
 
     if (!foundSeason && !ignoreNotFound) {
@@ -79,5 +86,32 @@ export class SeasonsService {
     );
 
     return { seasons };
+  }
+
+  async toggleSeasonWatched(
+    data: ToggleSeasonWatchedData,
+  ): Promise<ToggleSeasonWatchedResult> {
+    const { currentUser, isWatched } = data;
+
+    const seasonEntity = await this.findSeasonEntity({
+      ...data,
+      relations: ['episodes'],
+    });
+
+    await Promise.all(
+      seasonEntity.episodes.map(async (episode) => {
+        await this.episodesService.toggleEpisodeWatched({
+          id: episode.id,
+          currentUser,
+          isWatched,
+        });
+      }),
+    );
+
+    return {
+      season: createSeasonObjectFromEntity({
+        seasonEntity,
+      }),
+    };
   }
 }

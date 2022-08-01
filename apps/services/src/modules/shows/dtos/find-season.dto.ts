@@ -4,6 +4,7 @@ export class FindSeasonData {
   id?: string;
   externalId?: number;
   ignoreNotFound?: boolean;
+  relations?: string[];
 }
 
 export class FindSeasonResult {
