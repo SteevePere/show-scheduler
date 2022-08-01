@@ -1,15 +1,14 @@
 import { UserGenderEnum, UserRoleEnum } from '@scheduler/shared';
+import * as bcrypt from 'bcrypt';
 import { BaseEntity } from 'src/core/entities/base.entity';
+import { EpisodeEntity } from 'src/modules/shows/entities/episode.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { EpisodeEntity } from 'src/modules/shows/entities/episode.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -44,12 +43,10 @@ export class UserEntity extends BaseEntity {
   @Column({ nullable: true })
   resetPasswordToken: string;
 
-  @ManyToMany(() => EpisodeEntity)
-  @JoinTable({
-    name: 'user_watched_episodes',
-    joinColumns: [{ name: 'userId' }],
-    inverseJoinColumns: [{ name: 'episodeId' }],
-  })
+  @ManyToMany(
+    () => EpisodeEntity,
+    (episodeEntity: EpisodeEntity) => episodeEntity.watchedBy,
+  )
   watchedEpisodes: EpisodeEntity[];
 
   @BeforeInsert()

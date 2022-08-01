@@ -1,9 +1,12 @@
 import { BaseEntity } from 'src/core/entities/base.entity';
 import { FileEntity } from 'src/modules/files/entities/file.entity';
+import { UserEntity } from 'src/modules/users/entities/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   RelationId,
@@ -45,4 +48,15 @@ export class EpisodeEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'imageId' })
   image: FileEntity;
+
+  @ManyToMany(
+    () => UserEntity,
+    (userEntity: UserEntity) => userEntity.watchedEpisodes,
+  )
+  @JoinTable({
+    name: 'user_watched_episodes',
+    joinColumns: [{ name: 'episodeId' }],
+    inverseJoinColumns: [{ name: 'userId' }],
+  })
+  watchedBy: UserEntity[];
 }

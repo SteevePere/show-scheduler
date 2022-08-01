@@ -9,15 +9,11 @@ import { Public } from 'src/core/decorators/public.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { FindShowData } from '../dtos/find-show.dto';
 import { SearchShowsData } from '../dtos/search-shows.dto';
-import { SchedulerService } from '../services/scheduler.service';
 import { ShowsService } from '../services/shows.service';
 
 @Controller('shows')
 export class ShowsController {
-  constructor(
-    public showsService: ShowsService,
-    private schedulerService: SchedulerService,
-  ) {}
+  constructor(public showsService: ShowsService) {}
 
   @Public()
   @Get('external/search')

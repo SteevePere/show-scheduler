@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files-service';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { FindShowGenreData } from '../dtos/find-show-genre.dto';
 import { FindShowData, FindShowResult } from '../dtos/find-show.dto';
 import {
@@ -164,7 +164,9 @@ export class ShowsService {
     const show = await this.findShowEntity({ id: data.id });
 
     try {
-      Object.assign(show, { ...data.data });
+      Object.assign<ShowEntity, DeepPartial<ShowEntity>>(show, {
+        ...data.data,
+      });
       const savedShow = await this.showsRepository.save(show);
 
       return { show: createShowObjectFromEntity({ showEntity: savedShow }) };

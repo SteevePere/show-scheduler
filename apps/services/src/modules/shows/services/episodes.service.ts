@@ -1,12 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files-service';
-import { Repository } from 'typeorm';
+import { UserEntity } from 'src/modules/users/entities/user.entity';
+import { DeepPartial, Repository } from 'typeorm';
+import { FindEpisodeData } from '../dtos/find-episode.dto';
 import {
   SaveSeasonEpisodesData,
   SaveSeasonEpisodesResult,
 } from '../dtos/save-season-episodes.dto';
+import {
+  ToggleEpisodeWatchedData,
+  ToggleEpisodeWatchedResult,
+} from '../dtos/toggle-episode-watched.dto';
+import {
+  UpdateEpisodeData,
+  UpdateEpisodeResult,
+} from '../dtos/update-episode.dto';
 import { EpisodeEntity } from '../entities/episode.entity';
 import { createEpisodeObjectFromEntity } from '../transformers/episode-object.transformer';
 
@@ -57,5 +71,68 @@ export class EpisodesService {
     );
 
     return { episodes };
+  }
+
+  async toggleEpisodeWatched(
+    data: ToggleEpisodeWatchedData,
+  ): Promise<ToggleEpisodeWatchedResult> {
+    const { currentUser, isWatched } = data;
+    const episodeEntity = await this.findEpisodeEntity({
+      ...data,
+      relations: ['watchedBy'],
+    });
+    const currentUserEntity = new UserEntity();
+    currentUserEntity.id = currentUser.id;
+
+    if (isWatched) {
+      Object.assign<EpisodeEntity, DeepPartial<EpisodeEntity>>(episodeEntity, {
+        watchedBy: [currentUserEntity],
+      });
+    } else {
+      episodeEntity.watchedBy = episodeEntity.watchedBy.filter((watcher) => {
+        watcher.id !== currentUser.id;
+      });
+    }
+
+    await this.episodesRepository.save(episodeEntity);
+
+    return {
+      episode: createEpisodeObjectFromEntity({
+        episodeEntity,
+      }),
+    };
+  }
+
+  async updateEpisode(data: UpdateEpisodeData): Promise<UpdateEpisodeResult> {
+    const episode = await this.findEpisodeEntity({ id: data.id });
+
+    try {
+      Object.assign<EpisodeEntity, DeepPartial<EpisodeEntity>>(episode, {
+        ...data.data,
+      });
+      const savedEpisode = await this.episodesRepository.save(episode);
+
+      return {
+        episode: createEpisodeObjectFromEntity({ episodeEntity: savedEpisode }),
+      };
+    } catch (error) {
+      throw new InternalServerErrorException('Unable to update Episode', error);
+    }
+  }
+
+  private async findEpisodeEntity(
+    data: FindEpisodeData,
+  ): Promise<EpisodeEntity> {
+    const { id, externalId, relations = [], ignoreNotFound = false } = data;
+    const foundEpisode = await this.episodesRepository.findOne({
+      where: [{ id }, { externalId }],
+      relations,
+    });
+
+    if (!foundEpisode && !ignoreNotFound) {
+      throw new NotFoundException('Episode not found');
+    }
+
+    return foundEpisode;
   }
 }
