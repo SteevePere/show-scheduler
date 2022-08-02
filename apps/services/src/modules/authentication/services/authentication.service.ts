@@ -4,26 +4,27 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { UserRoleEnum } from '@scheduler/shared';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { ConfigType } from '@nestjs/config';
+import { omit } from 'lodash';
+import { nanoid } from 'nanoid';
 import { AuthenticationConfig } from 'src/config/authentication.config';
+import { EmailsService } from 'src/modules/emails/services/emails.service';
+import { UsersService } from 'src/modules/users/services/users.service';
 import {
   CreateAccessTokenData,
   CreateAccessTokenResult,
 } from '../dtos/create-access-token.dto';
+import { ForgotPasswordData } from '../dtos/forgot-password.dto';
 import { RegistrationData, RegistrationResult } from '../dtos/register.dto';
-import { UsersService } from 'src/modules/users/services/users.service';
+import { ResetPasswordData } from '../dtos/reset-password.dto';
+import { SignInData } from '../dtos/sign-in.dto';
 import {
   ValidateTokenData,
   ValidateTokenResult,
 } from '../dtos/validate-token.dto';
-import { SignInData } from '../dtos/sign-in.dto';
-import { ForgotPasswordData } from '../dtos/forgot-password.dto';
-import { nanoid } from 'nanoid';
-import { EmailsService } from 'src/modules/emails/services/emails.service';
-import { ResetPasswordData } from '../dtos/reset-password.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -60,7 +61,7 @@ export class AuthenticationService {
     }
 
     return {
-      user,
+      user: omit(user, ['password']),
       tokens: this.createAccessToken({ user }),
     };
   }

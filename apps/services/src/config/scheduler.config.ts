@@ -6,6 +6,15 @@ export const SchedulerConfig = registerAs('scheduler', () => ({
       obsoleteFrom: {
         weeks: +process.env.FAVORITE_OBSOLETE_FROM_WEEKS,
       },
+      cronJob: {
+        interval: process.env.FAVORITE_CLEANUP_JOB_INTERVAL,
+      },
     },
+  },
+  notifications: {
+    cronJob: {
+      interval: process.env.NOTIFICATIONS_JOB_INTERVAL,
+    },
+    noticePeriod: process.env.NOTIFICATIONS_NOTICE_PERIOD,
   },
 }));

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
-import { FilesService } from 'src/modules/files/services/files-service';
+import { FilesService } from 'src/modules/files/services/files.service';
 import { Repository } from 'typeorm';
 import { FindSeasonData } from '../dtos/find-season.dto';
 import {

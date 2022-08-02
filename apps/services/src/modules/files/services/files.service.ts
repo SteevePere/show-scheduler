@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { SaveFileData, SaveFileResult } from '../dto/save-file.dto';
 import { FileEntity } from '../entities/file.entity';
 import { createFileObjectFromEntity } from '../transformers/file-object.transformer';
@@ -8,6 +8,7 @@ import { createFileObjectFromEntity } from '../transformers/file-object.transfor
 @Injectable()
 export class FilesService {
   constructor(
+    private readonly databaseConnection: Connection,
     @InjectRepository(FileEntity)
     private readonly filesRepository: Repository<FileEntity>,
   ) {}
@@ -27,5 +28,17 @@ export class FilesService {
         error,
       );
     }
+  }
+
+  async removeObsoleteFiles(): Promise<void> {
+    await this.databaseConnection.query(
+      `DELETE
+        FROM files WHERE files.id IN
+        (SELECT files.id from files LEFT JOIN shows ON shows."imageId" = files.id
+        LEFT JOIN seasons ON seasons."imageId" = files.id
+        LEFT JOIN episodes ON episodes."imageId" = files.id
+        WHERE shows.id IS NULL AND seasons.id IS NULL AND episodes.id IS NULL);`,
+      [],
+    );
   }
 }

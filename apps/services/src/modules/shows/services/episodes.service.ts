@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
-import { FilesService } from 'src/modules/files/services/files-service';
+import { FilesService } from 'src/modules/files/services/files.service';
 import { UserEntity } from 'src/modules/users/entities/user.entity';
 import { DeepPartial, Repository } from 'typeorm';
 import { FindEpisodeData } from '../dtos/find-episode.dto';
