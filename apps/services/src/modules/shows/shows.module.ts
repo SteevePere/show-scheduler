@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SchedulerConfig } from 'src/config/scheduler.config';
 import { DataProviderModule } from '../data-provider/data-provider.module';
+import { EmailsModule } from '../emails/emails.module';
 import { FilesModule } from '../files/files.module';
 import { EpisodesController } from './controllers/episodes.controller';
 import { SeasonsController } from './controllers/seasons.controller';
@@ -31,6 +32,7 @@ import { ShowsService } from './services/shows.service';
     ]),
     DataProviderModule,
     FilesModule,
+    EmailsModule,
   ],
   providers: [ShowsService, SeasonsService, EpisodesService, SchedulerService],
   exports: [ShowsService],

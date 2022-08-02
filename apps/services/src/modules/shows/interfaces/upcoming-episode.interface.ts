@@ -11,6 +11,7 @@ export interface IUpcomingEpisode {
 }
 
 export interface INotificationRecipient {
-  userEmail: string;
+  email: string;
+  firstName: string;
   episodes: IUpcomingEpisode[];
 }

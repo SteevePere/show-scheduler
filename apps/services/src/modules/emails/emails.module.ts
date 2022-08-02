@@ -52,7 +52,7 @@ import { EmailsService } from './services/emails.service';
     }),
   ],
   providers: [EmailsService],
-  exports: [],
+  exports: [EmailsService],
   controllers: [],
 })
 export class EmailsModule {}
