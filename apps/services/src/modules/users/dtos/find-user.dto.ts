@@ -5,6 +5,7 @@ export class FindUserData {
   email?: string;
   includePassword?: boolean;
   includeResetPasswordToken?: boolean;
+  relations?: string[];
 }
 
 export class FindUserResult {

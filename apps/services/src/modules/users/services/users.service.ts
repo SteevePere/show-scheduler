@@ -56,9 +56,10 @@ export class UsersService {
   }
 
   private async findUserEntity(data: FindUserData): Promise<UserEntity> {
-    const { id, email, includePassword } = data;
+    const { id, email, relations = [], includePassword } = data;
     const foundUser = await this.usersRepository.findOne({
       where: [{ id }, { email }],
+      relations,
     });
 
     if (!foundUser) {
