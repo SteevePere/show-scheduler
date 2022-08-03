@@ -7,7 +7,6 @@ import { DateTime } from 'luxon';
 import { SchedulerConfig } from 'src/config/scheduler.config';
 import { EmailsService } from 'src/modules/emails/services/emails.service';
 import { FilesService } from 'src/modules/files/services/files.service';
-import { Connection } from 'typeorm';
 import { INotificationRecipient } from '../interfaces/upcoming-episode.interface';
 import { ShowsService } from './shows.service';
 
@@ -17,7 +16,6 @@ export class SchedulerService {
     @Inject(SchedulerConfig.KEY)
     private readonly schedulerConfig: ConfigType<typeof SchedulerConfig>,
     private schedulerRegistry: SchedulerRegistry,
-    private readonly databaseConnection: Connection,
     private readonly showsService: ShowsService,
     private readonly filesService: FilesService,
     private readonly emailsService: EmailsService,

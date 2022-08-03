@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -89,6 +90,13 @@ export class EpisodesService {
       ...data,
       relations: ['watchedBy'],
     });
+
+    if (isWatched && new Date(episodeEntity.airDate) > new Date()) {
+      throw new BadRequestException(
+        'Error when trying to mark episode as watched: Air date is in the future',
+      );
+    }
+
     const currentUserEntity = new UserEntity();
     currentUserEntity.id = currentUser.id;
 
