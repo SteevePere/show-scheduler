@@ -8,10 +8,7 @@ import { SchedulerConfig } from 'src/config/scheduler.config';
 import { EmailsService } from 'src/modules/emails/services/emails.service';
 import { FilesService } from 'src/modules/files/services/files.service';
 import { Connection } from 'typeorm';
-import {
-  INotificationRecipient,
-  IUpcomingEpisode,
-} from '../interfaces/upcoming-episode.interface';
+import { INotificationRecipient } from '../interfaces/upcoming-episode.interface';
 import { ShowsService } from './shows.service';
 
 @Injectable()
@@ -62,31 +59,9 @@ export class SchedulerService {
   }
 
   private async notifyOfUpcomingEpisodes(): Promise<void> {
-    const upcomingEpisodes: IUpcomingEpisode[] =
-      await this.databaseConnection.query(
-        `SELECT 
-        DISTINCT ON (episodes.id)
-        episodes.id, 
-        episodes.name AS "episodeName", 
-        episodes.number AS "episodeNumber", 
-        episodes.summary AS "episodeSummary", 
-        episodes."airDate" AS "episodeAirDate", 
-        seasons.number AS "seasonNumber", 
-        shows.name AS "showName", 
-        users.email AS "userEmail", 
-        users."firstName" AS "userFirstName" 
-        FROM 
-        episodes 
-        INNER JOIN seasons ON episodes."seasonId" = seasons.id 
-        INNER JOIN shows ON seasons."showId" = shows.id 
-        LEFT JOIN user_favorite_shows ON shows.id = user_favorite_shows."showId" 
-        INNER JOIN users ON user_favorite_shows."userId" = users.id 
-        WHERE 
-        episodes."airDate" BETWEEN NOW() 
-        AND NOW() + $1 :: interval 
-        AND user_favorite_shows."isNotificationEnabled" = true;`,
-        [this.schedulerConfig.notifications.noticePeriod],
-      );
+    const { upcomingEpisodes } = await this.showsService.findUpcomingEpisodes({
+      period: this.schedulerConfig.notifications.noticePeriod,
+    });
 
     const sortedByRecipient: INotificationRecipient[] = chain(upcomingEpisodes)
       .groupBy('userEmail')
@@ -96,8 +71,6 @@ export class SchedulerService {
         episodes,
       }))
       .value();
-
-    console.log('coucou');
 
     await Promise.all(
       sortedByRecipient.map(async (recipientData) => {

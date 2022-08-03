@@ -44,3 +44,4 @@ export * from './modules/users/enums/user-role.enum';
 export * from './modules/users/objects/user.object';
 export * from './modules/users/requests/update-user.request';
 export * from './modules/users/responses/update-user.response';
+export * from './utils/date.util';

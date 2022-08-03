@@ -3,7 +3,7 @@ export interface IUpcomingEpisode {
   episodeName: string;
   episodeNumber: number;
   episodeSummary: string;
-  episodeAirDate: Date;
+  episodeAirDate: string;
   seasonNumber: number;
   showName: string;
   userEmail: string;

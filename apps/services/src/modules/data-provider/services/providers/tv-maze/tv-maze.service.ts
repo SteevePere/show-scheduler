@@ -6,6 +6,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { EpisodeObject, SeasonObject, ShowObject } from '@scheduler/shared';
 import axios, { AxiosInstance } from 'axios';
+import { convert } from 'html-to-text';
 import { DataProviderConfig } from 'src/config/data-provider.config';
 import { TvMazeEpisodeObject } from 'src/modules/data-provider/dtos/providers/tv-maze/episode.dto';
 import { TvMazeSearchShowsObject } from 'src/modules/data-provider/dtos/providers/tv-maze/search-shows.dto';
@@ -61,7 +62,9 @@ export class TvMazeService implements DataProviderAbstractService {
           return {
             externalId: tvMazeShow.show.id,
             name: tvMazeShow.show.name,
-            summary: tvMazeShow.show.summary || null,
+            summary: tvMazeShow.show.summary
+              ? convert(tvMazeShow.show.summary)
+              : null,
             language: tvMazeShow.show.language,
             rating: tvMazeShow.show.rating.average,
             imageUrl: tvMazeShow.show.image.medium,
@@ -89,7 +92,7 @@ export class TvMazeService implements DataProviderAbstractService {
         show: {
           externalId: show.id,
           name: show.name,
-          summary: show.summary || null,
+          summary: show.summary ? convert(show.summary) : null,
           language: show.language,
           rating: show.rating.average,
           imageUrl: show.image.medium,
@@ -120,7 +123,9 @@ export class TvMazeService implements DataProviderAbstractService {
             externalId: tvMazeSeason.id,
             number: tvMazeSeason.number,
             name: tvMazeSeason.name || null,
-            summary: tvMazeSeason.summary || null,
+            summary: tvMazeSeason.summary
+              ? convert(tvMazeSeason.summary)
+              : null,
             imageUrl: tvMazeSeason.image.medium,
             premiereDate: tvMazeSeason.premiereDate || null,
             endDate: tvMazeSeason.endDate || null,
@@ -151,7 +156,9 @@ export class TvMazeService implements DataProviderAbstractService {
             externalId: tvMazeEpisode.id,
             number: tvMazeEpisode.number,
             name: tvMazeEpisode.name || null,
-            summary: tvMazeEpisode.summary || null,
+            summary: tvMazeEpisode.summary
+              ? convert(tvMazeEpisode.summary)
+              : null,
             imageUrl: tvMazeEpisode.image.medium,
             airDate: tvMazeEpisode.airstamp || null,
           };

@@ -26,16 +26,22 @@
                 <tr>
                   <td class="content-cell" colspan="2">
                     <div class="f-fallback">
-                      <h1>Hello {{ firstName }},</h1>
+                      <h1>Hey {{ firstName }},</h1>
                       <p>
-                        Here are your upcoming episodes in the next {{ noticePeriod }}:
+                        Here are your upcoming episodes in the next {{ noticePeriod }}!
                       </p>
                       {{#each episodes}}
-                        {{ episodeAirDate }}
-                        {{ showName }} - Season {{ seasonNumber }}
-                        Episode {{ episodeNumber }}
-                        {{ episodeSummary }}
-                        <br>
+                        <h2>
+                          <b>{{ episodeAirDate }}</b>
+                        </h2>
+                        {{ showName }} - Season {{ seasonNumber }}, Episode {{ episodeNumber }} 
+                        {{#if episodeName}} - {{ episodeName }}{{/if}}
+                        <br/>
+                        <p>
+                          <i>
+                            {{ episodeSummary }}
+                          </i>
+                        </p>
                       {{/each}} 
                     </div>
                   </td>
@@ -48,7 +54,7 @@
     </tr>
     <tr>
       <td>
-        <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
+        <table class="email-footer" align="center" margin-top="30" width="570" cellpadding="0" cellspacing="0" role="presentation">
           <tr>
             <td class="content-cell" align="center">
               <p class="f-fallback sub align-center">&copy; 2021 Show-Scheduler. All rights reserved.</p>

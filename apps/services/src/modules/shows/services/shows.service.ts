@@ -15,6 +15,10 @@ import {
 import { FindShowGenreData } from '../dtos/find-show-genre.dto';
 import { FindShowData, FindShowResult } from '../dtos/find-show.dto';
 import {
+  FindUpcomingEpisodesData,
+  FindUpcomingEpisodesResult,
+} from '../dtos/find-upcoming-episodes.dto';
+import {
   SaveSeasonEpisodesData,
   SaveSeasonEpisodesResult,
 } from '../dtos/save-season-episodes.dto';
@@ -204,5 +208,11 @@ export class ShowsService {
     await this.databaseConnection
       .getRepository(ShowEntity)
       .remove(obsoleteShows);
+  }
+
+  async findUpcomingEpisodes(
+    data: FindUpcomingEpisodesData,
+  ): Promise<FindUpcomingEpisodesResult> {
+    return this.episodesService.findUpcomingEpisodes(data);
   }
 }
