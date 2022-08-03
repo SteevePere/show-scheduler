@@ -1,10 +1,11 @@
 import {
-  Injectable,
   ConflictException,
-  NotFoundException,
+  Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { omit } from 'lodash';
 import { Repository } from 'typeorm';
 import { FindUserData, FindUserResult } from '../dtos/find-user.dto';
 import {
@@ -55,7 +56,7 @@ export class UsersService {
   }
 
   private async findUserEntity(data: FindUserData): Promise<UserEntity> {
-    const { id, email } = data;
+    const { id, email, includePassword } = data;
     const foundUser = await this.usersRepository.findOne({
       where: [{ id }, { email }],
     });
@@ -64,7 +65,7 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    return foundUser;
+    return includePassword ? foundUser : omit(foundUser, ['password']);
   }
 
   async updateUser(data: UpdateUserData): Promise<UpdateUserResult> {
