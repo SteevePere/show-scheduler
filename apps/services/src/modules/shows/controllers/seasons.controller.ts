@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
   ToggleSeasonWatchedRequest,
   ToggleSeasonWatchedResponse,
@@ -10,6 +11,7 @@ import { ToggleSeasonWatchedData } from '../dtos/toggle-season-watched.dto';
 import { SeasonsService } from '../services/seasons.service';
 
 @Controller('seasons')
+@ApiTags('Seasons')
 export class SeasonsController {
   constructor(public seasonsService: SeasonsService) {}
 

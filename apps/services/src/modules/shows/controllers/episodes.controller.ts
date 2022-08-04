@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
   EpisodeObject,
   FindEpisodesRequest,
@@ -14,6 +15,7 @@ import { ToggleEpisodeWatchedData } from '../dtos/toggle-episode-watched.dto';
 import { EpisodesService } from '../services/episodes.service';
 
 @Controller('episodes')
+@ApiTags('Episodes')
 export class EpisodesController {
   constructor(public episodesService: EpisodesService) {}
 

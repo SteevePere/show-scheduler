@@ -20,13 +20,20 @@ async function bootstrap() {
     bodyParser: false,
   });
 
-  const config = new DocumentBuilder()
+  app.setGlobalPrefix('/api');
+
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('Show Scheduler')
+    .setDescription('Documentation for the Show Scheduler REST API')
     .setVersion('1.0')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+  const document = SwaggerModule.createDocument(app, swaggerConfig, {
+    ignoreGlobalPrefix: false,
+  });
+  SwaggerModule.setup('swagger', app, document, {
+    customSiteTitle: 'Swagger - Show Scheduler',
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -80,8 +87,6 @@ async function bootstrap() {
   }
 
   const { host, port } = configService.get('server');
-
-  app.setGlobalPrefix('/api');
 
   await app.listen(port, host);
 }

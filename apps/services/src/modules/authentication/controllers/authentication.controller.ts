@@ -20,8 +20,10 @@ import { AuthenticationConfig } from 'src/config/authentication.config';
 import { SignInData } from '../dtos/sign-in.dto';
 import { ForgotPasswordData } from '../dtos/forgot-password.dto';
 import { ResetPasswordData } from '../dtos/reset-password.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('authentication')
+@ApiTags('Authentication')
 export class AuthenticationController {
   constructor(
     @Inject(AuthenticationConfig.KEY)

@@ -1,4 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
   FindShowRequest,
   FindShowResponse,
@@ -12,6 +13,7 @@ import { SearchShowsData } from '../dtos/search-shows.dto';
 import { ShowsService } from '../services/shows.service';
 
 @Controller('shows')
+@ApiTags('Shows')
 export class ShowsController {
   constructor(public showsService: ShowsService) {}
 

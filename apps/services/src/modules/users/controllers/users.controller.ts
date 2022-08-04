@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
   UpdateUserRequest,
   UpdateUserResponse,
@@ -16,6 +17,7 @@ import { UpdateUserData } from '../dtos/update-user.dto';
 import { UsersService } from '../services/users.service';
 
 @Controller('users')
+@ApiTags('Users')
 export class UsersController {
   constructor(public usersService: UsersService) {}
 

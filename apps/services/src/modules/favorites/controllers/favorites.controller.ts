@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
 import {
   CreateFavoriteRequest,
@@ -37,6 +38,7 @@ import { FavoritesService } from '../services/favorites.service';
   },
 })
 @Controller('favorites')
+@ApiTags('Favorites')
 export class FavoritesController
   implements CrudController<UserFavoriteShowEntity>
 {
