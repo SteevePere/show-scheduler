@@ -181,7 +181,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makavelii\"\n}",
+							"raw": "{\n    \"email\": \"steevepere@gmail.com\",\n    \"password\": \"Makaveli\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -241,7 +241,7 @@
 								},
 								{
 									"key": "Set-Cookie",
-									"value": "Authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjVkOTdlOWY3LWZjYTUtNDhjMS05NGQ2LTMxMmVmYjc4NjY1ZSIsImlhdCI6MTY1ODYxMTk5NywiZXhwIjoxNjU4NjQ3OTk3fQ.QoOnqjlSoe5Ltbt7xHhYmNf41W8bLVLSlfbuWn_7ONg; HttpOnly; Path=/; Max-Age=36000; SameSite=Lax"
+									"value": "Authentication=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjVkOTdlOWY3LWZjYTUtNDhjMS05NGQ2LTMxMmVmYjc4NjY1ZSIsImlhdCI6MTY1OTQyOTk3NCwiZXhwIjoxNjU5NDY1OTc0fQ.MCpeAY98O7R1ndoktI3cXCp_9d_gb4ZVoTa9Ntwt92I; HttpOnly; Path=/; Max-Age=36000; SameSite=Lax"
 								},
 								{
 									"key": "Content-Type",
@@ -249,15 +249,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "586"
+									"value": "512"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"24a-mrDtm984NU0Yh7bT1FdsPmWmCRY\""
+									"value": "W/\"200-zLsjmjC8P9UBpCHs3niN//NEqHg\""
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 23 Jul 2022 21:33:17 GMT"
+									"value": "Tue, 02 Aug 2022 08:46:14 GMT"
 								},
 								{
 									"key": "Connection",
@@ -269,7 +269,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"user\": {\n        \"id\": \"5d97e9f7-fca5-48c1-94d6-312efb78665e\",\n        \"email\": \"steevepere@gmail.com\",\n        \"password\": \"$2b$10$pgKDH3LvAHGtMjASNM3NuefvNYzGjNB9eBpwCRxQTZi.eOCFRQsAS\",\n        \"firstName\": \"Steeve\",\n        \"lastName\": \"Péré\",\n        \"role\": \"USER\",\n        \"gender\": \"MALE\",\n        \"birthDate\": \"1991-10-16T21:50:00.000Z\",\n        \"createdAt\": \"2022-07-23T15:05:53.541Z\",\n        \"updatedAt\": \"2022-07-23T15:05:53.541Z\"\n    },\n    \"tokens\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjVkOTdlOWY3LWZjYTUtNDhjMS05NGQ2LTMxMmVmYjc4NjY1ZSIsImlhdCI6MTY1ODYxMTk5NywiZXhwIjoxNjU4NjQ3OTk3fQ.QoOnqjlSoe5Ltbt7xHhYmNf41W8bLVLSlfbuWn_7ONg\"\n    }\n}"
+							"body": "{\n    \"user\": {\n        \"id\": \"5d97e9f7-fca5-48c1-94d6-312efb78665e\",\n        \"email\": \"steevepere@gmail.com\",\n        \"firstName\": \"Steeve\",\n        \"lastName\": \"Péré\",\n        \"role\": \"USER\",\n        \"gender\": \"MALE\",\n        \"birthDate\": \"1991-10-16T21:50:00.000Z\",\n        \"createdAt\": \"2022-07-23T15:05:53.541Z\",\n        \"updatedAt\": \"2022-08-01T20:20:19.664Z\"\n    },\n    \"tokens\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJJZCI6IjVkOTdlOWY3LWZjYTUtNDhjMS05NGQ2LTMxMmVmYjc4NjY1ZSIsImlhdCI6MTY1OTQyOTk3NCwiZXhwIjoxNjU5NDY1OTc0fQ.MCpeAY98O7R1ndoktI3cXCp_9d_gb4ZVoTa9Ntwt92I\"\n    }\n}"
 						},
 						{
 							"name": "Sign In - Invalid Password",
@@ -1503,6 +1503,233 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"episode\": {\n        \"id\": \"f9badb72-e81f-447b-ad32-acc47e0da972\",\n        \"seasonId\": \"c132cbfc-0e70-463e-90b7-7247991c6b86\",\n        \"externalId\": 12195,\n        \"number\": 4,\n        \"name\": \"Cancer Man\",\n        \"summary\": \"<p>Walter announces to the family that he has cancer; the DEA believes there is a new big-time player in the Albuquerque drug business; a depressed Walter takes his anger out on a worthy recipient; Jesse pays a surprise visit to his parents' house.</p>\",\n        \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_landscape/405/1012684.jpg\",\n        \"airDate\": \"2008-02-18T03:00:00.000Z\",\n        \"createdAt\": \"2022-07-31T19:40:53.953Z\",\n        \"updatedAt\": \"2022-07-31T19:40:53.953Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Find Episodes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/episodes?startDate=20220803T192007&endDate=20221003T192007&limit=100&skip=0&showId=8822c257-82e5-4fdc-8bb3-cc8f35c5bae1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"episodes"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "20220803T192007"
+								},
+								{
+									"key": "endDate",
+									"value": "20221003T192007"
+								},
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "showId",
+									"value": "8822c257-82e5-4fdc-8bb3-cc8f35c5bae1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Find Episodes - Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/episodes?startDate=20220803T192007&endDate=20221003T192007&limit=100&skip=0&showId=8822c257-82e5-4fdc-8bb3-cc8f35c5bae1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"episodes"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "20220803T192007"
+										},
+										{
+											"key": "endDate",
+											"value": "20221003T192007"
+										},
+										{
+											"key": "limit",
+											"value": "100"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "showId",
+											"value": "8822c257-82e5-4fdc-8bb3-cc8f35c5bae1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "632"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"278-+uHnPuhbOwRPmjlnuzsYEa9AQuA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 13:14:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"items\": [\n        {\n            \"id\": \"917b65ab-8519-49a4-9198-172228928386\",\n            \"seasonId\": \"95a16802-0a41-411c-ac58-e047cb1840e1\",\n            \"externalId\": 2116,\n            \"number\": 9,\n            \"name\": \"Wilderness of Mirrors\",\n            \"summary\": \"Martin escapes from the Saudi's interrogation only to learn that Sonya and Aiden\\nhave been kidnapped. In the process of tracking them down, he learns more about\\nthe connection between Verax, Arcadia and his own past.\",\n            \"imageUrl\": \"https://static.tvmaze.com/uploads/images/medium_landscape/36/90101.jpg\",\n            \"airDate\": \"2022-10-01T19:20:07.000Z\",\n            \"createdAt\": \"2022-08-04T13:12:07.888Z\",\n            \"updatedAt\": \"2022-08-04T13:12:07.888Z\"\n        }\n    ],\n    \"count\": 1,\n    \"limit\": \"100\",\n    \"skip\": \"0\"\n}"
+						},
+						{
+							"name": "Find Episodes - No Data",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/episodes?startDate=20220803T192007&endDate=20221003T192007&limit=100&skip=0&showId=8822c257-82e5-4fdc-8bb3-cc8f35c5bae2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"episodes"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "20220803T192007"
+										},
+										{
+											"key": "endDate",
+											"value": "20221003T192007"
+										},
+										{
+											"key": "limit",
+											"value": "100"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										},
+										{
+											"key": "showId",
+											"value": "8822c257-82e5-4fdc-8bb3-cc8f35c5bae2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f-gJzgm3IN4rs0H/7si5AEfxJa8XM\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 13:15:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"items\": [],\n    \"count\": 0,\n    \"limit\": \"100\",\n    \"skip\": \"0\"\n}"
 						}
 					]
 				}

@@ -12,6 +12,10 @@ import { UserEntity } from 'src/modules/users/entities/user.entity';
 import { Connection, DeepPartial, Repository } from 'typeorm';
 import { FindEpisodeData } from '../dtos/find-episode.dto';
 import {
+  FindEpisodesData,
+  FindEpisodesResult,
+} from '../dtos/find-episodes.dto';
+import {
   FindUpcomingEpisodesData,
   FindUpcomingEpisodesResult,
 } from '../dtos/find-upcoming-episodes.dto';
@@ -150,6 +154,38 @@ export class EpisodesService {
     }
 
     return foundEpisode;
+  }
+
+  async findEpisodes(data: FindEpisodesData): Promise<FindEpisodesResult> {
+    const { currentUser, startDate, endDate, limit, skip, showId } = data;
+    const query = this.databaseConnection
+      .createQueryBuilder()
+      .from(EpisodeEntity, 'episode')
+      .select('episode')
+      .innerJoinAndSelect('episode.season', 'season')
+      .innerJoinAndSelect('episode.image', 'image')
+      .innerJoinAndSelect('season.show', 'show')
+      .innerJoinAndSelect('show.userFavoriteReferences', 'favorites')
+      .where('favorites.userId = :userId', { userId: currentUser.id })
+      .andWhere('episode.airDate BETWEEN :startDate AND :endDate', {
+        startDate,
+        endDate,
+      })
+      .take(limit)
+      .skip(skip);
+
+    if (showId) {
+      query.andWhere('show.id = :showId', { showId });
+    }
+
+    const [episodes, count] = await query.getManyAndCount();
+
+    return {
+      episodes: episodes.map((episodeEntity) => {
+        return createEpisodeObjectFromEntity({ episodeEntity });
+      }),
+      count,
+    };
   }
 
   async findUpcomingEpisodes(
