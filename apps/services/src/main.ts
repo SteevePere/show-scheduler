@@ -26,7 +26,7 @@ async function bootstrap() {
     .setTitle('Show Scheduler')
     .setDescription('Documentation for the Show Scheduler REST API')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth({ type: 'apiKey', name: 'access-token', in: 'header' })
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig, {

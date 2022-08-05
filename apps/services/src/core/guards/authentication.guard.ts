@@ -34,7 +34,8 @@ export class JwtAuthenticationGuard extends AuthGuard('jwt') {
     }
 
     const request = context.switchToHttp().getRequest();
-    const accessToken = request.cookies['Authentication'];
+    const accessToken =
+      request.cookies['Authentication'] || request.headers['access-token'];
 
     if (!accessToken) {
       throw new UnauthorizedException('Missing accessToken');
