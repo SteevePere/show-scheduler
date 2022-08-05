@@ -1,5 +1,11 @@
 import { Body, Controller, Delete, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
 import {
   CreateFavoriteRequest,
@@ -18,6 +24,12 @@ import { FavoritesService } from '../services/favorites.service';
 @Crud({
   model: {
     type: UserFavoriteShowEntity,
+  },
+  routes: {
+    only: ['getManyBase'],
+    getManyBase: {
+      decorators: [ApiBearerAuth()],
+    },
   },
   query: {
     alwaysPaginate: true,
@@ -38,13 +50,18 @@ import { FavoritesService } from '../services/favorites.service';
   },
 })
 @Controller('favorites')
-@ApiTags('Favorites')
+@ApiTags('User Favorites')
 export class FavoritesController
   implements CrudController<UserFavoriteShowEntity>
 {
   constructor(public service: FavoritesService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Save a Show as User Favorite' })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({
+    type: CreateFavoriteResponse,
+  })
   async saveFavorite(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: CreateFavoriteRequest,
@@ -58,6 +75,11 @@ export class FavoritesController
   }
 
   @Delete()
+  @ApiOperation({ summary: 'Remove a Show from User Favorites' })
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: RemoveFavoriteResponse,
+  })
   async removeFavorite(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: RemoveFavoriteRequest,

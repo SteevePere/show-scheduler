@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   FindShowRequest,
   FindShowResponse,
@@ -19,6 +19,10 @@ export class ShowsController {
 
   @Public()
   @Get('external/search')
+  @ApiOperation({ summary: 'Search among all available Shows' })
+  @ApiOkResponse({
+    type: SearchShowsResponse,
+  })
   async searchExternalShows(
     @Query() data: SearchShowsRequest,
   ): Promise<SearchShowsResponse> {
@@ -31,6 +35,10 @@ export class ShowsController {
 
   @Public()
   @Get()
+  @ApiOperation({ summary: 'Find a particular Show' })
+  @ApiOkResponse({
+    type: FindShowResponse,
+  })
   async findShow(@Query() data: FindShowRequest): Promise<FindShowResponse> {
     return this.showsService.findShow(
       createFromClass(FindShowData, {

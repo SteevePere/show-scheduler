@@ -1,5 +1,4 @@
 import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
-import { Response } from 'express';
 import {
   ForgotPasswordRequest,
   RegistrationRequest,
@@ -8,19 +7,25 @@ import {
   SignInRequest,
   SignInResponse,
 } from '@scheduler/shared';
+import { Response } from 'express';
 
 import { Public } from 'src/core/decorators/public.decorator';
 import { setCookie } from 'src/core/utils/cookies.util';
 
-import { AuthenticationService } from '../services/authentication.service';
-import { RegistrationData } from '../dtos/register.dto';
-import { createFromClass } from 'src/core/utils/transformers.util';
 import { ConfigType } from '@nestjs/config';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthenticationConfig } from 'src/config/authentication.config';
-import { SignInData } from '../dtos/sign-in.dto';
+import { createFromClass } from 'src/core/utils/transformers.util';
 import { ForgotPasswordData } from '../dtos/forgot-password.dto';
+import { RegistrationData } from '../dtos/register.dto';
 import { ResetPasswordData } from '../dtos/reset-password.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { SignInData } from '../dtos/sign-in.dto';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Controller('authentication')
 @ApiTags('Authentication')
@@ -35,6 +40,11 @@ export class AuthenticationController {
 
   @Public()
   @Post('register')
+  @ApiOperation({ summary: 'Register and authenticate a User' })
+  @ApiCreatedResponse({
+    type: RegistrationResponse,
+    description: 'Also sets Authentication cookie',
+  })
   async register(
     @Body() data: RegistrationRequest,
     @Res({ passthrough: true }) response: Response,
@@ -57,6 +67,11 @@ export class AuthenticationController {
 
   @Public()
   @Post('sign-in')
+  @ApiOperation({ summary: 'Authenticate a User' })
+  @ApiCreatedResponse({
+    type: SignInResponse,
+    description: 'Also sets Authentication cookie',
+  })
   async signIn(
     @Body() data: SignInRequest,
     @Res({ passthrough: true }) response: Response,
@@ -78,6 +93,11 @@ export class AuthenticationController {
   }
 
   @Post('sign-out')
+  @ApiOperation({ summary: 'Sign out the authenticated User' })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({
+    description: 'Also removes the Authentication cookie',
+  })
   async signOut(@Res({ passthrough: true }) response: Response): Promise<void> {
     setCookie({
       response,
@@ -89,6 +109,11 @@ export class AuthenticationController {
 
   @Public()
   @Post('forgot-password')
+  @ApiOperation({ summary: 'Get a link to reset User password' })
+  @ApiCreatedResponse({
+    description:
+      'Sends an email to the provided email address, with a link that contains a reset token',
+  })
   async handleForgotPassword(
     @Body() data: ForgotPasswordRequest,
   ): Promise<void> {
@@ -101,6 +126,10 @@ export class AuthenticationController {
 
   @Public()
   @Post('reset-password')
+  @ApiOperation({ summary: 'Change the password a User' })
+  @ApiCreatedResponse({
+    description: 'Also sends a confirmation email',
+  })
   async resetPassword(@Body() data: ResetPasswordRequest): Promise<void> {
     await this.authenticationService.resetPassword(
       createFromClass(ResetPasswordData, {

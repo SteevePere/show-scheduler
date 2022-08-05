@@ -5,7 +5,12 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   UpdateUserRequest,
   UpdateUserResponse,
@@ -22,6 +27,11 @@ export class UsersController {
   constructor(public usersService: UsersService) {}
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a User' })
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: UpdateUserResponse,
+  })
   async updateUser(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Param('id') id: string,

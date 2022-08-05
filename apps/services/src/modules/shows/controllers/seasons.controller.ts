@@ -1,5 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   ToggleSeasonWatchedRequest,
   ToggleSeasonWatchedResponse,
@@ -16,6 +21,11 @@ export class SeasonsController {
   constructor(public seasonsService: SeasonsService) {}
 
   @Post('watched')
+  @ApiOperation({ summary: 'Mark an Season as watched or not' })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({
+    type: ToggleSeasonWatchedResponse,
+  })
   async toggleSeasonWatched(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: ToggleSeasonWatchedRequest,

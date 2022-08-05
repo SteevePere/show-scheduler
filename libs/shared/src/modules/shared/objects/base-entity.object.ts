@@ -1,20 +1,33 @@
-import { IsString, IsNotEmpty, IsDateString, IsOptional } from "class-validator";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsString, IsNotEmpty, IsDateString, IsOptional, IsUUID } from "class-validator";
 
 export class BaseEntityObject {
+  @ApiPropertyOptional({
+    description: 'Internal id of the Entity',
+    example: 'ab321168-945d-42fc-afdb-0efec1e3dedf',
+  })
   @IsOptional()
-  @IsString()
   @IsNotEmpty()
+  @IsUUID()
   id?: string;
 
+  @ApiPropertyOptional({
+    description: 'Creation date of the Entity',
+    example: '1991-10-16T21:50:00.000Z',
+  })
   @IsOptional()
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   @IsDateString()
   createdAt?: Date;
 
+  @ApiPropertyOptional({
+    description: 'Last update date of the Entity',
+    example: '1994-09-28T21:53:00.000Z',
+  })
   @IsOptional()
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   @IsDateString()
   updatedAt?: Date;
 }

@@ -14,6 +14,7 @@ export class SignInRequest {
   @ApiProperty({
     description: 'Password of the User',
     example: 'NeverGonnaGiveYouUp1234',
+    minLength: 6,
   })
   @IsString()
   @IsNotEmpty()

@@ -1,5 +1,10 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   EpisodeObject,
   FindEpisodesRequest,
@@ -8,6 +13,7 @@ import {
   ToggleEpisodeWatchedResponse,
   UserObject,
 } from '@scheduler/shared';
+import { ApiPaginatedResponse } from 'src/core/decorators/api-paginated-response.decorator';
 import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { FindEpisodesData } from '../dtos/find-episodes.dto';
@@ -20,6 +26,12 @@ export class EpisodesController {
   constructor(public episodesService: EpisodesService) {}
 
   @Post('watched')
+  @ApiOperation({ summary: 'Mark an Episode as watched or not' })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({
+    type: ToggleEpisodeWatchedResponse,
+    description: '',
+  })
   async toggleEpisodeWatched(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Body() data: ToggleEpisodeWatchedRequest,
@@ -33,6 +45,9 @@ export class EpisodesController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Find Episodes based on criteria' })
+  @ApiBearerAuth()
+  @ApiPaginatedResponse(EpisodeObject)
   async findEpisodes(
     @CurrentAuthenticatedUser() currentUser: UserObject,
     @Query() data: FindEpisodesRequest,
