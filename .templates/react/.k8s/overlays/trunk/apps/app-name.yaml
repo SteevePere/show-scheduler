@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: app-name
+spec:
+  values:
+    image:
+      tag: "${IMAGE_TAG}"
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+      host: app-name.trunk.scheduler.sandbox.koji-dev.com
+      ingressClassName: nginx
+      tlsEnabled: true
+    vars:
+      NODE_ENV: production
+      API_URL: https://api.trunk.scheduler.sandbox.koji-dev.com

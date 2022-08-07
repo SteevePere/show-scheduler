@@ -1,0 +1,40 @@
+version: v1beta11
+
+vars:
+- name: IMAGE_TAG
+  value: next
+- name: IMAGE
+  value: scheduler-app-name
+- name: REGISTRY
+  source: all
+  value: "ghcr.io/acrelec-cloud/"
+
+images:
+  scheduler-app-name:
+    image: ${REGISTRY}${IMAGE} # Use the value of our `${IMAGE}` variable here (see vars above)
+    tags:
+      - ${IMAGE_TAG}
+    dockerfile: ./Dockerfile
+    context: ../../
+    build:
+      docker:
+        skipPush: true
+        useBuildKit: true
+        disableFallback: true
+        args:
+          - "--platform=linux/amd64"
+
+profiles:
+  - name: production
+    patches:
+    - op: replace
+      path: images.*.build.docker.skipPush
+      value: false
+  - name: latest
+    patches:
+    - op: replace
+      path: images.*.build.docker.skipPush
+      value: false
+    - op: add
+      path: images.*.tags
+      value: latest

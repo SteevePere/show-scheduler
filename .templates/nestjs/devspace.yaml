@@ -1,0 +1,11 @@
+version: v1beta11
+
+dependencies:
+- name: scheduler-app-name
+  source:
+    path: ./apps/scheduler-app-name
+  vars:
+    - name: REGISTRY
+      value: ${REGISTRY}
+    - name: IMAGE_TAG
+      value: ${IMAGE_TAG}

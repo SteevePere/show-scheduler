@@ -1,0 +1,9 @@
+services:
+  scheduler-app-name:
+    build:
+      context: .
+      dockerfile: ./apps/scheduler-app-name/Dockerfile
+    env_file: ./apps/scheduler-app-name/.env.docker
+    # Change the port before uncommenting the following line
+    ports:
+      - '8080:80'

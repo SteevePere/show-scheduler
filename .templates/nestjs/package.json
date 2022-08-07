@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "watch:app-name": "lerna run watch --stream --scope=@scheduler/scheduler-app-name"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "ampup",
+  "name": "scheduler",
   "private": true,
   "workspaces": {
     "packages": [
@@ -28,20 +28,14 @@
   },
   "scripts": {
     "create-app": "node scripts/setup-app.js",
-    "release": "node scripts/release.js",
     "lint": "lerna run lint --parallel",
     "test": "echo true",
     "watch": "lerna run watch --parallel",
-    "watch:cdk": "lerna run watch --stream --scope=@ampup/cdk",
-    "watch:shared": "lerna run watch --stream --scope=@ampup/shared",
-    "prewatch": "yarn build --scope=@ampup/shared --scope=@ampup/cdk",
+    "prewatch": "yarn build --scope=@scheduler/shared",
     "build": "lerna run build --stream",
-    "build:libs": "lerna run build --stream --stream --scope=@ampup/shared --scope=@ampup/cdk",
-    "watch:api": "lerna run watch --stream --scope=@ampup/ampup-api",
-    "start:admin": "lerna run start --stream --scope=@ampup/ampup-admin",
-    "start:mobile": "lerna run start --stream --scope=@ampup/ampup-mobile",
-    "open:ios": "lerna run ios --stream --scope=@ampup/ampup-mobile",
-    "open:android": "lerna run android --stream --scope=@ampup/ampup-mobile"
+    "build:libs": "lerna run build --stream --stream --scope=@scheduler/shared",
+    "watch:shared": "lerna run watch --stream --scope=@scheduler/shared",
+    "watch:api": "lerna run watch --stream --scope=@scheduler/services"
   },
   "devDependencies": {
     "js-convert-case": "^4.2.0",
