@@ -1,14 +1,18 @@
+import "./App.less";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from 'react-redux';
 
-import "reflect-metadata";
-import "the-new-css-reset/css/reset.css";
 import App from "./App";
+import store from './store/store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
+  
   document.getElementById("root")
 );
 
