@@ -34,6 +34,7 @@ export class UserObject extends BaseEntityObject {
   @ApiPropertyOptional({
     description: 'Password of the User',
     example: 'NeverGonnaGiveYouUp1234',
+    writeOnly: true,
   })
   @IsOptional()
   password?: string;
@@ -67,6 +68,7 @@ export class UserObject extends BaseEntityObject {
     description: 'Token used to reset password',
     example: '$2b$10$VkB3mLYoDGG0hVSPwRQE0ujv7bmyUSRRN9VXUfC6jjaZhEWHgFBo.',
     nullable: true,
+    writeOnly: true,
   })
   @IsOptional()
   @IsString()
