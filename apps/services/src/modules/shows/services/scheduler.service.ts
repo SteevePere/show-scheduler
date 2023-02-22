@@ -52,7 +52,7 @@ export class SchedulerService {
       obsoleteFrom,
     });
 
-    await this.showsService.deleteObsoleteShows({ obsoleteShows });
+    await this.showsService.deleteObsoleteShows({ shows: obsoleteShows });
     await this.filesService.removeObsoleteFiles();
   }
 

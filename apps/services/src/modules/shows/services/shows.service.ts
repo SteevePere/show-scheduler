@@ -8,6 +8,7 @@ import { DataProviderService } from 'src/modules/data-provider/services/data-pro
 import { FilesService } from 'src/modules/files/services/files.service';
 import { Connection, DeepPartial, Repository } from 'typeorm';
 import { DeleteObsoleteShowsData } from '../dtos/delete-obsolete-shows.dto';
+import { DeleteShowsData } from '../dtos/delete-shows.dto';
 import {
   FindObsoleteShowsData,
   FindObsoleteShowsResult,
@@ -202,12 +203,13 @@ export class ShowsService {
     };
   }
 
-  async deleteObsoleteShows(data: DeleteObsoleteShowsData): Promise<void> {
-    const { obsoleteShows } = data;
+  private async deleteShows(data: DeleteShowsData): Promise<void> {
+    const { shows } = data;
+    await this.databaseConnection.getRepository(ShowEntity).remove(shows);
+  }
 
-    await this.databaseConnection
-      .getRepository(ShowEntity)
-      .remove(obsoleteShows);
+  async deleteObsoleteShows(data: DeleteObsoleteShowsData): Promise<void> {
+    await this.deleteShows(data);
   }
 
   async findUpcomingEpisodes(
