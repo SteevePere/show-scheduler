@@ -21,7 +21,7 @@ export class SeasonsController {
   constructor(public seasonsService: SeasonsService) {}
 
   @Post('watched')
-  @ApiOperation({ summary: 'Mark an Season as watched or not' })
+  @ApiOperation({ summary: 'Mark a Season as watched or not' })
   @ApiBearerAuth()
   @ApiCreatedResponse({
     type: ToggleSeasonWatchedResponse,
