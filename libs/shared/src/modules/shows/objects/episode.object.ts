@@ -60,7 +60,9 @@ export class EpisodeObject extends BaseEntityObject {
   @ApiProperty({
     description: 'URL of the image of the Episode',
     example: 'https://static.tvmaze.com/uploads/images/medium_landscape/405/1012709.jpg',
+    nullable: true,
   })
+  @ValidateIf((object, value) => value !== null)
   @IsUrl()
-  imageUrl: string;
+  imageUrl: string | null;
 }

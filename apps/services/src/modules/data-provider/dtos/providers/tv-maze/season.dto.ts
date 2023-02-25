@@ -16,7 +16,7 @@ export class TvMazeSeasonObject {
 
   network: Network;
   webChannel?: any;
-  image: Image;
+  image: Image | null;
   summary: string;
   _links: Links;
 }

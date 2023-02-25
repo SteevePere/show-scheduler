@@ -5,7 +5,7 @@ import { ShowEntity } from '../entities/show.entity';
 
 interface IShowTransformerData {
   showEntity: ShowEntity;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export function createShowObjectFromEntity(data: IShowTransformerData) {
@@ -33,7 +33,7 @@ export function createShowObjectFromEntity(data: IShowTransformerData) {
     summary,
     language,
     rating,
-    imageUrl: imageUrl || image.filePath,
+    imageUrl: imageUrl || image?.filePath || null,
     genres: genres.map((genre: GenreEntity) => genre.name),
     lastFavoritedAt,
     createdAt,

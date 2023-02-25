@@ -4,7 +4,7 @@ import { EpisodeEntity } from '../entities/episode.entity';
 
 interface IEpisodeTransformerData {
   episodeEntity: EpisodeEntity;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export function createEpisodeObjectFromEntity(data: IEpisodeTransformerData) {
@@ -31,7 +31,7 @@ export function createEpisodeObjectFromEntity(data: IEpisodeTransformerData) {
     number,
     name,
     summary,
-    imageUrl: imageUrl || image.filePath,
+    imageUrl: imageUrl || image?.filePath || null,
     airDate,
     createdAt,
     updatedAt,

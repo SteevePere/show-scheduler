@@ -1,8 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
+import { Type } from "class-transformer";
+import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, ValidateIf, ValidateNested } from "class-validator";
 
 import { IsSafeInt } from "../../../decorators/validation/is-safe-integer.decorator";
 import { BaseEntityObject } from "../../shared/objects/base-entity.object";
+import { SeasonObject } from "./season.object";
 
 export class ShowObject extends BaseEntityObject {
   @ApiProperty({
@@ -49,9 +51,11 @@ export class ShowObject extends BaseEntityObject {
   @ApiProperty({
     description: 'URL of the image of the Show',
     example: 'https://static.tvmaze.com/uploads/images/medium_landscape/405/1012709.jpg',
+    nullable: true,
   })
+  @ValidateIf((object, value) => value !== null)
   @IsUrl()
-  imageUrl: string;
+  imageUrl: string | null;
 
   @ApiProperty({
     description: 'Genres of the Show',
@@ -71,4 +75,13 @@ export class ShowObject extends BaseEntityObject {
   @IsNotEmpty()
   @IsDateString()
   lastFavoritedAt?: Date | null;
+
+  @ApiPropertyOptional({
+    description: `Seasons of the Show`,
+    type: [SeasonObject]
+  })
+  @IsOptional()
+  @Type(() => SeasonObject)
+  @ValidateNested()
+  seasons?: SeasonObject[];
 }

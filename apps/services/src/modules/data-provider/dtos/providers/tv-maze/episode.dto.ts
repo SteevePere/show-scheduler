@@ -16,7 +16,7 @@ export class TvMazeEpisodeObject {
 
   runtime: number;
   rating: Rating;
-  image: Image;
+  image: Image | null;
   summary: string;
   _links: Links;
 }

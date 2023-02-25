@@ -10,6 +10,7 @@ import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
 import {
   CreateFavoriteRequest,
   CreateFavoriteResponse,
+  FindFavoritesResponse,
   RemoveFavoriteRequest,
   RemoveFavoriteResponse,
   UserObject,
@@ -28,7 +29,10 @@ import { FavoritesService } from '../services/favorites.service';
   routes: {
     only: ['getManyBase'],
     getManyBase: {
-      decorators: [ApiBearerAuth()],
+      decorators: [
+        ApiBearerAuth(),
+        ApiOperation({ summary: 'Retrieve User Favorites' }),
+      ],
     },
   },
   query: {
@@ -37,10 +41,13 @@ import { FavoritesService } from '../services/favorites.service';
       show: {
         eager: true,
       },
-      'show.seasons': {
+      'show.genres': {
         eager: true,
       },
     },
+  },
+  serialize: {
+    getMany: FindFavoritesResponse,
   },
 })
 @CrudAuth({

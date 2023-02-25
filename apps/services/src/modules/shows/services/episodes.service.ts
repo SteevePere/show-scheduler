@@ -60,9 +60,11 @@ export class EpisodesService {
         const { externalId, name, number, summary, imageUrl, airDate } =
           externalEpisode;
 
-        const { file: image } = await this.filesService.saveFile({
-          filePath: imageUrl,
-        });
+        const { file: image } = imageUrl
+          ? await this.filesService.saveFile({
+              filePath: imageUrl,
+            })
+          : null;
 
         const episodeToSave = this.episodesRepository.create({
           seasonId,
@@ -70,14 +72,14 @@ export class EpisodesService {
           name,
           number,
           summary,
-          imageId: image.id,
+          imageId: image?.id || null,
           airDate,
         });
         const episodeEntity = await this.episodesRepository.save(episodeToSave);
 
         return createEpisodeObjectFromEntity({
           episodeEntity,
-          imageUrl: image.filePath,
+          imageUrl: image?.filePath || null,
         });
       }),
     );

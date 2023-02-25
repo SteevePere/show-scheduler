@@ -62,9 +62,11 @@ export class SeasonsService {
           endDate,
         } = externalSeason;
 
-        const { file: image } = await this.filesService.saveFile({
-          filePath: imageUrl,
-        });
+        const { file: image } = imageUrl
+          ? await this.filesService.saveFile({
+              filePath: imageUrl,
+            })
+          : null;
 
         const seasonToSave = this.seasonsRepository.create({
           showId,
@@ -72,7 +74,7 @@ export class SeasonsService {
           name,
           number,
           summary,
-          imageId: image.id,
+          imageId: image?.id || null,
           premiereDate,
           endDate,
         });
@@ -80,7 +82,7 @@ export class SeasonsService {
 
         return createSeasonObjectFromEntity({
           seasonEntity,
-          imageUrl: image.filePath,
+          imageUrl: image?.filePath || null,
         });
       }),
     );

@@ -103,9 +103,12 @@ export class ShowsService {
     const genres = await this.findOrSaveShowGenreEntities({
       names: stringGenres,
     });
-    const { file: image } = await this.filesService.saveFile({
-      filePath: imageUrl,
-    });
+
+    const { file: image } = imageUrl
+      ? await this.filesService.saveFile({
+          filePath: imageUrl,
+        })
+      : null;
 
     const showToSave = this.showsRepository.create({
       externalId,
@@ -113,7 +116,7 @@ export class ShowsService {
       summary,
       language,
       rating,
-      imageId: image.id,
+      imageId: image?.id || null,
       genres,
     });
     const showEntity = await this.showsRepository.save(showToSave);
@@ -121,7 +124,7 @@ export class ShowsService {
     return {
       show: createShowObjectFromEntity({
         showEntity,
-        imageUrl: image.filePath,
+        imageUrl: image?.filePath || null,
       }),
     };
   }

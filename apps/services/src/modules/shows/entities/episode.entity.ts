@@ -39,7 +39,7 @@ export class EpisodeEntity extends BaseEntity {
   })
   season: SeasonEntity;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
   @RelationId((episode: EpisodeEntity) => episode.image)
   imageId: string;
 
