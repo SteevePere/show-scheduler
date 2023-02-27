@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ShowObject } from '@scheduler/shared';
 import { ShowsService } from 'src/modules/shows/services/shows.service';
@@ -27,6 +28,21 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
     private readonly showsService: ShowsService,
   ) {
     super(userFavoriteShowsRepository);
+  }
+
+  async getMany(req: CrudRequest) {
+    const response = (await super.getMany(
+      req,
+    )) as GetManyDefaultResponse<UserFavoriteShowEntity>;
+
+    const favorites = response.data.map((favorite) => {
+      favorite.show.genres = favorite.show.genres.map(
+        (genre) => genre.name,
+      ) as any;
+      return favorite;
+    });
+
+    return { ...response, data: favorites };
   }
 
   async saveFavorite(data: CreateFavoriteData): Promise<CreateFavoriteResult> {
