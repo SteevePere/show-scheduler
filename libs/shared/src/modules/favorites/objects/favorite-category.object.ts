@@ -1,0 +1,32 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsString, ValidateIf } from "class-validator";
+
+import { BaseEntityObject } from "../../shared/objects/base-entity.object";
+
+export class FavoriteCategoryObject extends BaseEntityObject {
+  @ApiProperty({
+    description: 'Internal id of the User',
+    example: 'e69ce218-d3b3-4fd7-98d4-dd8fb27e9152',
+  })
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
+
+  @ApiProperty({
+    description: 'Internal id of the Parent Category',
+    example: 'e69ce218-d3b3-4fd7-98d4-dd8fb27e9152',
+    nullable: true,
+  })
+  @ValidateIf((object, value) => value !== null)
+  @IsNotEmpty()
+  @IsString()
+  parentId: string | null;
+
+  @ApiProperty({
+    description: 'Name of the Category',
+    example: 'Category 1',
+  })
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+}

@@ -12,6 +12,7 @@ export * from './modules/authentication/requests/sign-in.request';
 export * from './modules/authentication/responses/authentication.response';
 export * from './modules/authentication/responses/registration.response';
 export * from './modules/authentication/responses/sign-in.response';
+export * from './modules/favorites/objects/favorite-category.object';
 export * from './modules/favorites/objects/favorite.object';
 export * from './modules/favorites/requests/base-favorite.request';
 export * from './modules/favorites/requests/create-favorite.request';
