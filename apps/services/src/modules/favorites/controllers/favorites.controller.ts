@@ -18,7 +18,7 @@ import {
 import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { CreateFavoriteData } from '../dtos/create-favorite.dto';
-import { RemoveFavoriteData } from '../dtos/remove-favorite.dtos';
+import { RemoveFavoriteData } from '../dtos/remove-favorite.dto';
 import { UserFavoriteShowEntity } from '../entities/user-favorite-show.entity';
 import { FavoritesService } from '../services/favorites.service';
 

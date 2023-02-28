@@ -17,7 +17,7 @@ import { FindUserFavoriteShowData } from '../dtos/find-favorite.dto';
 import {
   RemoveFavoriteData,
   RemoveFavoriteResult,
-} from '../dtos/remove-favorite.dtos';
+} from '../dtos/remove-favorite.dto';
 import {
   UpdateFavoriteData,
   UpdateFavoriteResult,

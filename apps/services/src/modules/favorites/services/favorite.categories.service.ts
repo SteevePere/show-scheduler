@@ -14,6 +14,11 @@ import {
   CreateFavoriteCategoryData,
   CreateFavoriteCategoryResult,
 } from '../dtos/create-favorite-category.dto';
+import { FindFavoriteCategoryData } from '../dtos/find-favorite-category.dto';
+import {
+  RemoveFavoriteCategoryData,
+  RemoveFavoriteCategoryResult,
+} from '../dtos/remove-favorite-category.dto';
 import { UserFavoriteCategoryEntity } from '../entities/user-favorite-category.entity';
 import { createFavoriteCategoryObjectFromEntity } from '../transformers/favorite-category-object.transformer';
 import { FavoritesService } from './favorites.service';
@@ -32,13 +37,11 @@ export class FavoriteCategoriesService {
     const { parentId, currentUser, name, favorites: favoriteIds } = data;
 
     if (parentId) {
-      const parentCategory = await this.favoriteCategoriesRepository.findOne({
-        where: { id: parentId },
+      const parentCategory = await this.findFavoriteCategoryEntity({
+        id: parentId,
       });
 
-      if (!parentCategory) {
-        throw new NotFoundException('Favorite Category not found');
-      } else if (parentCategory.userId !== currentUser.id) {
+      if (parentCategory.userId !== currentUser.id) {
         throw new ForbiddenException(
           `Unable to update another User's Category`,
         );
@@ -54,7 +57,7 @@ export class FavoriteCategoriesService {
       const newCategory = await this.favoriteCategoriesRepository.save(
         categoryToSave,
       );
-      const { updatedFavorites } = favoriteIds
+      const assignToCategoryResult = favoriteIds
         ? await this.assignFavoritesToCategory({
             favoriteIds,
             category: newCategory,
@@ -64,7 +67,7 @@ export class FavoriteCategoriesService {
       return {
         category: createFavoriteCategoryObjectFromEntity({
           favoriteCategoryEntity: newCategory,
-          favorites: updatedFavorites,
+          favorites: assignToCategoryResult?.updatedFavorites,
         }),
       };
     } catch (error) {
@@ -73,6 +76,53 @@ export class FavoriteCategoriesService {
         error,
       );
     }
+  }
+
+  async removeFavoriteCategory(
+    data: RemoveFavoriteCategoryData,
+  ): Promise<RemoveFavoriteCategoryResult> {
+    const { currentUser, categoryId } = data;
+
+    const category = await this.findFavoriteCategoryEntity({
+      id: categoryId,
+    });
+
+    if (category.userId !== currentUser.id) {
+      throw new ForbiddenException(`Unable to delete another User's Category`);
+    }
+
+    try {
+      await this.favoriteCategoriesRepository.delete(category.id);
+
+      return {
+        category: createFavoriteCategoryObjectFromEntity({
+          favoriteCategoryEntity: category,
+        }),
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Error when trying to remove Category',
+        error,
+      );
+    }
+  }
+
+  private async findFavoriteCategoryEntity(
+    data: FindFavoriteCategoryData,
+  ): Promise<UserFavoriteCategoryEntity> {
+    const { id } = data;
+    const foundFavoriteCategory =
+      await this.favoriteCategoriesRepository.findOne({
+        where: {
+          id,
+        },
+      });
+
+    if (!foundFavoriteCategory) {
+      throw new NotFoundException('Category of Favorites not found');
+    }
+
+    return foundFavoriteCategory;
   }
 
   private async assignFavoritesToCategory(
