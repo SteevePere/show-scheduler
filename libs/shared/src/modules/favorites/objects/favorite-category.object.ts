@@ -1,7 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString, ValidateIf } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsArray, IsNotEmpty, IsOptional, IsString, ValidateIf, ValidateNested } from "class-validator";
 
 import { BaseEntityObject } from "../../shared/objects/base-entity.object";
+import { FavoriteObject } from "./favorite.object";
 
 export class FavoriteCategoryObject extends BaseEntityObject {
   @ApiProperty({
@@ -29,4 +30,13 @@ export class FavoriteCategoryObject extends BaseEntityObject {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @ApiPropertyOptional({
+    description: 'List of Favorites in Category',
+    type: [FavoriteObject],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested()
+  favorites?: FavoriteObject[];
 }

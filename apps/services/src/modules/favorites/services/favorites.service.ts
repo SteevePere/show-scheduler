@@ -18,7 +18,12 @@ import {
   RemoveFavoriteData,
   RemoveFavoriteResult,
 } from '../dtos/remove-favorite.dtos';
+import {
+  UpdateFavoriteData,
+  UpdateFavoriteResult,
+} from '../dtos/update-favorite.dto';
 import { UserFavoriteShowEntity } from '../entities/user-favorite-show.entity';
+import { createFavoriteObjectFromEntity } from '../transformers/favorite-object.transformer';
 
 @Injectable()
 export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity> {
@@ -149,6 +154,33 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
     } catch (error) {
       throw new InternalServerErrorException(
         'Error when trying to remove Favorite',
+        error,
+      );
+    }
+  }
+
+  async updateFavorite(
+    data: UpdateFavoriteData,
+  ): Promise<UpdateFavoriteResult> {
+    const favorite = await this.userFavoriteShowsRepository.findOne({
+      where: { id: data.id },
+    });
+    if (!favorite) {
+      throw new NotFoundException('Favorite not found');
+    }
+    try {
+      Object.assign(favorite, { ...data.data });
+      const savedFavorite = await this.userFavoriteShowsRepository.save(
+        favorite,
+      );
+      return {
+        favorite: createFavoriteObjectFromEntity({
+          favoriteEntity: savedFavorite,
+        }),
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Unable to update Favorite',
         error,
       );
     }

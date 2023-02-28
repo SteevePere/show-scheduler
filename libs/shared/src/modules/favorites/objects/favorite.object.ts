@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsBoolean, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 
@@ -30,11 +30,11 @@ export class FavoriteObject extends BaseEntityObject {
   @IsString()
   showId: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Show favorited by the User',
     type: ShowObject,
   })
   @ValidateNested()
   @Type(() => ShowObject)
-  show: ShowObject;
+  show?: ShowObject;
 }
