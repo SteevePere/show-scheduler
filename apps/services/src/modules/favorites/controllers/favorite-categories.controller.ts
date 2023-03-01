@@ -131,7 +131,6 @@ export class FavoriteCategoriesController {
     );
   }
 
-  // TODO: make this a decorator
   private async validateCategoryOwnership(
     data: ValidateCategoryOwnershipData,
   ): Promise<ValidateCategoryOwnershipResult> {

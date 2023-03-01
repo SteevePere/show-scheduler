@@ -127,6 +127,21 @@ export class FavoriteCategoriesService {
     };
   }
 
+  //   async findFavoriteCategoryTree() {
+  //     const userCategories = await this.favoriteCategoriesRepository.find({
+  //       where: { userId: '9ce88aab-034c-44a8-b7b1-dc687d8bd442' },
+  //       relations: ['favorites'],
+  //     });
+
+  //     // go thru cats
+  //     // if parentId is null, push to array
+  //     // find cats with parentId equal to my id, push to my children array
+
+  //     const sortedCategories = userCategories.map((category) => {
+  // if
+  //     });
+  //   }
+
   private async findFavoriteCategoryEntity(
     data: FindFavoriteCategoryData,
   ): Promise<UserFavoriteCategoryEntity> {

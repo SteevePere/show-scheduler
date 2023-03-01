@@ -1,6 +1,7 @@
 import { BaseEntity } from 'src/core/entities/base.entity';
-import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, RelationId } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
+import { UserFavoriteShowEntity } from './user-favorite-show.entity';
 
 @Entity('user_favorite_categories')
 export class UserFavoriteCategoryEntity extends BaseEntity {
@@ -20,4 +21,11 @@ export class UserFavoriteCategoryEntity extends BaseEntity {
 
   @ManyToOne(() => UserFavoriteCategoryEntity, { onDelete: 'CASCADE' })
   parent: UserFavoriteCategoryEntity;
+
+  @OneToMany(
+    () => UserFavoriteShowEntity,
+    (userFavoriteShowEntity: UserFavoriteShowEntity) =>
+      userFavoriteShowEntity.category,
+  )
+  favorites: UserFavoriteShowEntity[];
 }
