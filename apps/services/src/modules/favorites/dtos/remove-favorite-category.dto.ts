@@ -1,11 +1,10 @@
 import {
-  RemoveFavoriteCategoryRequest,
+  FavoriteCategoryObject,
   RemoveFavoriteCategoryResponse,
-  UserObject,
 } from '@scheduler/shared';
 
-export class RemoveFavoriteCategoryData extends RemoveFavoriteCategoryRequest {
-  currentUser: UserObject;
+export class RemoveFavoriteCategoryData {
+  category: FavoriteCategoryObject;
 }
 
 export class RemoveFavoriteCategoryResult extends RemoveFavoriteCategoryResponse {}

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreateFavoriteCategoryRequest {
   @ApiProperty({
@@ -15,7 +15,7 @@ export class CreateFavoriteCategoryRequest {
     example: 'ab321168-945d-42fc-afdb-0efec1e3dedf',
   })
   @IsOptional()
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
   parentId?: string;
 
