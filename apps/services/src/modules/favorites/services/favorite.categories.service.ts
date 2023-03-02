@@ -127,20 +127,37 @@ export class FavoriteCategoriesService {
     };
   }
 
-  //   async findFavoriteCategoryTree() {
-  //     const userCategories = await this.favoriteCategoriesRepository.find({
-  //       where: { userId: '9ce88aab-034c-44a8-b7b1-dc687d8bd442' },
-  //       relations: ['favorites'],
-  //     });
+  async findFavoriteCategoryTree() {
+    const userCategories = await this.favoriteCategoriesRepository.find({
+      where: {
+        userId: '9ce88aab-034c-44a8-b7b1-dc687d8bd442',
+      },
+      relations: ['favorites', 'favorites.show'],
+    });
+    const sortedCategoryTree = [];
 
-  //     // go thru cats
-  //     // if parentId is null, push to array
-  //     // find cats with parentId equal to my id, push to my children array
+    const categoryTreeSorter = (category: UserFavoriteCategoryEntity) => {
+      const categoryChildren = userCategories.filter(
+        (cat) => cat.parentId === category.id,
+      );
+      category.children = category.children
+        ? category.children.concat(categoryChildren, [...category.children])
+        : [...categoryChildren];
+      if (category.parentId === null) {
+        sortedCategoryTree.push(category);
+      }
+      categoryChildren.forEach((cat) => {
+        categoryTreeSorter(cat);
+      });
+    };
 
-  //     const sortedCategories = userCategories.map((category) => {
-  // if
-  //     });
-  //   }
+    const rootCategories = userCategories.filter(
+      (cat) => cat.parentId === null,
+    );
+    rootCategories.forEach((cat) => categoryTreeSorter(cat));
+
+    return sortedCategoryTree;
+  }
 
   private async findFavoriteCategoryEntity(
     data: FindFavoriteCategoryData,

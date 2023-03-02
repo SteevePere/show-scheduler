@@ -1,6 +1,7 @@
 import { FavoriteCategoryObject, FavoriteObject } from '@scheduler/shared';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { UserFavoriteCategoryEntity } from '../entities/user-favorite-category.entity';
+import { createFavoriteObjectFromEntity } from './favorite-object.transformer';
 
 interface IFavoriteCategoryTransformerData {
   favoriteCategoryEntity: UserFavoriteCategoryEntity;
@@ -11,15 +12,8 @@ export function createFavoriteCategoryObjectFromEntity(
   data: IFavoriteCategoryTransformerData,
 ) {
   const {
-    favoriteCategoryEntity: {
-      id,
-      userId,
-      parentId,
-      name,
-      createdAt,
-      updatedAt,
-    },
-    favorites,
+    favoriteCategoryEntity: { id, userId, parentId, name, children, favorites },
+    favorites: favoriteObjects,
   } = data;
 
   return createFromClass(FavoriteCategoryObject, {
@@ -27,8 +21,17 @@ export function createFavoriteCategoryObjectFromEntity(
     userId,
     parentId,
     name,
-    favorites,
-    createdAt,
-    updatedAt,
+    children:
+      children &&
+      children.map((child) =>
+        createFavoriteCategoryObjectFromEntity({
+          favoriteCategoryEntity: child,
+        }),
+      ),
+    favorites: favoriteObjects
+      ? favoriteObjects
+      : favorites.map((favorite) =>
+          createFavoriteObjectFromEntity({ favoriteEntity: favorite }),
+        ),
   });
 }

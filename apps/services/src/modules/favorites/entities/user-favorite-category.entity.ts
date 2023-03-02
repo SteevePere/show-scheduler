@@ -23,6 +23,13 @@ export class UserFavoriteCategoryEntity extends BaseEntity {
   parent: UserFavoriteCategoryEntity;
 
   @OneToMany(
+    () => UserFavoriteCategoryEntity,
+    (userFavoriteCategoryEntity: UserFavoriteCategoryEntity) =>
+      userFavoriteCategoryEntity.parent,
+  )
+  children: UserFavoriteCategoryEntity[];
+
+  @OneToMany(
     () => UserFavoriteShowEntity,
     (userFavoriteShowEntity: UserFavoriteShowEntity) =>
       userFavoriteShowEntity.category,

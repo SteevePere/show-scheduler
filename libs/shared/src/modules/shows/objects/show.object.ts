@@ -46,14 +46,15 @@ export class ShowObject extends BaseEntityObject {
   @IsNumber()
   rating: number | null;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'URL of the image of the Show',
     example: 'https://static.tvmaze.com/uploads/images/medium_landscape/405/1012709.jpg',
     nullable: true,
   })
+  @IsOptional()
   @ValidateIf((object, value) => value !== null)
   @IsUrl()
-  imageUrl: string | null;
+  imageUrl?: string | null;
 
   @ApiProperty({
     description: 'Genres of the Show',

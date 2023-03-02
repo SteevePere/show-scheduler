@@ -39,4 +39,13 @@ export class FavoriteCategoryObject extends BaseEntityObject {
   @IsArray()
   @ValidateNested()
   favorites?: FavoriteObject[];
+
+  @ApiPropertyOptional({
+    description: 'List of children Categories',
+    type: [FavoriteCategoryObject],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested()
+  children?: FavoriteCategoryObject[];
 }

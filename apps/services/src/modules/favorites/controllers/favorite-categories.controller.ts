@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   ForbiddenException,
+  Get,
   Param,
   Patch,
   Post,
@@ -105,6 +106,12 @@ export class FavoriteCategoriesController {
         ...data,
       }),
     );
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'TOTOOO' })
+  async toto(): Promise<any> {
+    return await this.favoriteCategoriesService.findFavoriteCategoryTree();
   }
 
   @Delete()
