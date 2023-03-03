@@ -30,6 +30,7 @@ import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { CreateFavoriteCategoryData } from '../dtos/create-favorite-category.dto';
 import { FindFavoriteCategoryTreeData } from '../dtos/find-favorite-category-tree.dto';
+import { FindFavoriteCategoryData } from '../dtos/find-favorite-category.dto';
 import { RemoveFavoriteCategoryData } from '../dtos/remove-favorite-category.dto';
 import { UpdateFavoriteCategoryData } from '../dtos/update-favorite-category.dto';
 import {
@@ -155,9 +156,11 @@ export class FavoriteCategoriesController {
   ): Promise<ValidateCategoryOwnershipResult> {
     const { categoryId: id, currentUser, action } = data;
     const { category } =
-      await this.favoriteCategoriesService.findFavoriteCategory({
-        id,
-      });
+      await this.favoriteCategoriesService.findFavoriteCategory(
+        createFromClass(FindFavoriteCategoryData, {
+          id,
+        }),
+      );
 
     if (category.userId !== currentUser.id) {
       throw new ForbiddenException(
