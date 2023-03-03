@@ -12,7 +12,7 @@ export function createFavoriteCategoryObjectFromEntity(
   data: IFavoriteCategoryTransformerData,
 ) {
   const {
-    favoriteCategoryEntity: { id, userId, parentId, name, children, favorites },
+    favoriteCategoryEntity: { id, userId, parentId, name, favorites },
     favorites: favoriteObjects,
   } = data;
 
@@ -21,13 +21,6 @@ export function createFavoriteCategoryObjectFromEntity(
     userId,
     parentId,
     name,
-    children:
-      children &&
-      children.map((child) =>
-        createFavoriteCategoryObjectFromEntity({
-          favoriteCategoryEntity: child,
-        }),
-      ),
     favorites: favoriteObjects
       ? favoriteObjects
       : favorites.map((favorite) =>

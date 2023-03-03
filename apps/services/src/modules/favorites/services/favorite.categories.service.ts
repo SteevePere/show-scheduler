@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FavoriteCategoryObject } from '@scheduler/shared';
 import { Repository } from 'typeorm';
 import {
   AssignFavoritesToCategoryData,
@@ -13,6 +14,10 @@ import {
   CreateFavoriteCategoryData,
   CreateFavoriteCategoryResult,
 } from '../dtos/create-favorite-category.dto';
+import {
+  FindFavoriteCategoryTreeData,
+  FindFavoriteCategoryTreeResult,
+} from '../dtos/find-favorite-category-tree.dto';
 import {
   FindFavoriteCategoryData,
   FindFavoriteCategoryResult,
@@ -127,17 +132,25 @@ export class FavoriteCategoriesService {
     };
   }
 
-  async findFavoriteCategoryTree() {
+  async findFavoriteCategoryTree(
+    data: FindFavoriteCategoryTreeData,
+  ): Promise<FindFavoriteCategoryTreeResult> {
+    const { userId } = data;
     const userCategories = await this.favoriteCategoriesRepository.find({
       where: {
-        userId: '9ce88aab-034c-44a8-b7b1-dc687d8bd442',
+        userId,
       },
       relations: ['favorites', 'favorites.show'],
     });
-    const sortedCategoryTree = [];
+    const catObjects = userCategories.map((cat) =>
+      createFavoriteCategoryObjectFromEntity({
+        favoriteCategoryEntity: cat,
+      }),
+    );
+    const sortedCategoryTree: FavoriteCategoryObject[] = [];
 
-    const categoryTreeSorter = (category: UserFavoriteCategoryEntity) => {
-      const categoryChildren = userCategories.filter(
+    const categoryTreeSorter = (category: FavoriteCategoryObject) => {
+      const categoryChildren = catObjects.filter(
         (cat) => cat.parentId === category.id,
       );
       category.children = category.children
@@ -151,12 +164,10 @@ export class FavoriteCategoriesService {
       });
     };
 
-    const rootCategories = userCategories.filter(
-      (cat) => cat.parentId === null,
-    );
+    const rootCategories = catObjects.filter((cat) => cat.parentId === null);
     rootCategories.forEach((cat) => categoryTreeSorter(cat));
 
-    return sortedCategoryTree;
+    return { categories: sortedCategoryTree };
   }
 
   private async findFavoriteCategoryEntity(

@@ -22,6 +22,7 @@ export * from './modules/favorites/requests/remove-favorite.request';
 export * from './modules/favorites/requests/update-favorite-category.request';
 export * from './modules/favorites/responses/create-favorite-category.response';
 export * from './modules/favorites/responses/create-favorite.response';
+export * from './modules/favorites/responses/find-favorite-category-tree.response';
 export * from './modules/favorites/responses/find-favorites.response';
 export * from './modules/favorites/responses/remove-favorite-category.response';
 export * from './modules/favorites/responses/remove-favorite.response';

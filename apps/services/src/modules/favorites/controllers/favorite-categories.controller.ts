@@ -19,6 +19,7 @@ import {
 import {
   CreateFavoriteCategoryRequest,
   CreateFavoriteCategoryResponse,
+  FindFavoriteCategoryTreeResponse,
   RemoveFavoriteCategoryRequest,
   RemoveFavoriteCategoryResponse,
   UpdateFavoriteCategoryRequest,
@@ -28,6 +29,7 @@ import {
 import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { CreateFavoriteCategoryData } from '../dtos/create-favorite-category.dto';
+import { FindFavoriteCategoryTreeData } from '../dtos/find-favorite-category-tree.dto';
 import { RemoveFavoriteCategoryData } from '../dtos/remove-favorite-category.dto';
 import { UpdateFavoriteCategoryData } from '../dtos/update-favorite-category.dto';
 import {
@@ -109,9 +111,19 @@ export class FavoriteCategoriesController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'TOTOOO' })
-  async toto(): Promise<any> {
-    return await this.favoriteCategoriesService.findFavoriteCategoryTree();
+  @ApiOperation({ summary: `Retrieve User's tree of Favorites` })
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: FindFavoriteCategoryTreeResponse,
+  })
+  async toto(
+    @CurrentAuthenticatedUser() currentUser: UserObject,
+  ): Promise<any> {
+    return await this.favoriteCategoriesService.findFavoriteCategoryTree(
+      createFromClass(FindFavoriteCategoryTreeData, {
+        userId: currentUser.id,
+      }),
+    );
   }
 
   @Delete()

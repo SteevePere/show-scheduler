@@ -41,8 +41,8 @@ export class FavoriteCategoryObject extends BaseEntityObject {
   favorites?: FavoriteObject[];
 
   @ApiPropertyOptional({
-    description: 'List of children Categories',
-    type: [FavoriteCategoryObject],
+    description: 'List of children Categories, recursive object',
+    example: "Same as parent object (cannot display recursive objects in OpenAPI)"
   })
   @IsOptional()
   @IsArray()
