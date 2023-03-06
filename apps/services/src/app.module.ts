@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SentryInterceptor, SentryModule } from '@ntegral/nestjs-sentry';
 import { getConnectionOptions } from 'typeorm';
 import { AuthenticationConfig } from './config/authentication.config';
+import { SentryConfig } from './config/sentry.config';
 import { ServerConfig } from './config/server.config';
 import { JwtAuthenticationGuard } from './core/guards/authentication.guard';
 import { JwtStrategy } from './core/strategies/jwt.strategy';
@@ -18,7 +20,7 @@ import { UsersModule } from './modules/users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [ServerConfig, AuthenticationConfig],
+      load: [ServerConfig, SentryConfig, AuthenticationConfig],
       envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
@@ -26,6 +28,17 @@ import { UsersModule } from './modules/users/users.module';
         Object.assign(await getConnectionOptions(), {
           autoLoadEntities: true,
         }),
+    }),
+    SentryModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        dsn: configService.get<string>('sentry.dsn'),
+        debug: true,
+        environment: 'development',
+        logLevels: ['debug'],
+        tracesSampleRate: 1.0,
+      }),
+      inject: [ConfigService],
     }),
     ScheduleModule.forRoot(),
     AuthenticationModule,
@@ -41,6 +54,10 @@ import { UsersModule } from './modules/users/users.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthenticationGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useFactory: () => new SentryInterceptor(),
     },
   ],
 })
