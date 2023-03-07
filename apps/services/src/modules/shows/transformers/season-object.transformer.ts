@@ -4,7 +4,7 @@ import { SeasonEntity } from '../entities/season.entity';
 
 interface ISeasonTransformerData {
   seasonEntity: SeasonEntity;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export function createSeasonObjectFromEntity(data: ISeasonTransformerData) {
@@ -32,7 +32,7 @@ export function createSeasonObjectFromEntity(data: ISeasonTransformerData) {
     number,
     name,
     summary,
-    imageUrl: imageUrl || image.filePath,
+    imageUrl: imageUrl || image?.filePath || null,
     premiereDate,
     endDate,
     createdAt,

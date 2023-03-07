@@ -67,7 +67,7 @@ export class TvMazeService implements DataProviderAbstractService {
               : null,
             language: tvMazeShow.show.language,
             rating: tvMazeShow.show.rating.average,
-            imageUrl: tvMazeShow.show.image.medium,
+            imageUrl: tvMazeShow.show.image?.medium || null,
             genres: tvMazeShow.show.genres,
           };
         }),
@@ -95,7 +95,7 @@ export class TvMazeService implements DataProviderAbstractService {
           summary: show.summary ? convert(show.summary) : null,
           language: show.language,
           rating: show.rating.average,
-          imageUrl: show.image.medium,
+          imageUrl: show.image?.medium || null,
           genres: show.genres,
         },
       };
@@ -126,7 +126,7 @@ export class TvMazeService implements DataProviderAbstractService {
             summary: tvMazeSeason.summary
               ? convert(tvMazeSeason.summary)
               : null,
-            imageUrl: tvMazeSeason.image.medium,
+            imageUrl: tvMazeSeason.image?.medium || null,
             premiereDate: tvMazeSeason.premiereDate || null,
             endDate: tvMazeSeason.endDate || null,
           };
@@ -159,7 +159,7 @@ export class TvMazeService implements DataProviderAbstractService {
             summary: tvMazeEpisode.summary
               ? convert(tvMazeEpisode.summary)
               : null,
-            imageUrl: tvMazeEpisode.image.medium,
+            imageUrl: tvMazeEpisode.image?.medium || null,
             airDate: tvMazeEpisode.airstamp || null,
           };
         }),

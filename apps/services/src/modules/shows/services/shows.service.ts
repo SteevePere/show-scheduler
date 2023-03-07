@@ -8,6 +8,7 @@ import { DataProviderService } from 'src/modules/data-provider/services/data-pro
 import { FilesService } from 'src/modules/files/services/files.service';
 import { Connection, DeepPartial, Repository } from 'typeorm';
 import { DeleteObsoleteShowsData } from '../dtos/delete-obsolete-shows.dto';
+import { DeleteShowsData } from '../dtos/delete-shows.dto';
 import {
   FindObsoleteShowsData,
   FindObsoleteShowsResult,
@@ -102,9 +103,12 @@ export class ShowsService {
     const genres = await this.findOrSaveShowGenreEntities({
       names: stringGenres,
     });
-    const { file: image } = await this.filesService.saveFile({
-      filePath: imageUrl,
-    });
+
+    const { file: image } = imageUrl
+      ? await this.filesService.saveFile({
+          filePath: imageUrl,
+        })
+      : null;
 
     const showToSave = this.showsRepository.create({
       externalId,
@@ -112,7 +116,7 @@ export class ShowsService {
       summary,
       language,
       rating,
-      imageId: image.id,
+      imageId: image?.id || null,
       genres,
     });
     const showEntity = await this.showsRepository.save(showToSave);
@@ -120,7 +124,7 @@ export class ShowsService {
     return {
       show: createShowObjectFromEntity({
         showEntity,
-        imageUrl: image.filePath,
+        imageUrl: image?.filePath || null,
       }),
     };
   }
@@ -202,12 +206,13 @@ export class ShowsService {
     };
   }
 
-  async deleteObsoleteShows(data: DeleteObsoleteShowsData): Promise<void> {
-    const { obsoleteShows } = data;
+  private async deleteShows(data: DeleteShowsData): Promise<void> {
+    const { shows } = data;
+    await this.databaseConnection.getRepository(ShowEntity).remove(shows);
+  }
 
-    await this.databaseConnection
-      .getRepository(ShowEntity)
-      .remove(obsoleteShows);
+  async deleteObsoleteShows(data: DeleteObsoleteShowsData): Promise<void> {
+    await this.deleteShows(data);
   }
 
   async findUpcomingEpisodes(

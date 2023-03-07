@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ShowObject } from '@scheduler/shared';
 import { ShowsService } from 'src/modules/shows/services/shows.service';
@@ -16,8 +17,13 @@ import { FindUserFavoriteShowData } from '../dtos/find-favorite.dto';
 import {
   RemoveFavoriteData,
   RemoveFavoriteResult,
-} from '../dtos/remove-favorite.dtos';
+} from '../dtos/remove-favorite.dto';
+import {
+  UpdateFavoriteData,
+  UpdateFavoriteResult,
+} from '../dtos/update-favorite.dto';
 import { UserFavoriteShowEntity } from '../entities/user-favorite-show.entity';
+import { createFavoriteObjectFromEntity } from '../transformers/favorite-object.transformer';
 
 @Injectable()
 export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity> {
@@ -27,6 +33,21 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
     private readonly showsService: ShowsService,
   ) {
     super(userFavoriteShowsRepository);
+  }
+
+  async getMany(req: CrudRequest) {
+    const response = (await super.getMany(
+      req,
+    )) as GetManyDefaultResponse<UserFavoriteShowEntity>;
+
+    const favorites = response.data.map((favorite) => {
+      favorite.show.genres = favorite.show.genres.map(
+        (genre) => genre.name,
+      ) as any;
+      return favorite;
+    });
+
+    return { ...response, data: favorites };
   }
 
   async saveFavorite(data: CreateFavoriteData): Promise<CreateFavoriteResult> {
@@ -133,6 +154,33 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
     } catch (error) {
       throw new InternalServerErrorException(
         'Error when trying to remove Favorite',
+        error,
+      );
+    }
+  }
+
+  async updateFavorite(
+    data: UpdateFavoriteData,
+  ): Promise<UpdateFavoriteResult> {
+    const favorite = await this.userFavoriteShowsRepository.findOne({
+      where: { id: data.id },
+    });
+    if (!favorite) {
+      throw new NotFoundException('Favorite not found');
+    }
+    try {
+      Object.assign(favorite, { ...data.data });
+      const savedFavorite = await this.userFavoriteShowsRepository.save(
+        favorite,
+      );
+      return {
+        favorite: createFavoriteObjectFromEntity({
+          favoriteEntity: savedFavorite,
+        }),
+      };
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Unable to update Favorite',
         error,
       );
     }

@@ -39,7 +39,7 @@ export class SeasonEntity extends BaseEntity {
   @ManyToOne(() => ShowEntity, (show) => show.seasons, { onDelete: 'CASCADE' })
   show: ShowEntity;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
   @RelationId((season: SeasonEntity) => season.image)
   imageId: string;
 

@@ -34,7 +34,7 @@ export class ShowEntity extends BaseEntity {
   @Column({ type: 'timestamptz', nullable: true })
   lastFavoritedAt: Date;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', nullable: true })
   @RelationId((show: ShowEntity) => show.image)
   imageId: string;
 

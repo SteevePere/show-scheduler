@@ -1,5 +1,3 @@
-import { ShowEntity } from '../entities/show.entity';
+import { DeleteShowsData } from './delete-shows.dto';
 
-export class DeleteObsoleteShowsData {
-  obsoleteShows: ShowEntity[];
-}
+export class DeleteObsoleteShowsData extends DeleteShowsData {}

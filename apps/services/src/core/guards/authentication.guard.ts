@@ -29,6 +29,7 @@ export class JwtAuthenticationGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext) {
     const noAuth: boolean =
       this.reflector.get('no-auth', context.getHandler()) || false;
+
     if (noAuth) {
       return true;
     }
@@ -55,6 +56,7 @@ export class JwtAuthenticationGuard extends AuthGuard('jwt') {
         tokenData,
       });
       request.user = user;
+
       return true;
     } catch (error) {
       throw new UnauthorizedException(`Invalid accessToken`);

@@ -28,7 +28,7 @@ export class TvMazeShowObject {
   webChannel: WebChannel;
   dvdCountry?: any;
   externals: Externals;
-  image: Image;
+  image: Image | null;
   summary: string;
   updated: number;
   _links: Links;

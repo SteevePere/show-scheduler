@@ -10,6 +10,7 @@ import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
 import {
   CreateFavoriteRequest,
   CreateFavoriteResponse,
+  FindFavoritesResponse,
   RemoveFavoriteRequest,
   RemoveFavoriteResponse,
   UserObject,
@@ -17,7 +18,7 @@ import {
 import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { CreateFavoriteData } from '../dtos/create-favorite.dto';
-import { RemoveFavoriteData } from '../dtos/remove-favorite.dtos';
+import { RemoveFavoriteData } from '../dtos/remove-favorite.dto';
 import { UserFavoriteShowEntity } from '../entities/user-favorite-show.entity';
 import { FavoritesService } from '../services/favorites.service';
 
@@ -28,7 +29,10 @@ import { FavoritesService } from '../services/favorites.service';
   routes: {
     only: ['getManyBase'],
     getManyBase: {
-      decorators: [ApiBearerAuth()],
+      decorators: [
+        ApiBearerAuth(),
+        ApiOperation({ summary: 'Retrieve User Favorites' }),
+      ],
     },
   },
   query: {
@@ -37,10 +41,13 @@ import { FavoritesService } from '../services/favorites.service';
       show: {
         eager: true,
       },
-      'show.seasons': {
+      'show.genres': {
         eager: true,
       },
     },
+  },
+  serialize: {
+    getMany: FindFavoritesResponse,
   },
 })
 @CrudAuth({
