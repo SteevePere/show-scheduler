@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpException, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -57,7 +57,15 @@ import { UsersModule } from './modules/users/users.module';
     },
     {
       provide: APP_INTERCEPTOR,
-      useFactory: () => new SentryInterceptor(),
+      useFactory: () =>
+        new SentryInterceptor({
+          filters: [
+            {
+              type: HttpException,
+              filter: (exception: HttpException) => 500 > exception.getStatus(), // Only report 500 errors
+            },
+          ],
+        }),
     },
   ],
 })
