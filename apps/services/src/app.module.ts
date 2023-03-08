@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SentryInterceptor, SentryModule } from '@ntegral/nestjs-sentry';
 import { getConnectionOptions } from 'typeorm';
 import { AuthenticationConfig } from './config/authentication.config';
+import { SecurityConfig } from './config/security.config';
 import { SentryConfig } from './config/sentry.config';
 import { ServerConfig } from './config/server.config';
 import { JwtAuthenticationGuard } from './core/guards/authentication.guard';
@@ -20,7 +21,7 @@ import { UsersModule } from './modules/users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [ServerConfig, SentryConfig, AuthenticationConfig],
+      load: [ServerConfig, SecurityConfig, SentryConfig, AuthenticationConfig],
       envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
