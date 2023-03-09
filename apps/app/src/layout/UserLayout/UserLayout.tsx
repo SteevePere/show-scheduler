@@ -1,14 +1,11 @@
 import {
   EditOutlined
 } from '@ant-design/icons';
-import {
-  HomeOutlined
-} from '@ant-design/icons';
-import { Button, Layout } from 'antd';
-import React from "react";
-import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Layout } from 'antd';
+import React, { Component } from "react";
 
+import SignInButton from '../../components/auth/SignIn/SignInButton/SignInButton';
+import SignInOutButton from '../../components/auth/SignOut/SignOutButton/SignOutButton';
 import Logo from '../Logo/Logo';
 import SideMenu from '../SideMenu/SideMenu';
 
@@ -72,12 +69,8 @@ const UserLayout = (props: UserLayoutProps) => {
 	          textAlign: 'right'
 	        }}
 	      >
-	        <NavLink to='/sign-in'>
-	          <Button>
-	            <HomeOutlined/>
-				    Sign In
-	          </Button>
-	        </NavLink>
+	        <SignInButton/>
+	        <SignInOutButton/>
 	      </Header>
 	      <Content
 	        style={{

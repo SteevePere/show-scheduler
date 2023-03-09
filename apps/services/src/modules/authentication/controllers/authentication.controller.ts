@@ -1,11 +1,21 @@
-import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Res,
+  UnauthorizedException,
+} from '@nestjs/common';
+import {
+  CurrentUserResponse,
   ForgotPasswordRequest,
   RegistrationRequest,
   RegistrationResponse,
   ResetPasswordRequest,
   SignInRequest,
   SignInResponse,
+  UserObject,
 } from '@scheduler/shared';
 import { Response } from 'express';
 
@@ -16,10 +26,12 @@ import { ConfigType } from '@nestjs/config';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthenticationConfig } from 'src/config/authentication.config';
+import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { ForgotPasswordData } from '../dtos/forgot-password.dto';
 import { RegistrationData } from '../dtos/register.dto';
@@ -105,6 +117,22 @@ export class AuthenticationController {
       cookieValue: '',
       expiresIn: 0,
     });
+  }
+
+  @Get('current-user')
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: CurrentUserResponse,
+    description: 'Returns the currently authenticated User',
+  })
+  async getCurrentUser(
+    @CurrentAuthenticatedUser() user: UserObject,
+  ): Promise<CurrentUserResponse> {
+    if (!(user instanceof UserObject)) {
+      throw new UnauthorizedException(`Invalid authentication method`);
+    }
+
+    return { user };
   }
 
   @Public()
