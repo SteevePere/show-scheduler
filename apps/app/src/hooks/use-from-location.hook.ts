@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 type LocationState = {
   from: {
@@ -9,4 +9,4 @@ type LocationState = {
 export const useFromLocation = () => {
   const route = useLocation<LocationState>();
   return route.state?.from.path;
-}; 
+};

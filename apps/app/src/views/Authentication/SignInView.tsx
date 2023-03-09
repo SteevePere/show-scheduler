@@ -1,20 +1,20 @@
-
 import { SignInRequest } from '@scheduler/shared';
 import React, { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import SignIn from '../../components/auth/SignIn/SignIn';
 import { routingConfig } from '../../config/routing.config';
 import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
-import { useCurrentUser } from '../../hooks/use-current-user.hook';
 import { useFromLocation } from '../../hooks/use-from-location.hook';
 import { signIn } from '../../store/auth/auth.thunks';
+import { RootState } from '../../store/store';
 
 export const SignInView = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const from = useFromLocation();
-  const currentUser = useCurrentUser();
+  const { loading, error, currentUser } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (currentUser) {
@@ -27,6 +27,6 @@ export const SignInView = () => {
   }, []);
   
   return (
-    <SignIn signIn={login}/>
+    <SignIn signIn={login} error={error} loading={loading}/>
   );
 };

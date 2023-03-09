@@ -11,44 +11,44 @@ interface SideMenuProps {
 
 const SideMenu = (props: SideMenuProps) =>
 {
-	const {
+  const {
 	  menuItems,
 	  theme,
-	} = props;
+  } = props;
 
-	const location = useLocation();
+  const location = useLocation();
 
-	const getCurrentRoute = () =>
-	{
-		let currentRoute = location && location.pathname &&
+  const getCurrentRoute = () =>
+  {
+    let currentRoute = location && location.pathname &&
 			location.pathname.replace('/', '');
 
-		if (currentRoute && currentRoute.includes('/'))
+    if (currentRoute && currentRoute.includes('/'))
 		  currentRoute = currentRoute.substring(0, currentRoute.indexOf('/'));
 
-		return currentRoute;
-	};
+    return currentRoute;
+  };
 
-	return (
-	  <Menu
-	    mode='inline'
-	    theme={theme}
-	    selectedKeys={[getCurrentRoute()]}
-	    style={{ marginTop: 20 }}
-	  >
-	    {menuItems && menuItems.map(menuItem =>
-	      <Menu.Item
-	        key={menuItem.key}
-	        icon={menuItem.icon}
-	      >
-	        <NavLink to={menuItem.to}>
-	          {menuItem.name}
-	        </NavLink>
-	      </Menu.Item>
-	    )}
-	    <Divider/>
-	  </Menu>
-	);
+  return (
+    <Menu
+      mode='inline'
+      theme={theme}
+      selectedKeys={[getCurrentRoute()]}
+      style={{ marginTop: 20 }}
+    >
+      {menuItems && menuItems.map(menuItem =>
+        <Menu.Item
+          key={menuItem.key}
+          icon={menuItem.icon}
+        >
+          <NavLink to={menuItem.to}>
+            {menuItem.name}
+          </NavLink>
+        </Menu.Item>
+      )}
+      <Divider/>
+    </Menu>
+  );
 };
 
 export default SideMenu;

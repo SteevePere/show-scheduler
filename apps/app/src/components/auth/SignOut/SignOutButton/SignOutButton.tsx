@@ -22,6 +22,5 @@ const SignInOutButton = () => {
     </Button>
   );
 };
-  
-  
+
 export default SignInOutButton;

@@ -1,4 +1,4 @@
-import { UserObject } from "@scheduler/shared";
+import { UserObject } from '@scheduler/shared';
   
 export interface AuthState {
   currentUser: UserObject | null;

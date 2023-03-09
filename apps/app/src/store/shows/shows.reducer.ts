@@ -4,16 +4,16 @@ import { Show, ShowState } from './shows.model';
 
 export const showsReducer = {
   setLoading: (state: ShowState) => {
-	state.loading = true;
+    state.loading = true;
   },
   setSuccess: (state: ShowState, action: PayloadAction<Show[]>) => {
-	state.loading = false;
-	state.error = null;
-	state.data = action.payload;
+    state.loading = false;
+    state.error = null;
+    state.data = action.payload;
   },
   setFailure: (state: ShowState, action: PayloadAction<string>) => {
-	state.loading = false;
-	state.error = action.payload;
-	state.data = [];
+    state.loading = false;
+    state.error = action.payload;
+    state.data = [];
   },
 };

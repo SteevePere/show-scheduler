@@ -1,15 +1,17 @@
 import { SignInRequest } from '@scheduler/shared';
 import { Button, Card, Form, Input, Row, Col } from 'antd';
-import React from "react";
+import React from 'react';
   
 import './SignIn.css';
 
 interface SignInProps {
   signIn: (values: SignInRequest) => void;
+  error: string | null;
+  loading: boolean;
 }
   
 const SignIn = (props: SignInProps) => {
-  const { signIn } = props;
+  const { signIn, error, loading } = props;
 
   return (
     <Card
@@ -42,16 +44,17 @@ const SignIn = (props: SignInProps) => {
               <Input.Password />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 12, span: 8 }}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading={loading}>
                 Submit
               </Button>
             </Form.Item>
+            {error && <>Wrong email or password</>}
           </Form>
         </Col>
       </Row>
     </Card>
   );
-  };
+};
   
   
 export default SignIn;

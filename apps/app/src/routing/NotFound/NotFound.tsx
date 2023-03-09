@@ -2,13 +2,13 @@ import {
   HomeOutlined
 } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
-import React from "react";
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './NotFound.css';
 
 const NotFound = () => {
-    return (
+  return (
 	  <Card
 	    id='not-found'
 	    bordered={false}
@@ -39,7 +39,7 @@ const NotFound = () => {
 	      </Col>
 	    </Row>
 	  </Card>
-    );
+  );
 };
 
 
