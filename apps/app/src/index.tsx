@@ -1,9 +1,9 @@
-import "./App.less";
-import React from "react";
-import ReactDOM from "react-dom";
+import './App.less';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import App from "./App";
+import App from './App';
 import store from './store/store';
 
 ReactDOM.render(
@@ -13,6 +13,6 @@ ReactDOM.render(
     </React.StrictMode>
   </Provider>,
   
-  document.getElementById("root")
+  document.getElementById('root')
 );
 

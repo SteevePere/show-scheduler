@@ -28,16 +28,8 @@
     "semi": 2,
     "no-console": 0,
     "@typescript-eslint/no-redeclare": 0,
-    "@typescript-eslint/indent": ["error", 2, {
-      "ignoredNodes": [
-        "ArrowFunctionExpression > BlockStatement",
-        "NoSubstitutionTemplateLiteral",
-        "TemplateLiteral",
-        "TSTypeAliasDeclaration *",
-        "MethodDefinition > *",
-        "MemberExpression > CallExpression > *"
-      ]
-    }],
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "indent": ["error", 2, { "MemberExpression": 0 }],
     "import/order": [
       "error",
       {

@@ -11,17 +11,17 @@ interface UserLayoutRouteProps {
 };
 
 const UserLayoutRoute = ({ component, ...rest }: UserLayoutRouteProps) => {
-    return (
-      <Route
-        {...rest}
-        component={(props: JSX.IntrinsicAttributes) =>
-          <UserLayout
-            {...props}
-            content={component}
-          />
-        }
-      />
-    );
+  return (
+    <Route
+      {...rest}
+      component={(props: JSX.IntrinsicAttributes) =>
+        <UserLayout
+          {...props}
+          content={component}
+        />
+      }
+    />
+  );
 };
 
 export default UserLayoutRoute;
