@@ -3,6 +3,7 @@
  */
 
 export * from './decorators/validation/is-safe-integer.decorator';
+export * from './decorators/validation/match.decorator';
 export * from './modules/authentication/objects/password.object';
 export * from './modules/authentication/objects/tokens.object';
 export * from './modules/authentication/requests/forgot-password.request';
@@ -31,6 +32,7 @@ export * from './modules/favorites/responses/remove-favorite.response';
 export * from './modules/favorites/responses/update-favorite-category.response';
 export * from './modules/files/enums/file-source-type.enum';
 export * from './modules/files/objects/file.object';
+export * from './modules/shared/constants/constants';
 export * from './modules/shared/enums/data-provider.enum';
 export * from './modules/shared/objects/base-entity.object';
 export * from './modules/shared/requests/time-framed-request.request';

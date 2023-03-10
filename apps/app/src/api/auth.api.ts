@@ -1,8 +1,14 @@
-import { CurrentUserResponse, SignInRequest, SignInResponse } from '@scheduler/shared';
+import { CurrentUserResponse, RegistrationRequest, RegistrationResponse, SignInRequest, SignInResponse } from '@scheduler/shared';
 
 import { axiosInstance } from './axios/instance';
 
 const AUTH_ENDPOINT = '/authentication';
+
+export const apiSignUp = async (data: RegistrationRequest) => {
+  return await axiosInstance.post<RegistrationResponse>(
+    `${AUTH_ENDPOINT}/register`, data,
+  ).then((response) => response.data);
+};
 
 export const apiSignIn = async (data: SignInRequest) => {
   return await axiosInstance.post<SignInResponse>(

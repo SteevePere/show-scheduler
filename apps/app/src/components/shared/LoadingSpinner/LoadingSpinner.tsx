@@ -10,7 +10,7 @@ interface LoadingSpinnerProps extends SpinProps {
 const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const LoadingSpinner = (props: LoadingSpinnerProps) => (
-  <div className="spinner-container">
+  <div className='spinner-container'>
     <Row justify='center'>
       <Spin indicator={spinner} size={props.size}/>
     </Row>
