@@ -29,6 +29,7 @@
     "no-console": 0,
     "@typescript-eslint/no-redeclare": 0,
     "quotes": [2, "single", { "avoidEscape": true }],
+    "jsx-quotes": [2, "prefer-single"],
     "indent": ["error", 2, { "MemberExpression": 0 }],
     "import/order": [
       "error",

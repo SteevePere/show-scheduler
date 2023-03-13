@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
 
+import { Match } from "../../../decorators/validation/match.decorator";
 import { UserGenderEnum } from "../../users/enums/user-gender.enum";
 import { PasswordObject } from "../objects/password.object";
 
@@ -29,6 +30,15 @@ export class RegistrationRequest extends PasswordObject {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @ApiProperty({
+    description: 'Password confirmation of the future User. Must match password',
+    example: 'NeverGonnaGiveYouUp1234',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Match('password')
+  passwordConfirm: string;
 
   @ApiProperty({
     description: 'Birth date of the future User',

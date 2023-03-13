@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 
 import SignInButton from '../../components/auth/SignIn/SignInButton/SignInButton';
 import SignInOutButton from '../../components/auth/SignOut/SignOutButton/SignOutButton';
+import SignUpButton from '../../components/auth/SignUp/SignUpButton/SignUpButton';
 import Logo from '../Logo/Logo';
 import SideMenu from '../SideMenu/SideMenu';
 
@@ -68,6 +69,7 @@ const UserLayout = (props: UserLayoutProps) => {
             textAlign: 'right'
           }}
         >
+          <SignUpButton/>
           <SignInButton/>
           <SignInOutButton/>
         </Header>
@@ -77,13 +79,15 @@ const UserLayout = (props: UserLayoutProps) => {
             textAlign: 'center',
           }}
         >
-          {content}
+          <>
+            {content}
+          </>
         </Content>
         <Footer
           style={{ textAlign: 'center' }}
         >
           <small>
-			©Show-Scheduler 2022
+			      ©Show-Scheduler 2022
           </small>
         </Footer>
       </Layout>

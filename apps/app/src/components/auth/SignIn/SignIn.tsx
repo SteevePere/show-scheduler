@@ -1,17 +1,18 @@
 import { SignInRequest } from '@scheduler/shared';
-import { Button, Card, Form, Input, Row, Col } from 'antd';
+import { Button, Card, Col, Form, Input, Row } from 'antd';
 import React from 'react';
+
+import SignUpButton from '../SignUp/SignUpButton/SignUpButton';
   
 import './SignIn.css';
 
 interface SignInProps {
   signIn: (values: SignInRequest) => void;
-  error: string | null;
   loading: boolean;
 }
   
 const SignIn = (props: SignInProps) => {
-  const { signIn, error, loading } = props;
+  const { signIn, loading } = props;
 
   return (
     <Card
@@ -23,32 +24,32 @@ const SignIn = (props: SignInProps) => {
       >
         <Col span={8} offset={8}>
           <Form
-            name="basic"
+            name='basic'
             labelCol={{ span: 6 }}
             initialValues={{ remember: true }}
             onFinish={signIn}
-            autoComplete="off"
+            autoComplete='off'
           >
             <Form.Item
-              label="Email"
-              name="email"
+              label='Email'
+              name='email'
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="Password"
-              name="password"
+              label='Password'
+              name='password'
               rules={[{ required: true, message: 'Please input your password!' }]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 12, span: 8 }}>
-              <Button type="primary" htmlType="submit" loading={loading}>
+              <Button type='primary' htmlType='submit' loading={loading}>
                 Submit
               </Button>
             </Form.Item>
-            {error && <>Wrong email or password</>}
+            <SignUpButton/>
           </Form>
         </Col>
       </Row>
