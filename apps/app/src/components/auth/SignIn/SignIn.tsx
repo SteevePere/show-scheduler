@@ -8,12 +8,11 @@ import './SignIn.css';
 
 interface SignInProps {
   signIn: (values: SignInRequest) => void;
-  error: string | null;
   loading: boolean;
 }
   
 const SignIn = (props: SignInProps) => {
-  const { signIn, error, loading } = props;
+  const { signIn, loading } = props;
 
   return (
     <Card
@@ -51,7 +50,6 @@ const SignIn = (props: SignInProps) => {
               </Button>
             </Form.Item>
             <SignUpButton/>
-            {error && <>Wrong email or password</>}
           </Form>
         </Col>
       </Row>

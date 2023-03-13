@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AxiosResponse } from 'axios';
 
 import { authInitialState } from './auth.initial-state';
 import { authReducer } from './auth.reducer';
@@ -11,6 +12,7 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(signUp.pending, (state) => {
       state.loading = true;
+      state.error = null;
     })
     .addCase(signUp.fulfilled, (state, action) => {
       state.currentUser = action.payload.user;
@@ -20,17 +22,21 @@ export const authSlice = createSlice({
       localStorage.setItem('is-logged-in', 'true');
     })
     .addCase(signUp.rejected, (state, action) => {
-      console.log(action);
-      
+      if ((action.payload as AxiosResponse).data.statusCode === 409) {
+        state.error = 'This username is already in use!';
+      } else {
+        state.error = 'An error occured';
+      }
+
       state.currentUser = null;
       state.isLoggedIn = false;
       state.loading = false;
-      state.error = action.error.message || null;
       localStorage.setItem('is-logged-in', 'false');
     });
 
     builder.addCase(signIn.pending, (state) => {
       state.loading = true;
+      state.error = null;
     })
     .addCase(signIn.fulfilled, (state, action) => {
       state.currentUser = action.payload.user;

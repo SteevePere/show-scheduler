@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
 import { useFromLocation } from '../../hooks/use-from-location.hook';
 import { signUp } from '../../store/auth/auth.thunks';
 import { RootState } from '../../store/store';
+import { openNotification } from '../../utils/notification.util';
 
 export const SignUpView = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,17 @@ export const SignUpView = () => {
     }
   }, [currentUser, history, from]);
 
+  useEffect(() => {
+    if (error) {
+      openNotification({ type: 'error', message: 'Registration Failed', description: error });
+    }
+  }, [error]);
+
   const register = useCallback((values: RegistrationRequest) => {
     dispatch(signUp(values));
   }, []);
   
   return (
-    <SignUp signUp={register} error={error} loading={loading}/>
+    <SignUp signUp={register} loading={loading}/>
   );
 };

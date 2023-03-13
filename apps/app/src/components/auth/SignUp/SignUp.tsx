@@ -8,14 +8,13 @@ import './SignUp.css';
 
 interface ISignUpProps {
   signUp: (values: RegistrationRequest) => void;
-  error: string | null;
   loading: boolean;
 }
 
 const MIN_PASSWORD_LENGTH = 6;
   
 const SignUp = (props: ISignUpProps) => {
-  const { signUp, error, loading } = props;
+  const { signUp, loading } = props;
 
   const formInputs: IFormInput[] = [
     {
@@ -129,7 +128,6 @@ const SignUp = (props: ISignUpProps) => {
                 Submit
               </Button>
             </Form.Item>
-            {error && <>{error}</>}
           </Form>
         </Col>
       </Row>

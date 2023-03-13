@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
 import { useFromLocation } from '../../hooks/use-from-location.hook';
 import { signIn } from '../../store/auth/auth.thunks';
 import { RootState } from '../../store/store';
+import { openNotification } from '../../utils/notification.util';
 
 export const SignInView = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,17 @@ export const SignInView = () => {
     }
   }, [currentUser, history, from]);
 
+  useEffect(() => {
+    if (error) {
+      openNotification({ type: 'error', message: 'Authentication Failed', description: 'Wrong email or password!' });
+    }
+  }, [error]);
+
   const login = useCallback((values: SignInRequest) => {
     dispatch(signIn(values));
   }, []);
   
   return (
-    <SignIn signIn={login} error={error} loading={loading}/>
+    <SignIn signIn={login} loading={loading}/>
   );
 };
