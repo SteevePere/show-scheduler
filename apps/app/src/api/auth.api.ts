@@ -1,4 +1,4 @@
-import { CurrentUserResponse, RegistrationRequest, RegistrationResponse, SignInRequest, SignInResponse } from '@scheduler/shared';
+import { CurrentUserResponse, ForgotPasswordRequest, RegistrationRequest, RegistrationResponse, SignInRequest, SignInResponse } from '@scheduler/shared';
 
 import { axiosInstance } from './axios/instance';
 
@@ -26,4 +26,10 @@ export const apiGetCurrentUser = async () => {
   return await axiosInstance.get<CurrentUserResponse>(
     `${AUTH_ENDPOINT}/current-user`,
   ).then((response) => response.data.user);
+};
+
+export const apiRequestPasswordReset = async (data: ForgotPasswordRequest) => {
+  return await axiosInstance.post<void>(
+    `${AUTH_ENDPOINT}/forgot-password`, data,
+  ).then((response) => response.data);
 };

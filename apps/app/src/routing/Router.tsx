@@ -7,6 +7,7 @@ import {
 import { useAppDispatch } from '../hooks/use-app-dispatch.hook';
 import { getCurrentUser } from '../store/auth/auth.thunks';
 import { RootState } from '../store/store';
+import { ForgotPasswordView } from '../views/Authentication/ForgotPasswordView';
 import { SignInView } from '../views/Authentication/SignInView';
 import { SignUpView } from '../views/Authentication/SignUpView';
 import NotFound from './NotFound/NotFound';
@@ -28,6 +29,7 @@ const AppRouter = () => {
 	    <Switch>
 	      <Route exact path='/sign-in' component={SignInView}/>
 	      <Route exact path='/sign-up' component={SignUpView}/>
+	      <Route exact path='/forgot-password' component={ForgotPasswordView}/>
 	      <ProtectedRoute>
 		  	<Switch>
 	          <UserLayoutRoute exact path='/posts' component={<>Hello</>}/>

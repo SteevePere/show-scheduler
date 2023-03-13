@@ -5,4 +5,5 @@ export const authInitialState: AuthState = {
   isLoggedIn: localStorage.getItem('is-logged-in') === 'true' ? true : false,
   loading: false,
   error: null,
+  success: false,
 };

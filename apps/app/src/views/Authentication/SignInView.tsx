@@ -3,7 +3,9 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import ForgotPasswordButton from '../../components/auth/ForgotPassword/ForgotPasswordButton/ForgotPasswordButton';
 import SignIn from '../../components/auth/SignIn/SignIn';
+import SignUpButton from '../../components/auth/SignUp/SignUpButton/SignUpButton';
 import { routingConfig } from '../../config/routing.config';
 import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
 import { useFromLocation } from '../../hooks/use-from-location.hook';
@@ -34,6 +36,10 @@ export const SignInView = () => {
   }, []);
   
   return (
-    <SignIn signIn={login} loading={loading}/>
+    <>
+      <SignIn signIn={login} loading={loading}/>
+      <SignUpButton/>
+      <ForgotPasswordButton/>
+    </>
   );
 };
