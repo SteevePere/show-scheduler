@@ -4,9 +4,8 @@ import {
 import { Layout } from 'antd';
 import React, { Component } from 'react';
 
-import SignInButton from '../../components/auth/SignIn/SignInButton/SignInButton';
-import SignInOutButton from '../../components/auth/SignOut/SignOutButton/SignOutButton';
-import SignUpButton from '../../components/auth/SignUp/SignUpButton/SignUpButton';
+import SignOutButton from '../../components/auth/SignOut/SignOutButton/SignOutButton';
+import ProfileButton from '../../components/profile/ProfileButton/ProfileButton';
 import Logo from '../Logo/Logo';
 import SideMenu from '../SideMenu/SideMenu';
 
@@ -69,9 +68,8 @@ const UserLayout = (props: UserLayoutProps) => {
             textAlign: 'right'
           }}
         >
-          <SignUpButton/>
-          <SignInButton/>
-          <SignInOutButton/>
+          <ProfileButton/>
+          <SignOutButton/>
         </Header>
         <Content
           style={{

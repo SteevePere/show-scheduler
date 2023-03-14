@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ForgotPasswordRequest, RegistrationRequest, ResetPasswordRequest, SignInRequest } from '@scheduler/shared';
+import { ForgotPasswordRequest, RegistrationRequest, ResetPasswordRequest, SignInRequest, UpdateUserRequest } from '@scheduler/shared';
 import axios from 'axios';
 
 import { apiGetCurrentUser, apiRequestPasswordReset, apiResetPassword, apiSignIn, apiSignOut, apiSignUp } from '../../api/auth.api';
+import { apiUpdateUser } from '../../api/users.api';
+import { WithId } from '../../utils/with-id.util';
 
 export const signUp = createAsyncThunk('auth/signUp', async (data: RegistrationRequest,  { rejectWithValue }) => {
   try {
@@ -33,4 +35,9 @@ export const requestPasswordReset = createAsyncThunk('auth/requestPasswordReset'
 
 export const resetPassword = createAsyncThunk('auth/resetPassword', async (data: ResetPasswordRequest) => {
   return await apiResetPassword(data);
+});
+
+export const updateUser = createAsyncThunk('auth/updateUser', async (data: WithId<UpdateUserRequest>) => {
+  const { id, ...rest } = data;
+  return await apiUpdateUser(id, rest);
 });

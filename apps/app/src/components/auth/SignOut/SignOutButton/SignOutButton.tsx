@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../../../hooks/use-app-dispatch.hook';
 import { signOut } from '../../../../store/auth/auth.thunks';
 import './SignOutButton.css';
 
-const SignInOutButton = () => {
+const SignOutButton = () => {
   const dispatch = useAppDispatch();
   
   const handleLogout = useCallback(() => {
@@ -23,4 +23,4 @@ const SignInOutButton = () => {
   );
 };
 
-export default SignInOutButton;
+export default SignOutButton;

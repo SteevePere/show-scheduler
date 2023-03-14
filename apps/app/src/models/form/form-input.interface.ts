@@ -1,4 +1,5 @@
 import { Rule } from 'antd/lib/form';
+import { Moment } from 'moment';
 
 export interface IinputValidationRule {
   required: boolean,
@@ -13,4 +14,5 @@ export interface IFormInput {
   rules?: Rule[],
   dependencies?: string[],
   children?: JSX.Element | undefined,
+  initialValue?: string | Moment | undefined;
 };
