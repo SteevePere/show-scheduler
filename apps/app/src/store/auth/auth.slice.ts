@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 
 import { authInitialState } from './auth.initial-state';
 import { authReducer } from './auth.reducer';
-import { getCurrentUser, requestPasswordReset, resetPassword, signIn, signOut, signUp } from './auth.thunks';
+import { getCurrentUser, requestPasswordReset, resetPassword, signIn, signOut, signUp, updateUser } from './auth.thunks';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -97,6 +97,23 @@ export const authSlice = createSlice({
       state.success = true;
     })
     .addCase(resetPassword.rejected, (state) => {
+      state.loading = false;
+      state.error = 'An error occured';
+      state.success = false;
+    });
+
+    builder.addCase(updateUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    })
+    .addCase(updateUser.fulfilled, (state, action) => {
+      state.currentUser = action.payload.user;
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    })
+    .addCase(updateUser.rejected, (state) => {
       state.loading = false;
       state.error = 'An error occured';
       state.success = false;
