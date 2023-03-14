@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RegistrationRequest, SignInRequest } from '@scheduler/shared';
+import { ForgotPasswordRequest, RegistrationRequest, ResetPasswordRequest, SignInRequest } from '@scheduler/shared';
 import axios from 'axios';
 
-import { apiGetCurrentUser, apiSignIn, apiSignOut, apiSignUp } from '../../api/auth.api';
+import { apiGetCurrentUser, apiRequestPasswordReset, apiResetPassword, apiSignIn, apiSignOut, apiSignUp } from '../../api/auth.api';
 
 export const signUp = createAsyncThunk('auth/signUp', async (data: RegistrationRequest,  { rejectWithValue }) => {
   try {
@@ -19,10 +19,18 @@ export const signIn = createAsyncThunk('auth/signIn', async (data: SignInRequest
   return await apiSignIn(data);
 });
 
-export const signOut = createAsyncThunk('auth/signout', async () => {
+export const signOut = createAsyncThunk('auth/signOut', async () => {
   return await apiSignOut();
 });
 
 export const getCurrentUser = createAsyncThunk('auth/getCurrentUser', async () => {
   return await apiGetCurrentUser();
+});
+
+export const requestPasswordReset = createAsyncThunk('auth/requestPasswordReset', async (data: ForgotPasswordRequest) => {
+  return await apiRequestPasswordReset(data);
+});
+
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (data: ResetPasswordRequest) => {
+  return await apiResetPassword(data);
 });

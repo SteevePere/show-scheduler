@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 
 import { authInitialState } from './auth.initial-state';
 import { authReducer } from './auth.reducer';
-import { getCurrentUser, signIn, signOut, signUp } from './auth.thunks';
+import { getCurrentUser, requestPasswordReset, resetPassword, signIn, signOut, signUp } from './auth.thunks';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -68,6 +68,38 @@ export const authSlice = createSlice({
       state.currentUser = null;
       state.isLoggedIn = false;
       localStorage.setItem('is-logged-in', 'false');
+    });
+
+    builder.addCase(requestPasswordReset.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    })
+    .addCase(requestPasswordReset.fulfilled, (state) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    })
+    .addCase(requestPasswordReset.rejected, (state) => {
+      state.loading = false;
+      state.error = 'An error occured';
+      state.success = false;
+    });
+
+    builder.addCase(resetPassword.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    })
+    .addCase(resetPassword.fulfilled, (state) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    })
+    .addCase(resetPassword.rejected, (state) => {
+      state.loading = false;
+      state.error = 'An error occured';
+      state.success = false;
     });
   },
 });

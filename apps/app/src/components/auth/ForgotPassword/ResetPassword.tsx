@@ -1,35 +1,19 @@
-import { RegistrationRequest } from '@scheduler/shared';
-import { Button, Card, Col, DatePicker, Form, Input, Radio, Row } from 'antd';
+import { ResetPasswordRequest } from '@scheduler/shared';
+import { Button, Card, Col, Form, Input, Row } from 'antd';
 import React from 'react';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
-  
-import './SignUp.css';
 
-interface ISignUpProps {
-  signUp: (values: RegistrationRequest) => void;
+interface IResetPasswordProps {
+  handlePasswordReset: (values: ResetPasswordRequest) => void;
   loading: boolean;
 }
-
-const SignUp = (props: ISignUpProps) => {
-  const { signUp, loading } = props;
+  
+const ForgotPassword = (props: IResetPasswordProps) => {
+  const { handlePasswordReset, loading } = props;
 
   const formInputs: IFormInput[] = [
-    {
-      key: 'firstNameInput',
-      label: 'First Name',
-      name: 'firstName',
-      rules: [{ required: true, message: 'Please input your first name!'}],
-      children: <Input key='firstNameInput'/>
-    },
-    {
-      key: 'lastNameInput',
-      label: 'Last Name',
-      name: 'lastName',
-      rules: [{ required: true, message: 'Please input your last name!' }],
-      children: <Input key='lastNameInput'/>
-    },
     {
       key: 'emailInput',
       label: 'Email',
@@ -45,7 +29,7 @@ const SignUp = (props: ISignUpProps) => {
     },
     {
       key: 'passwordInput',
-      label: 'Password',
+      label: 'New Password',
       name: 'password',
       rules: [
         { required: true, message: 'Please input your password!' },
@@ -55,7 +39,7 @@ const SignUp = (props: ISignUpProps) => {
     },
     {
       key: 'passwordConfirmInput',
-      label: 'Confirm Password',
+      label: 'Confirm New Password',
       name: 'passwordConfirm',
       dependencies: ['password'],
       rules: [
@@ -76,29 +60,11 @@ const SignUp = (props: ISignUpProps) => {
       ],
       children: <Input.Password key='passwordConfirm'/>
     },
-    {
-      key: 'genderInput',
-      label: 'Gender',
-      name: 'gender',
-      valuePropName: 'checked',
-      rules: [{ required: true, message: 'Please choose a gender!' }],
-      children: <Radio.Group>
-        <Radio key='MALE' value='MALE'>Male</Radio>
-        <Radio key='FEMALE'value='FEMALE'>Female</Radio>
-      </Radio.Group>
-    },
-    {
-      key: 'birthDateInput',
-      label: 'Birth Date',
-      name: 'birthDate',
-      rules: [{ required: true, message: 'Please input your birth date!' }],
-      children: <DatePicker key='birthDatePicker'/>
-    },
   ];
 
   return (
     <Card
-      id='sign-up'
+      id='sign-in'
       bordered={false}
     >
       <Row
@@ -109,8 +75,8 @@ const SignUp = (props: ISignUpProps) => {
             name='basic'
             labelCol={{ span: 6 }}
             initialValues={{ remember: true }}
-            onFinish={signUp}
-            autoComplete='on'
+            onFinish={handlePasswordReset}
+            autoComplete='off'
           >
             {formInputs.map((input) => (
               <Form.Item
@@ -135,4 +101,4 @@ const SignUp = (props: ISignUpProps) => {
 };
   
   
-export default SignUp;
+export default ForgotPassword;

@@ -3,6 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import SignInButton from '../../components/auth/SignIn/SignInButton/SignInButton';
 import SignUp from '../../components/auth/SignUp/SignUp';
 import { routingConfig } from '../../config/routing.config';
 import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
@@ -34,6 +35,9 @@ export const SignUpView = () => {
   }, []);
   
   return (
-    <SignUp signUp={register} loading={loading}/>
+    <>
+      <SignUp signUp={register} loading={loading}/>
+      <SignInButton/>
+    </>
   );
 };

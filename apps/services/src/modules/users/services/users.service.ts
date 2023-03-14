@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { omit } from 'lodash';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { FindUserData, FindUserResult } from '../dtos/find-user.dto';
 import {
@@ -32,6 +33,7 @@ export class UsersService {
       throw new ConflictException('User with this email already exists');
     }
 
+    data.password = await this.hashPassword(data.password);
     const userToSave = this.usersRepository.create({ ...data });
     const newUser = await this.usersRepository.save(userToSave);
 
@@ -70,13 +72,24 @@ export class UsersService {
   }
 
   async updateUser(data: UpdateUserData): Promise<UpdateUserResult> {
-    const user = await this.findUserEntity({ id: data.id });
+    const user = await this.findUserEntity({
+      id: data.id,
+    });
+
     try {
+      if (data.data.password) {
+        data.data.password = await this.hashPassword(data.data.password);
+      }
+
       Object.assign(user, { ...data.data });
       const savedUser = await this.usersRepository.save(user);
       return { user: createUserObjectFromEntity({ userEntity: savedUser }) };
     } catch (error) {
       throw new InternalServerErrorException('Unable to update User', error);
     }
+  }
+
+  private async hashPassword(password: string) {
+    return await bcrypt.hash(password, 10);
   }
 }

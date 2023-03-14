@@ -6,8 +6,8 @@ import UserLayout from '../../layout/UserLayout/UserLayout';
 interface UserLayoutRouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any;
-  path: string;
-  exact: boolean;
+  path?: string | readonly string[] | undefined;
+  exact?: boolean | undefined;
 };
 
 const UserLayoutRoute = ({ component, ...rest }: UserLayoutRouteProps) => {

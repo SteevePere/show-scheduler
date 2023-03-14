@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Inject,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
@@ -82,31 +83,38 @@ export class AuthenticationService {
   }
 
   async handleForgotPassword(data: ForgotPasswordData): Promise<void> {
-    const { user } = await this.usersService.findUser({
-      email: data.email,
-    });
+    try {
+      const { user } = await this.usersService.findUser({
+        email: data.email,
+      });
 
-    const resetToken = nanoid();
-    const hashedResetToken = await bcrypt.hash(resetToken, 10);
+      const resetToken = nanoid();
+      const hashedResetToken = await bcrypt.hash(resetToken, 10);
 
-    await this.usersService.updateUser({
-      id: user.id,
-      data: {
-        resetPasswordToken: hashedResetToken,
-      },
-    });
+      await this.usersService.updateUser({
+        id: user.id,
+        data: {
+          resetPasswordToken: hashedResetToken,
+        },
+      });
 
-    await this.emailsService.sendTemplatedEmail({
-      template: 'forgot-password',
-      to: user.email,
-      subject: 'Reset Your Password',
-      data: {
-        firstName: user.firstName,
-        linkToApp: `${
-          this.authenticationConfig.password.emails.urls.forgotPassword
-        }?token=${encodeURI(resetToken)}`,
-      },
-    });
+      await this.emailsService.sendTemplatedEmail({
+        template: 'forgot-password',
+        to: user.email,
+        subject: 'Reset Your Password',
+        data: {
+          firstName: user.firstName,
+          linkToApp: `${
+            this.authenticationConfig.password.emails.urls.forgotPassword
+          }?token=${encodeURI(resetToken)}`,
+        },
+      });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return;
+      }
+      throw error;
+    }
   }
 
   async resetPassword(resetPasswordData: ResetPasswordData): Promise<void> {
