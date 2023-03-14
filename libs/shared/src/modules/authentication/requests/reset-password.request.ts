@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
+import { Match } from '../../../decorators/validation/match.decorator';
 import { PasswordObject } from '../objects/password.object';
 
 export class ResetPasswordRequest extends PasswordObject {
@@ -20,4 +21,13 @@ export class ResetPasswordRequest extends PasswordObject {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @ApiProperty({
+    description: 'Confirmation of the new password. Must match password',
+    example: 'NeverGonnaGiveYouUp1234',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @Match('password')
+  passwordConfirm: string;
 }

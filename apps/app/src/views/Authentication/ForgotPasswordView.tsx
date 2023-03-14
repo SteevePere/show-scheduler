@@ -1,19 +1,33 @@
-import { ForgotPasswordRequest } from '@scheduler/shared';
+import { ForgotPasswordRequest, ResetPasswordRequest } from '@scheduler/shared';
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import ForgotPassword from '../../components/auth/ForgotPassword/ForgotPassword';
+import ResetPassword from '../../components/auth/ForgotPassword/ResetPassword';
+import SignInButton from '../../components/auth/SignIn/SignInButton/SignInButton';
+import { BackButton } from '../../components/shared/BackButton/BackButton';
 import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
-import { requestPasswordReset } from '../../store/auth/auth.thunks';
+import { useQuery } from '../../hooks/use-query.hook';
+import { FORGOT_PASSWORD_ROUTE } from '../../routing/Router';
+import { requestPasswordReset, resetPassword } from '../../store/auth/auth.thunks';
 import { RootState } from '../../store/store';
 import { openNotification } from '../../utils/notification.util';
 
 export const ForgotPasswordView = () => {
   const dispatch = useAppDispatch();
-  const { loading, error, success } = useSelector((state: RootState) => state.auth);
+  const location = useLocation();
+  const query = useQuery();
 
-  const handlePasswordReset = useCallback((values: ForgotPasswordRequest) => {
+  const { loading, error, success } = useSelector((state: RootState) => state.auth);
+  const isRequestToken = location.pathname === FORGOT_PASSWORD_ROUTE;
+  
+  const handlePasswordRequest = useCallback((values: ForgotPasswordRequest) => {
     dispatch(requestPasswordReset(values));
+  }, []);
+
+  const handlePasswordReset = useCallback((values: ResetPasswordRequest) => {
+    dispatch(resetPassword({ ...values, token: query.get('token') || '' }));
   }, []);
 
   useEffect(() => {
@@ -21,13 +35,31 @@ export const ForgotPasswordView = () => {
       openNotification({ type: 'error', message: 'Request Failed', description: 'Something went wrong!' });
     }
     else if (success) {
-      openNotification({ type: 'success', message: 'Request Sent', description: 'An email will be sent to this email address if it exists in our database!' });
+      openNotification(
+        isRequestToken ? {
+          type: 'success',
+          message: 'Request Sent',
+          description: 
+            'An email will be sent to this email address if it exists in our database!'
+        } : {
+          type: 'success',
+          message: 'Password Updated',
+          description: 
+            'Your password has been reset!'
+        }
+      );
     }
   }, [success, error]);
-  
-  return (
+
+  return isRequestToken ? (
     <>
-      <ForgotPassword handlePasswordReset={handlePasswordReset} loading={loading}/>
+      <ForgotPassword handlePasswordReset={handlePasswordRequest} loading={loading}/>
+      <BackButton/>
+    </>
+  ) : (
+    <>
+      <ResetPassword handlePasswordReset={handlePasswordReset} loading={loading}/>
+      {success && <SignInButton/>}
     </>
   );
 };

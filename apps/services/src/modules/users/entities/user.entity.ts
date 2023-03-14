@@ -57,12 +57,4 @@ export class UserEntity extends BaseEntity {
     (episodeEntity: EpisodeEntity) => episodeEntity.watchedBy,
   )
   watchedEpisodes: EpisodeEntity[];
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPasswordHook() {
-    if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10);
-    }
-  }
 }
