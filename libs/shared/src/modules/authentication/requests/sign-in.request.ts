@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
-import { PasswordObject } from "../objects/password.object";
+import { PasswordRequest } from "../../shared/requests/password.request";
 
-export class SignInRequest extends PasswordObject {
+export class SignInRequest extends PasswordRequest {
   @ApiProperty({
     description: 'Email of the User',
     example: 'johndoe@gmail.com',

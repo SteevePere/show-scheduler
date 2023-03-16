@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
 
 import { Match } from "../../../decorators/validation/match.decorator";
+import { PasswordRequest } from "../../shared/requests/password.request";
 import { UserGenderEnum } from "../../users/enums/user-gender.enum";
-import { PasswordObject } from "../objects/password.object";
 
-export class RegistrationRequest extends PasswordObject {
+export class RegistrationRequest extends PasswordRequest {
   @ApiProperty({
     description: 'First name of the future User',
     example: 'John',
