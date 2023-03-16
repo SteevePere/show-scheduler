@@ -16,10 +16,11 @@ interface IUserFormProps {
   disabled: boolean;
   handler: (values: HandlerType) => void;
   fields?: string[] | undefined;
+  extraInputs?: IFormInput[] | undefined;
 }
 
 const UserForm = (props: IUserFormProps) => {
-  const { form, user, fields, loading, disabled, handler } = props;
+  const { form, user, fields, loading, disabled, extraInputs = [], handler } = props;
 
   const formInputs: IFormInput[] = [
     {
@@ -108,20 +109,26 @@ const UserForm = (props: IUserFormProps) => {
   ];
 
   const renderFields = () => {
-    return formInputs.map((input) => {
+    const getFormItem = (input: IFormInput) => {
+      return (<Form.Item
+        key={input.key}
+        label={input.label}
+        name={input.name}
+        initialValue={input.initialValue}
+        rules={input.rules}
+      >
+        {input.children}
+      </Form.Item>); 
+    };
+
+    const fieldsToRender = formInputs.map((input) => {
       if (fields && fields.includes(input.name) || !fields) {
-        return (<Form.Item
-          key={input.key}
-          label={input.label}
-          name={input.name}
-          initialValue={input.initialValue}
-          rules={input.rules}
-        >
-          {input.children}
-        </Form.Item>);
+        return getFormItem(input);
       }
       return null;
     });
+
+    return fieldsToRender.concat(extraInputs.map((input) => getFormItem(input)));
   };
 
   return (
