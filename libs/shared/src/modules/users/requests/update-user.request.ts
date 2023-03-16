@@ -1,6 +1,8 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength, ValidateIf } from "class-validator";
 
+import { Match } from "../../../decorators/validation/match.decorator";
+import { MIN_PASSWORD_LENGTH } from "../../shared/constants/constants";
 import { UserGenderEnum } from "../enums/user-gender.enum";
 
 export class UpdateUserRequest {
@@ -42,7 +44,6 @@ export class UpdateUserRequest {
   @IsDateString()
   birthDate?: Date;
 
-
   @ApiPropertyOptional({
     enum: UserGenderEnum,
     description: 'New gender of the User',
@@ -51,4 +52,34 @@ export class UpdateUserRequest {
   @IsOptional()
   @IsEnum(UserGenderEnum)
   gender?: UserGenderEnum;
+
+  @ApiPropertyOptional({
+    description: 'New password of the User',
+    example: 'NeverGonnaGiveYouUp1234',
+    minLength: MIN_PASSWORD_LENGTH,
+  })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(MIN_PASSWORD_LENGTH)
+  password?: string;
+
+  @ApiPropertyOptional({
+    description: 'Confirmation of the new password. Must match password',
+    example: 'NeverGonnaGiveYouUp1234',
+  })
+  @ValidateIf((request) => !!request.password)
+  @IsString()
+  @IsNotEmpty()
+  @Match('password')
+  passwordConfirm?: string;
+
+  @ApiPropertyOptional({
+    description: 'Old password of the User',
+    example: 'NeverGonnaGiveYouUp1234',
+  })
+  @ValidateIf((request) => !!request.password)
+  @IsString()
+  @IsNotEmpty()
+  oldPassword?: string;
 }

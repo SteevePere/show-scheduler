@@ -113,12 +113,14 @@ export const authSlice = createSlice({
       state.error = null;
       state.success = true;
     })
-    .addCase(updateUser.rejected, (state) => {
+    .addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = 'An error occured';
+      state.error = action.error?.message || null;
       state.success = false;
     });
   },
 });
+
+export const { setSuccess } = authSlice.actions;
 
 export default authSlice.reducer;

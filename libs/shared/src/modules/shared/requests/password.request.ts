@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
-import { MIN_PASSWORD_LENGTH } from '../../shared/constants/constants';
+import { MIN_PASSWORD_LENGTH } from '../constants/constants';
 
-export class PasswordObject {
+export class PasswordRequest {
   @ApiProperty({
     description: 'Password of the future User',
     example: 'NeverGonnaGiveYouUp1234',
