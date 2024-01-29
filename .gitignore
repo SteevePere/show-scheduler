@@ -49,3 +49,4 @@ runtime-env.js
 # Ignore DevSpace cache and log folder
 .devspace/
 /test
+*.code-workspace
