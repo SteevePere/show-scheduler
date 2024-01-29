@@ -10,7 +10,7 @@
   "files": [
     "dist"
   ],
-  "author": "KOJI Developers <developers@koji.fr>",
+  "author": "Steeve Péré",
   "engines": {
     "node": ">=14.0.0"
   },
