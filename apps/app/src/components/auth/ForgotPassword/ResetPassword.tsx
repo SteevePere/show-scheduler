@@ -99,6 +99,5 @@ const ForgotPassword = (props: IResetPasswordProps) => {
     </Card>
   );
 };
-  
-  
+
 export default ForgotPassword;

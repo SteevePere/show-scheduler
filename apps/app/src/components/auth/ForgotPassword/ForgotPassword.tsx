@@ -50,6 +50,5 @@ const ForgotPassword = (props: IForgotPasswordProps) => {
     </Card>
   );
 };
-  
-  
+
 export default ForgotPassword;

@@ -22,6 +22,5 @@ const SignUp = (props: ISignUpProps) => {
     />
   );
 };
-  
-  
+
 export default SignUp;
