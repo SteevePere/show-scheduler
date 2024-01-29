@@ -15,11 +15,21 @@ const libraryName = 'index';
 export default {
   input: `src/index.ts`,
   output: [
-    { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true },
-    { file: pkg.module, format: 'es', sourcemap: true },
+    { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true, globals: {
+      'class-validator': 'classValidator',
+      'class-transformer': 'classTransformer',
+      '@nestjs/swagger': 'swagger',
+      'prop-types': 'PropTypes'
+    } },
+    { file: pkg.module, format: 'es', sourcemap: true, globals: {
+      'class-validator': 'classValidator',
+      'class-transformer': 'classTransformer',
+      '@nestjs/swagger': 'swagger',
+      'prop-types': 'PropTypes'
+    }},
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ['class-validator', 'class-transformer'],
+  external: ['class-validator', 'class-transformer', '@nestjs/swagger'],
   watch: {
     include: 'src/**',
   },
