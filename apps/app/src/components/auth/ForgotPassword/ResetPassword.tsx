@@ -1,8 +1,7 @@
 import { ResetPasswordRequest } from '@scheduler/shared';
 import { Button, Card, Col, Form, Input, Row } from 'antd';
-import React from 'react';
+import { IFormInput } from 'models/form/form-input.interface';
 
-import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
 
 interface IResetPasswordProps {

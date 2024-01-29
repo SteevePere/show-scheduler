@@ -1,9 +1,18 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength, ValidateIf } from "class-validator";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+  ValidateIf
+} from 'class-validator';
 
-import { Match } from "../../../decorators/validation/match.decorator";
-import { MIN_PASSWORD_LENGTH } from "../../shared/constants/constants";
-import { UserGenderEnum } from "../enums/user-gender.enum";
+import { Match } from '../../../decorators/validation/match.decorator';
+import { MIN_PASSWORD_LENGTH } from '../../shared/constants/constants';
+import { UserGenderEnum } from '../enums/user-gender.enum';
 
 export class UpdateUserRequest {
   @ApiPropertyOptional({

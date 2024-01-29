@@ -1,8 +1,17 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDateString, IsNotEmpty, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  ValidateIf
+} from 'class-validator';
 
-import { IsSafeInt } from "../../../decorators/validation/is-safe-integer.decorator";
-import { BaseEntityObject } from "../../shared/objects/base-entity.object";
+import {
+  IsSafeInt
+} from '../../../decorators/validation/is-safe-integer.decorator';
+import { BaseEntityObject } from '../../shared/objects/base-entity.object';
 
 export class EpisodeObject extends BaseEntityObject {
   @ApiPropertyOptional({

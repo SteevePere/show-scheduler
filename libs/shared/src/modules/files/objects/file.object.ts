@@ -1,8 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
-import { BaseEntityObject } from "../../shared/objects/base-entity.object";
-import { FileSourceTypeEnum } from "../enums/file-source-type.enum";
+import { BaseEntityObject } from '../../shared/objects/base-entity.object';
+import { FileSourceTypeEnum } from '../enums/file-source-type.enum';
 
 export class FileObject extends BaseEntityObject {
   @ApiProperty({

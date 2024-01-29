@@ -1,9 +1,17 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, ValidateIf } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateIf
+} from 'class-validator';
 
-import { BaseEntityObject } from "../../shared/objects/base-entity.object";
-import { UserGenderEnum } from "../enums/user-gender.enum";
-import { UserRoleEnum } from "../enums/user-role.enum";
+import { BaseEntityObject } from '../../shared/objects/base-entity.object';
+import { UserGenderEnum } from '../enums/user-gender.enum';
+import { UserRoleEnum } from '../enums/user-role.enum';
 
 export class UserObject extends BaseEntityObject {
   @ApiProperty({

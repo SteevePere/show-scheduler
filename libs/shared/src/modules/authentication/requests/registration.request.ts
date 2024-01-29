@@ -1,9 +1,15 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsString
+} from 'class-validator';
 
-import { Match } from "../../../decorators/validation/match.decorator";
-import { PasswordRequest } from "../../shared/requests/password.request";
-import { UserGenderEnum } from "../../users/enums/user-gender.enum";
+import { Match } from '../../../decorators/validation/match.decorator';
+import { PasswordRequest } from '../../shared/requests/password.request';
+import { UserGenderEnum } from '../../users/enums/user-gender.enum';
 
 export class RegistrationRequest extends PasswordRequest {
   @ApiProperty({

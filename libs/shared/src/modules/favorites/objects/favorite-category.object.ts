@@ -1,8 +1,15 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsNotEmpty, IsOptional, IsString, ValidateIf, ValidateNested } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateIf,
+  ValidateNested
+} from 'class-validator';
 
-import { BaseEntityObject } from "../../shared/objects/base-entity.object";
-import { FavoriteObject } from "./favorite.object";
+import { BaseEntityObject } from '../../shared/objects/base-entity.object';
+import { FavoriteObject } from './favorite.object';
 
 export class FavoriteCategoryObject extends BaseEntityObject {
   @ApiProperty({
@@ -42,7 +49,7 @@ export class FavoriteCategoryObject extends BaseEntityObject {
 
   @ApiPropertyOptional({
     description: 'List of children Categories, recursive object',
-    example: "Same as parent object (cannot display recursive objects in OpenAPI)"
+    example: 'Same as parent object (cannot display recursive objects in OpenAPI)'
   })
   @IsOptional()
   @IsArray()

@@ -1,7 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-import { PasswordRequest } from "../../shared/requests/password.request";
+import { PasswordRequest } from '../../shared/requests/password.request';
 
 export class SignInRequest extends PasswordRequest {
   @ApiProperty({

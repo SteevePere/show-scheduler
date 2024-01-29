@@ -1,9 +1,14 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsBoolean, IsNotEmpty, IsString, ValidateNested } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsString,
+  ValidateNested
+} from 'class-validator';
 
-import { BaseEntityObject } from "../../shared/objects/base-entity.object";
-import { ShowObject } from "../../shows/objects/show.object";
+import { BaseEntityObject } from '../../shared/objects/base-entity.object';
+import { ShowObject } from '../../shows/objects/show.object';
 
 export class FavoriteObject extends BaseEntityObject {
   @ApiProperty({

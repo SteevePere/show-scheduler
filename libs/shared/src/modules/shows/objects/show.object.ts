@@ -1,8 +1,19 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl, ValidateIf } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsArray,
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUrl,
+  ValidateIf
+} from 'class-validator';
 
-import { IsSafeInt } from "../../../decorators/validation/is-safe-integer.decorator";
-import { BaseEntityObject } from "../../shared/objects/base-entity.object";
+import {
+  IsSafeInt
+} from '../../../decorators/validation/is-safe-integer.decorator';
+import { BaseEntityObject } from '../../shared/objects/base-entity.object';
 
 export class ShowObject extends BaseEntityObject {
   @ApiProperty({
@@ -64,7 +75,7 @@ export class ShowObject extends BaseEntityObject {
   genres: string[];
 
   @ApiPropertyOptional({
-    description: `Date of last time this Show was added to a User's Favorites`,
+    description: 'Date of last time this Show was added to a User\'s Favorites',
     example: '1991-10-16T21:50:00.000Z',
     nullable: true,
   })

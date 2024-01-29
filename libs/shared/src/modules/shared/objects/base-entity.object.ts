@@ -1,5 +1,11 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsString, IsNotEmpty, IsDateString, IsOptional, IsUUID } from "class-validator";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID
+} from 'class-validator';
 
 export class BaseEntityObject {
   @ApiPropertyOptional({

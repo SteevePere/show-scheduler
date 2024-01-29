@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsSafeInt } from '../../../decorators/validation/is-safe-integer.decorator';
+import {
+  IsSafeInt
+} from '../../../decorators/validation/is-safe-integer.decorator';
 
 export class BaseFavoriteRequest {
   @ApiProperty({

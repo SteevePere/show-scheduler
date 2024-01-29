@@ -1,7 +1,14 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumberString, IsOptional, IsUUID } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsNotEmpty,
+  IsNumberString,
+  IsOptional,
+  IsUUID
+} from 'class-validator';
 
-import { TimeFramedRequest } from "../../shared/requests/time-framed-request.request";
+import {
+  TimeFramedRequest
+} from '../../shared/requests/time-framed-request.request';
 
 export class FindEpisodesRequest extends TimeFramedRequest {
   @ApiProperty({

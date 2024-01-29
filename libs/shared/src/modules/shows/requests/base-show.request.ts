@@ -1,5 +1,10 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumberString, IsUUID, ValidateIf } from "class-validator";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsNotEmpty,
+  IsNumberString,
+  IsUUID,
+  ValidateIf
+} from 'class-validator';
 
 export class BaseShowRequest {
   @ApiPropertyOptional({

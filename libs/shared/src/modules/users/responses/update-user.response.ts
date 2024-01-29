@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
-import { UserObject } from "../objects/user.object";
+import { UserObject } from '../objects/user.object';
 
 export class UpdateUserResponse {
   @ApiProperty({

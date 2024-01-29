@@ -1,9 +1,11 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { ValidateNested } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { ValidateNested } from 'class-validator';
 
-import { IsSafeInt } from "../../../decorators/validation/is-safe-integer.decorator";
-import { FavoriteObject } from "../objects/favorite.object";
+import {
+  IsSafeInt
+} from '../../../decorators/validation/is-safe-integer.decorator';
+import { FavoriteObject } from '../objects/favorite.object';
 
 export class FindFavoritesResponse {
   @ApiProperty({

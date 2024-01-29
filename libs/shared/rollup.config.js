@@ -13,7 +13,7 @@ const pkg = require('./package.json');
 const libraryName = 'index';
 
 export default {
-  input: `src/index.ts`,
+  input: 'src/index.ts',
   output: [
     { file: pkg.main, name: camelCase(libraryName), format: 'umd', sourcemap: true, globals: {
       'class-validator': 'classValidator',
