@@ -2,7 +2,6 @@ import { SignInRequest } from '@scheduler/shared';
 import { Button, Card, Col, Form, Input, Row } from 'antd';
 import React from 'react';
 
-  
 import './SignIn.css';
 
 interface SignInProps {
