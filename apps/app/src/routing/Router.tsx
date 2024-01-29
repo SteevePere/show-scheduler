@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   BrowserRouter, Route, RouteProps, Switch
 } from 'react-router-dom';
+import { getCurrentUser } from 'store/auth/auth.thunks';
+import { RootState } from 'store/store';
+import { ForgotPasswordView } from 'views/Authentication/ForgotPasswordView';
+import { SignInView } from 'views/Authentication/SignInView';
+import { SignUpView } from 'views/Authentication/SignUpView';
+import { PostsView } from 'views/Posts/PostsView';
+import { ProfileView } from 'views/Profile/ProfileView';
 
-import LoadingSpinner from '../components/shared/LoadingSpinner/LoadingSpinner';
-import { useAppDispatch } from '../hooks/use-app-dispatch.hook';
-import { getCurrentUser } from '../store/auth/auth.thunks';
-import { RootState } from '../store/store';
-import { ForgotPasswordView } from '../views/Authentication/ForgotPasswordView';
-import { SignInView } from '../views/Authentication/SignInView';
-import { SignUpView } from '../views/Authentication/SignUpView';
-import { ProfileView } from '../views/Profile/ProfileView';
 import NotFound from './NotFound/NotFound';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
 import UserLayoutRoute from './UserLayoutRoute/UserLayoutRoute';
@@ -55,7 +55,7 @@ const protectedRoutes: RouteProps[] = [
   {
 	  path: POSTS_ROUTE,
 	  exact: true,
-	  children: <LoadingSpinner/>,
+	  children: <PostsView/>,
   },
 ];
 
