@@ -1,16 +1,14 @@
 import {
-  LoginOutlined
+  UserAddOutlined
 } from '@ant-design/icons';
 import { Button } from 'antd';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './SignUpButton.css';
 
 const SignUpButton = () => {
   return (
     <NavLink to='/sign-up'>
       <Button>
-        <LoginOutlined/>
+        <UserAddOutlined/>
           Sign Up
       </Button>
     </NavLink>

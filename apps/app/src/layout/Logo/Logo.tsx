@@ -1,14 +1,19 @@
-import React from 'react';
+interface ILogoProps {
+  width?: string;
+  padding?: number;
+}
 
-const Logo = () => {
+const Logo = (props: ILogoProps) => {
+  const { width = '100%', padding = 20 } = props;
+
   return (
     <img
-      src={process.env.PUBLIC_URL + '/logo192.png'}
+      src={process.env.PUBLIC_URL + '/logo512.png'}
       alt='Logo'
       style={{
-        width: '100%',
+        width,
+        padding,
         objectFit: 'cover',
-        padding: 20,
       }}
     />
   );

@@ -1,6 +1,5 @@
 import { ForgotPasswordRequest } from '@scheduler/shared';
-import { Button, Card, Col, Form, Input, Row } from 'antd';
-import React from 'react';
+import { Button, Form, Input } from 'antd';
 
 interface IForgotPasswordProps {
   handlePasswordReset: (values: ForgotPasswordRequest) => void;
@@ -11,43 +10,31 @@ const ForgotPassword = (props: IForgotPasswordProps) => {
   const { handlePasswordReset, loading } = props;
 
   return (
-    <Card
-      id='sign-in'
-      bordered={false}
+    <Form
+      name='basic'
+      labelCol={{ span: 6 }}
+      labelAlign='left'
+      initialValues={{ remember: true }}
+      onFinish={handlePasswordReset}
+      autoComplete='off'
     >
-      <Row
-        gutter={[24, 24]}
+      <Form.Item
+        label='Email'
+        name='email'
+        rules={[
+          { required: true, message: 'Please input your email!' },
+          {
+            type: 'email',
+            message: 'The input is not a valid e-mail!',
+          },
+        ]}
       >
-        <Col span={8} offset={8}>
-          <Form
-            name='basic'
-            labelCol={{ span: 6 }}
-            initialValues={{ remember: true }}
-            onFinish={handlePasswordReset}
-            autoComplete='off'
-          >
-            <Form.Item
-              label='Email'
-              name='email'
-              rules={[
-                { required: true, message: 'Please input your email!' },
-                {
-                  type: 'email',
-                  message: 'The input is not a valid e-mail!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 12, span: 8 }}>
-              <Button type='primary' htmlType='submit' loading={loading}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    </Card>
+        <Input />
+      </Form.Item>
+      <Button block type='primary' htmlType='submit' loading={loading}>
+        {!loading && 'Send Me A Recovery Link'}
+      </Button>
+    </Form>
   );
 };
 

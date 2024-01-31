@@ -1,5 +1,6 @@
 import { RegistrationRequest } from '@scheduler/shared';
-import React, { useCallback, useEffect } from 'react';
+import BaseLayout from 'layout/BaseLayout/BaseLayout';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -35,9 +36,11 @@ export const SignUpView = () => {
   }, []);
   
   return (
-    <>
-      <SignUp signUp={register} loading={loading}/>
-      <SignInButton/>
-    </>
+    <BaseLayout
+      content={<SignUp signUp={register} loading={loading}/>}
+      ctas={
+        <SignInButton text='Sign In Instead'/>
+      }
+    />
   );
 };

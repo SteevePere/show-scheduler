@@ -1,16 +1,15 @@
 import {
-  LoginOutlined
+  UserOutlined
 } from '@ant-design/icons';
 import { Button } from 'antd';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
     
 const ProfileButton = () => {
   return (
     <NavLink to='/profile'>
       <Button>
-        <LoginOutlined/>
-          My Profile
+        <UserOutlined/>
+        My Profile
       </Button>
     </NavLink>
   );

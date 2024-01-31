@@ -1,5 +1,6 @@
 import { SignInRequest } from '@scheduler/shared';
-import React, { useCallback, useEffect } from 'react';
+import BaseLayout from 'layout/BaseLayout/BaseLayout';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -36,10 +37,14 @@ export const SignInView = () => {
   }, []);
   
   return (
-    <>
-      <SignIn signIn={login} loading={loading}/>
-      <SignUpButton/>
-      <ForgotPasswordButton/>
-    </>
+    <BaseLayout
+      content={<SignIn signIn={login} loading={loading}/>}
+      ctas={
+        <>
+          <SignUpButton/>
+          <ForgotPasswordButton/>
+        </>
+      }
+    />
   );
 };

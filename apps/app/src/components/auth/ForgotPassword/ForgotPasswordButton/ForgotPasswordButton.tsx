@@ -1,5 +1,5 @@
 import {
-  LoginOutlined
+  QuestionCircleOutlined
 } from '@ant-design/icons';
 import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
@@ -8,7 +8,7 @@ const ForgotPasswordButton = () => {
   return (
     <NavLink to='/forgot-password'>
       <Button>
-        <LoginOutlined/>
+        <QuestionCircleOutlined/>
             Forgot your Password?
       </Button>
     </NavLink>

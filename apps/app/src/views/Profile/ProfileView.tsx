@@ -1,5 +1,5 @@
 import { UpdateUserRequest } from '@scheduler/shared';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import Profile from '../../components/profile/Profile';

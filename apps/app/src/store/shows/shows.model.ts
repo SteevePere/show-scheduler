@@ -1,12 +1,7 @@
-export interface Show {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
+import { ShowObject } from '@scheduler/shared';
 
 export interface ShowState {
   loading: boolean;
   error: string | null;
-  data: Show[];
+  data: ShowObject[];
 }

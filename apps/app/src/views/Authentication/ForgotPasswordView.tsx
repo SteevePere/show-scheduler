@@ -1,5 +1,6 @@
 import { ForgotPasswordRequest, ResetPasswordRequest } from '@scheduler/shared';
-import React, { useCallback, useEffect } from 'react';
+import BaseLayout from 'layout/BaseLayout/BaseLayout';
+import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -40,26 +41,31 @@ export const ForgotPasswordView = () => {
           type: 'success',
           message: 'Request Sent',
           description: 
-            'An email will be sent to this email address if it exists in our database!'
+            'An email will be sent to this email address if it exists in our database!',
+          duration: 5,
         } : {
           type: 'success',
           message: 'Password Updated',
           description: 
-            'Your password has been reset!'
+            'Your password has been reset!',
+          duration: 5,
         }
       );
     }
   }, [success, error]);
 
   return isRequestToken ? (
-    <>
-      <ForgotPassword handlePasswordReset={handlePasswordRequest} loading={loading}/>
-      <BackButton/>
-    </>
+    <BaseLayout
+      content={<ForgotPassword handlePasswordReset={handlePasswordRequest} loading={loading}/>}
+      ctas={
+        <BackButton/>
+      }
+    />
   ) : (
-    <>
-      <ResetPassword handlePasswordReset={handlePasswordReset} loading={loading}/>
-      {success && <SignInButton/>}
-    </>
+    <BaseLayout
+      content={<ResetPassword handlePasswordReset={handlePasswordReset} loading={loading}/>}
+      ctas={success ? <SignInButton/> : undefined}
+    />
+   
   );
 };

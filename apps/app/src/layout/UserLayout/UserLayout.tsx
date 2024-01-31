@@ -1,5 +1,5 @@
 import {
-  EditOutlined
+  SearchOutlined
 } from '@ant-design/icons';
 import { Layout } from 'antd';
 import React, { Component } from 'react';
@@ -31,10 +31,10 @@ const UserLayout = (props: UserLayoutProps) => {
 
   const menuItems: MenuItem[] = [
 	  {
-	    key: 'posts',
-	    icon: <EditOutlined/>,
-	    name: 'Posts',
-	    to: '/posts',
+	    key: 'search',
+	    icon: <SearchOutlined/>,
+	    name: 'Search Shows',
+	    to: '/search',
 	  },
   ];
 

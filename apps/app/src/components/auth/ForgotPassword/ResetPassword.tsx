@@ -1,5 +1,5 @@
 import { ResetPasswordRequest } from '@scheduler/shared';
-import { Button, Card, Col, Form, Input, Row } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { IFormInput } from 'models/form/form-input.interface';
 
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
@@ -38,7 +38,7 @@ const ForgotPassword = (props: IResetPasswordProps) => {
     },
     {
       key: 'passwordConfirmInput',
-      label: 'Confirm New Password',
+      label: 'Confirm Password',
       name: 'passwordConfirm',
       dependencies: ['password'],
       rules: [
@@ -62,40 +62,29 @@ const ForgotPassword = (props: IResetPasswordProps) => {
   ];
 
   return (
-    <Card
-      id='sign-in'
-      bordered={false}
+    <Form
+      name='basic'
+      labelCol={{ span: 6 }}
+      labelAlign='left'
+      initialValues={{ remember: true }}
+      onFinish={handlePasswordReset}
+      autoComplete='off'
     >
-      <Row
-        gutter={[24, 24]}
-      >
-        <Col span={8} offset={8}>
-          <Form
-            name='basic'
-            labelCol={{ span: 6 }}
-            initialValues={{ remember: true }}
-            onFinish={handlePasswordReset}
-            autoComplete='off'
-          >
-            {formInputs.map((input) => (
-              <Form.Item
-                key={input.key}
-                label={input.label}
-                name={input.name}
-                rules={input.rules}
-              >
-                {input.children}
-              </Form.Item>
-            ))}
-            <Form.Item wrapperCol={{ offset: 12, span: 8 }}>
-              <Button type='primary' htmlType='submit' loading={loading}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    </Card>
+      {formInputs.map((input) => (
+        <Form.Item
+          key={input.key}
+          label={input.label}
+          name={input.name}
+          rules={input.rules}
+        >
+          {input.children}
+        </Form.Item>
+      ))}
+      <Button block type='primary' htmlType='submit' loading={loading}>
+        {!loading && 'Change Password'}
+      </Button>
+    </Form>
+        
   );
 };
 

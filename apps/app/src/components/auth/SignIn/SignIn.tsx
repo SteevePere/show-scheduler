@@ -1,8 +1,5 @@
 import { SignInRequest } from '@scheduler/shared';
-import { Button, Card, Col, Form, Input, Row } from 'antd';
-import React from 'react';
-
-import './SignIn.css';
+import { Button, Form, Input } from 'antd';
 
 interface SignInProps {
   signIn: (values: SignInRequest) => void;
@@ -13,50 +10,39 @@ const SignIn = (props: SignInProps) => {
   const { signIn, loading } = props;
 
   return (
-    <Card
-      id='sign-in'
-      bordered={false}
+    <Form
+      name='basic'
+      initialValues={{ remember: true }}
+      onFinish={signIn}
+      autoComplete='off'
+      labelCol={{ span: 6 }}
+      labelAlign='left'
     >
-      <Row
-        gutter={[24, 24]}
+      <Form.Item
+        label='Email'
+        name='email'
+        rules={[
+          { required: true, message: 'Please input your username!' },
+          {
+            type: 'email',
+            message: 'The input is not a valid e-mail!',
+          },
+        ]}
       >
-        <Col span={8} offset={8}>
-          <Form
-            name='basic'
-            labelCol={{ span: 6 }}
-            initialValues={{ remember: true }}
-            onFinish={signIn}
-            autoComplete='off'
-          >
-            <Form.Item
-              label='Email'
-              name='email'
-              rules={[
-                { required: true, message: 'Please input your username!' },
-                {
-                  type: 'email',
-                  message: 'The input is not a valid e-mail!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label='Password'
-              name='password'
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 12, span: 8 }}>
-              <Button type='primary' htmlType='submit' loading={loading}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    </Card>
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label='Password'
+        name='password'
+        rules={[{ required: true, message: 'Please input your password!' }]}
+      >
+        <Input.Password />
+      </Form.Item>
+      <Button block type='primary' htmlType='submit' loading={loading}>
+        {!loading && 'Submit'}
+      </Button>
+    </Form>
+          
   );
 };
  

@@ -1,7 +1,6 @@
 import { RegistrationRequest, UpdateUserRequest, UserObject } from '@scheduler/shared';
-import { Button, Card, Col, DatePicker, Form, FormInstance, Input, Radio, Row } from 'antd';
+import { Button, DatePicker, Form, FormInstance, Input, Radio } from 'antd';
 import moment from 'moment';
-import React from 'react';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
@@ -104,7 +103,7 @@ const UserForm = (props: IUserFormProps) => {
       name: 'birthDate',
       initialValue: user ? moment(user?.birthDate) : undefined,
       rules: [{ required: true, message: 'Please input your birth date!' }],
-      children: <DatePicker key='birthDatePicker'/>
+      children: <DatePicker key='birthDatePicker' style={{ width: '100%' }}/>
     },
   ];
 
@@ -132,33 +131,21 @@ const UserForm = (props: IUserFormProps) => {
   };
 
   return (
-    <Card
-      id='user-form-card'
-      bordered={false}
+    <Form
+      form={form}
+      name='basic'
+      labelCol={{ span: 6 }}
+      labelAlign='left'
+      initialValues={{ remember: true }}
+      onFinish={handler}
+      autoComplete='on'
+      disabled={disabled}
     >
-      <Row
-        gutter={[24, 24]}
-      >
-        <Col span={8} offset={8}>
-          <Form
-            form={form}
-            name='basic'
-            labelCol={{ span: 6 }}
-            initialValues={{ remember: true }}
-            onFinish={handler}
-            autoComplete='on'
-            disabled={disabled}
-          >
-            {loading ? <LoadingSpinner/> : renderFields()}
-            <Form.Item wrapperCol={{ offset: 12, span: 8 }}>
-              <Button type='primary' htmlType='submit' loading={loading}>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    </Card>
+      {loading ? <LoadingSpinner/> : renderFields()}
+      <Button block type='primary' htmlType='submit' loading={loading}>
+        {!loading && 'Submit'}
+      </Button>
+    </Form> 
   );
 };
 

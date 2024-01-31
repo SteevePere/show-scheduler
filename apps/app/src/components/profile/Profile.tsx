@@ -1,6 +1,9 @@
+import {
+  UserOutlined
+} from '@ant-design/icons';
 import { UpdateUserRequest, UserObject } from '@scheduler/shared';
-import { Button, Input } from 'antd';
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import { Button, Col, Divider, Input, Row, Space } from 'antd';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 import { IFormInput } from '../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../models/password.model';
@@ -40,7 +43,7 @@ const Profile = (props: IProfileProps) => {
     },
     {
       key: 'passwordConfirmInput',
-      label: 'Confirm New Password',
+      label: 'Confirm Password',
       name: 'passwordConfirm',
       dependencies: ['password'],
       rules: [
@@ -71,25 +74,35 @@ const Profile = (props: IProfileProps) => {
   ];
 
   return (
-    <>
-      <UserForm
-        user={currentUser}
-        loading={loading}
-        disabled={!editing}
-        fields={[
-          'email',
-          'firstName',
-          'lastName',
-          'birthDate',
-          'gender',
-        ]}
-        extraInputs={extraInputs}
-        handler={updateUser}
-      />
-      <Button type='primary' onClick={() => handleCancel()}>
-        {editing  ? 'Cancel' : 'Edit'}
-      </Button>
-    </>
+    <Row align='middle' justify='center'>
+      <Col span={22} md={{ span: 16 }} xl={{ span: 12 }}>
+        <h1>
+          <Space>
+            <UserOutlined/>
+            My Profile
+          </Space>
+        </h1>
+        <Divider/>
+        <UserForm
+          user={currentUser}
+          loading={loading}
+          disabled={!editing}
+          fields={[
+            'email',
+            'firstName',
+            'lastName',
+            'birthDate',
+            'gender',
+          ]}
+          extraInputs={extraInputs}
+          handler={updateUser}
+        />
+        <Divider/>
+        <Button block type='primary' onClick={() => handleCancel()}>
+          {editing  ? 'Cancel' : 'Edit'}
+        </Button>
+      </Col>
+    </Row>
   );
 };
         

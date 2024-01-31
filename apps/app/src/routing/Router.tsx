@@ -9,8 +9,8 @@ import { RootState } from 'store/store';
 import { ForgotPasswordView } from 'views/Authentication/ForgotPasswordView';
 import { SignInView } from 'views/Authentication/SignInView';
 import { SignUpView } from 'views/Authentication/SignUpView';
-import { PostsView } from 'views/Posts/PostsView';
 import { ProfileView } from 'views/Profile/ProfileView';
+import { SearchView } from 'views/Search/SearchView';
 
 import NotFound from './NotFound/NotFound';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
@@ -21,7 +21,7 @@ export const SIGN_UP_ROUTE = '/sign-up';
 export const FORGOT_PASSWORD_ROUTE = '/forgot-password';
 export const RESET_PASSWORD_ROUTE = '/reset-password';
 export const PROFILE_ROUTE = '/profile';
-export const POSTS_ROUTE = '/posts';
+export const SEARCH_ROUTE = '/search';
 
 const routes: RouteProps[] = [
   {
@@ -53,9 +53,9 @@ const protectedRoutes: RouteProps[] = [
 	  children: <ProfileView/>,
   },
   {
-	  path: POSTS_ROUTE,
+	  path: SEARCH_ROUTE,
 	  exact: true,
-	  children: <PostsView/>,
+	  children: <SearchView/>,
   },
 ];
 

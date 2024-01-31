@@ -1,10 +1,7 @@
 import { RegistrationRequest } from '@scheduler/shared';
-import React from 'react';
 
 import UserForm from '../../shared/UserForm/UserForm';
   
-import './SignUp.css';
-
 interface ISignUpProps {
   signUp: (values: RegistrationRequest) => void;
   loading: boolean;

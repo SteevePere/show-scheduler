@@ -2,11 +2,10 @@ import {
   LogoutOutlined
 } from '@ant-design/icons';
 import { Button } from 'antd';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { useAppDispatch } from '../../../../hooks/use-app-dispatch.hook';
 import { signOut } from '../../../../store/auth/auth.thunks';
-import './SignOutButton.css';
 
 const SignOutButton = () => {
   const dispatch = useAppDispatch();

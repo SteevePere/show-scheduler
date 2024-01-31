@@ -2,7 +2,6 @@ import {
   HomeOutlined
 } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './NotFound.css';
