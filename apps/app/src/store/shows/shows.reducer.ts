@@ -10,11 +10,11 @@ export const showsReducer = {
   setSuccess: (state: ShowState, action: PayloadAction<ShowObject[]>) => {
     state.loading = false;
     state.error = null;
-    state.data = action.payload;
+    state.shows = action.payload;
   },
   setFailure: (state: ShowState, action: PayloadAction<string>) => {
     state.loading = false;
     state.error = action.payload;
-    state.data = [];
+    state.shows = [];
   },
 };

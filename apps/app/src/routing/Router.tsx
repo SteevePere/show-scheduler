@@ -10,7 +10,8 @@ import { ForgotPasswordView } from 'views/Authentication/ForgotPasswordView';
 import { SignInView } from 'views/Authentication/SignInView';
 import { SignUpView } from 'views/Authentication/SignUpView';
 import { ProfileView } from 'views/Profile/ProfileView';
-import { SearchView } from 'views/Search/SearchView';
+import { SearchView } from 'views/Shows/SearchView';
+import { ShowView } from 'views/Shows/ShowView';
 
 import NotFound from './NotFound/NotFound';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
@@ -22,6 +23,7 @@ export const FORGOT_PASSWORD_ROUTE = '/forgot-password';
 export const RESET_PASSWORD_ROUTE = '/reset-password';
 export const PROFILE_ROUTE = '/profile';
 export const SEARCH_ROUTE = '/search';
+export const SHOW_ROUTE = '/show/:showId';
 
 const routes: RouteProps[] = [
   {
@@ -56,6 +58,10 @@ const protectedRoutes: RouteProps[] = [
 	  path: SEARCH_ROUTE,
 	  exact: true,
 	  children: <SearchView/>,
+  },
+  {
+	  path: SHOW_ROUTE,
+	  children: <ShowView/>,
   },
 ];
 

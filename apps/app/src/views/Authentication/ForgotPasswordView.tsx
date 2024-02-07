@@ -3,6 +3,7 @@ import BaseLayout from 'layout/BaseLayout/BaseLayout';
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { reset } from 'store/auth/auth.slice';
 
 import ForgotPassword from '../../components/auth/ForgotPassword/ForgotPassword';
 import ResetPassword from '../../components/auth/ForgotPassword/ResetPassword';
@@ -20,7 +21,7 @@ export const ForgotPasswordView = () => {
   const location = useLocation();
   const query = useQuery();
 
-  const { loading, error, success } = useSelector((state: RootState) => state.auth);
+  const { currentUser, loading, forgotPassError, success } = useSelector((state: RootState) => state.auth);
   const isRequestToken = location.pathname === FORGOT_PASSWORD_ROUTE;
   
   const handlePasswordRequest = useCallback((values: ForgotPasswordRequest) => {
@@ -32,7 +33,7 @@ export const ForgotPasswordView = () => {
   }, []);
 
   useEffect(() => {
-    if (error) {
+    if (forgotPassError) {
       openNotification({ type: 'error', message: 'Request Failed', description: 'Something went wrong!' });
     }
     else if (success) {
@@ -52,7 +53,15 @@ export const ForgotPasswordView = () => {
         }
       );
     }
-  }, [success, error]);
+  }, [success, forgotPassError]);
+
+  useEffect(() => {
+    return () => {
+      if (!currentUser) {
+        dispatch(reset());
+      }
+    };
+  }, []);
 
   return isRequestToken ? (
     <BaseLayout

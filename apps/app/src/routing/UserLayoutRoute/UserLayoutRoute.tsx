@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route } from 'react-router-dom';
 
 import UserLayout from '../../layout/UserLayout/UserLayout';
@@ -14,13 +13,11 @@ const UserLayoutRoute = ({ children, ...rest }: UserLayoutRouteProps) => {
   return (
     <Route
       {...rest}
-      component={(props: JSX.IntrinsicAttributes) =>
-        <UserLayout
-          {...props}
-          content={children}
-        />
-      }
-    />
+    >
+      <UserLayout
+        content={children}
+      />
+    </Route>
   );
 };
 

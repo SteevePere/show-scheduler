@@ -2,6 +2,8 @@ import { ShowState } from './shows.model';
 
 export const showsInitialState: ShowState = {
   loading: false,
+  searched: false,
   error: null,
-  data: [],
+  shows: [],
+  show: null,
 };

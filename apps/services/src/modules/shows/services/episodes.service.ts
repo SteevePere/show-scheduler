@@ -60,11 +60,13 @@ export class EpisodesService {
         const { externalId, name, number, summary, imageUrl, airDate } =
           externalEpisode;
 
-        const { file: image } = imageUrl
+        const imageResult = imageUrl
           ? await this.filesService.saveFile({
               filePath: imageUrl,
             })
           : null;
+
+        const image = imageResult ? imageResult.file : null;
 
         const episodeToSave = this.episodesRepository.create({
           seasonId,

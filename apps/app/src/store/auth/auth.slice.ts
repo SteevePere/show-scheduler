@@ -12,20 +12,20 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(signUp.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.signUpError = null;
     })
     .addCase(signUp.fulfilled, (state, action) => {
       state.currentUser = action.payload.user;
       state.isLoggedIn = true;
       state.loading = false;
-      state.error = null;
+      state.signUpError = null;
       localStorage.setItem('is-logged-in', 'true');
     })
     .addCase(signUp.rejected, (state, action) => {
       if ((action.payload as AxiosResponse).data.statusCode === 409) {
-        state.error = 'This username is already in use!';
+        state.signUpError = 'This username is already in use!';
       } else {
-        state.error = 'An error occured';
+        state.signUpError = 'An error occured';
       }
 
       state.currentUser = null;
@@ -36,20 +36,20 @@ export const authSlice = createSlice({
 
     builder.addCase(signIn.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.signInError = null;
     })
     .addCase(signIn.fulfilled, (state, action) => {
       state.currentUser = action.payload.user;
       state.isLoggedIn = true;
       state.loading = false;
-      state.error = null;
+      state.signInError = null;
       localStorage.setItem('is-logged-in', 'true');
     })
     .addCase(signIn.rejected, (state, action) => {
       state.currentUser = null;
       state.isLoggedIn = false;
       state.loading = false;
-      state.error = action.error.message || null;
+      state.signInError = action.error.message || null;
       localStorage.setItem('is-logged-in', 'false');
     });
 
@@ -72,50 +72,50 @@ export const authSlice = createSlice({
 
     builder.addCase(requestPasswordReset.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.forgotPassError = null;
       state.success = false;
     })
     .addCase(requestPasswordReset.fulfilled, (state) => {
       state.loading = false;
-      state.error = null;
+      state.forgotPassError = null;
       state.success = true;
     })
     .addCase(requestPasswordReset.rejected, (state) => {
       state.loading = false;
-      state.error = 'An error occured';
+      state.forgotPassError = 'An error occured';
       state.success = false;
     });
 
     builder.addCase(resetPassword.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.forgotPassError = null;
       state.success = false;
     })
     .addCase(resetPassword.fulfilled, (state) => {
       state.loading = false;
-      state.error = null;
+      state.forgotPassError = null;
       state.success = true;
     })
     .addCase(resetPassword.rejected, (state) => {
       state.loading = false;
-      state.error = 'An error occured';
+      state.forgotPassError = 'An error occured';
       state.success = false;
     });
 
     builder.addCase(updateUser.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.updateUserError = null;
       state.success = false;
     })
     .addCase(updateUser.fulfilled, (state, action) => {
       state.currentUser = action.payload.user;
       state.loading = false;
-      state.error = null;
+      state.updateUserError = null;
       state.success = true;
     })
     .addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.error?.message || null;
+      state.updateUserError = action.error?.message || null;
       state.success = false;
     });
   },

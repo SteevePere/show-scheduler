@@ -17,7 +17,7 @@ export const SignUpView = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const from = useFromLocation();
-  const { loading, error, currentUser } = useSelector((state: RootState) => state.auth);
+  const { loading, signUpError, currentUser } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (currentUser) {
@@ -26,10 +26,10 @@ export const SignUpView = () => {
   }, [currentUser, history, from]);
 
   useEffect(() => {
-    if (error) {
-      openNotification({ type: 'error', message: 'Registration Failed', description: error });
+    if (signUpError) {
+      openNotification({ type: 'error', message: 'Registration Failed', description: signUpError });
     }
-  }, [error]);
+  }, [signUpError]);
 
   const register = useCallback((values: RegistrationRequest) => {
     dispatch(signUp(values));

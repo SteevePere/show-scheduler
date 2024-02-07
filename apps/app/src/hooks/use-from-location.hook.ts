@@ -2,11 +2,14 @@ import { useLocation } from 'react-router-dom';
 
 type LocationState = {
   from: {
-    path: string;
+    pathname: string;
+    search: string;
   }
 }
 
 export const useFromLocation = () => {
   const route = useLocation<LocationState>();
-  return route.state?.from.path;
+  console.log(route);
+  
+  return route.state?.from.pathname + route.state?.from.search;
 };

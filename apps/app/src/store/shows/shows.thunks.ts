@@ -1,8 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { SearchShowsRequest } from '@scheduler/shared';
+import { FindShowRequest, SearchShowsRequest } from '@scheduler/shared';
 
-import { apiSearchShows } from '../../api/shows.api';
+import { apiFindShow, apiSearchShows } from '../../api/shows.api';
 
 export const searchShows = createAsyncThunk('shows/searchShows', async (data: SearchShowsRequest) => {
   return await apiSearchShows(data);
+});
+
+export const findShow = createAsyncThunk('shows/findShow', async (data: FindShowRequest) => {
+  return await apiFindShow(data);
 });

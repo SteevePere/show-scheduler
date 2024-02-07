@@ -4,6 +4,9 @@ export interface AuthState {
   currentUser: UserObject | null;
   isLoggedIn: boolean;
   loading: boolean;
-  error: string | null;
+  signInError: string | null;
+  signUpError: string | null;
+  forgotPassError: string | null;
+  updateUserError: string | null;
   success: boolean;
 }

@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
   
 type HandlerType = RegistrationRequest & UpdateUserRequest;
 
@@ -141,7 +140,7 @@ const UserForm = (props: IUserFormProps) => {
       autoComplete='on'
       disabled={disabled}
     >
-      {loading ? <LoadingSpinner/> : renderFields()}
+      {renderFields()}
       <Button block type='primary' htmlType='submit' loading={loading}>
         {!loading && 'Submit'}
       </Button>

@@ -4,22 +4,17 @@ import { useSelector } from 'react-redux';
 
 import Profile from '../../components/profile/Profile';
 import { useAppDispatch } from '../../hooks/use-app-dispatch.hook';
-import { setSuccess } from '../../store/auth/auth.slice';
 import { updateUser } from '../../store/auth/auth.thunks';
 import { RootState } from '../../store/store';
 import { openNotification } from '../../utils/notification.util';
 
 export const ProfileView = () => {
   const dispatch = useAppDispatch();
-  const { currentUser, error, success, loading } = useSelector((state: RootState) => state.auth);
+  const { currentUser, updateUserError, success, loading } = useSelector((state: RootState) => state.auth);
   
   if (!currentUser) {
     return null;
   }
-
-  useEffect(() => {
-    dispatch(setSuccess(false));
-  }, []);
 
   const [editing, setEditing] = useState<boolean>(false);
 
@@ -31,12 +26,12 @@ export const ProfileView = () => {
   }, []);
 
   useEffect(() => {
-    if (error) {
+    if (updateUserError) {
       setEditing(true);
       openNotification({
         type: 'error',
         message: 'Profile Update Failed',
-        description: error || 'Something went wrong!'
+        description: updateUserError || 'Something went wrong!'
       });
     }
     else if (success) {
@@ -49,7 +44,7 @@ export const ProfileView = () => {
         }
       );
     }
-  }, [success, error]);
+  }, [success, updateUserError]);
 
   return (
     <Profile
