@@ -5,7 +5,9 @@ import {
   FindShowResponse,
   SearchShowsRequest,
   SearchShowsResponse,
+  UserObject,
 } from '@scheduler/shared';
+import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
 import { Public } from 'src/core/decorators/public.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { FindShowData } from '../dtos/find-show.dto';
@@ -33,17 +35,20 @@ export class ShowsController {
     );
   }
 
-  @Public()
   @Get()
   @ApiOperation({ summary: 'Find a particular Show' })
   @ApiOkResponse({
     type: FindShowResponse,
   })
-  async findShow(@Query() data: FindShowRequest): Promise<FindShowResponse> {
+  async findShow(
+    @Query() data: FindShowRequest,
+    @CurrentAuthenticatedUser() currentUser: UserObject,
+  ): Promise<FindShowResponse> {
     return this.showsService.findShow(
       createFromClass(FindShowData, {
         ...data,
         ignoreNotFound: !!data.externalId,
+        currentUser,
       }),
     );
   }

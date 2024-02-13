@@ -5,6 +5,10 @@ import { FilesService } from 'src/modules/files/services/files.service';
 import { Repository } from 'typeorm';
 import { FindSeasonData } from '../dtos/find-season.dto';
 import {
+  FindShowSeasonsData,
+  FindShowSeasonsResult,
+} from '../dtos/find-show-seasons.dto';
+import {
   SaveShowSeasonsData,
   SaveShowSeasonsResult,
 } from '../dtos/save-show-seasons.dto';
@@ -40,15 +44,23 @@ export class SeasonsService {
     return foundSeason;
   }
 
+  async findShowSeasons(
+    data: FindShowSeasonsData,
+  ): Promise<FindShowSeasonsResult> {
+    const { showExternalId } = data;
+    return await this.dataProviderService.findShowSeasons({
+      showExternalId,
+    });
+  }
+
   async saveShowSeasons(
     data: SaveShowSeasonsData,
   ): Promise<SaveShowSeasonsResult> {
     const { showId, showExternalId } = data;
 
-    const { seasons: externalSeasons } =
-      await this.dataProviderService.findShowSeasons({
-        showExternalId,
-      });
+    const { seasons: externalSeasons } = await this.findShowSeasons({
+      showExternalId,
+    });
 
     const seasons = await Promise.all(
       externalSeasons.map(async (externalSeason) => {

@@ -1,7 +1,7 @@
 import {
   SearchOutlined
 } from '@ant-design/icons';
-import { Layout } from 'antd';
+import { Divider, Layout } from 'antd';
 import React, { Component } from 'react';
 
 import SignOutButton from '../../components/auth/SignOut/SignOutButton/SignOutButton';
@@ -64,11 +64,11 @@ const UserLayout = (props: UserLayoutProps) => {
         <Header
           className='site-layout-sub-header-background'
           style={{
-            padding: 0,
             textAlign: 'right'
           }}
         >
           <ProfileButton/>
+          <Divider type='vertical' orientation='center'/>
           <SignOutButton/>
         </Header>
         <Content
@@ -85,7 +85,7 @@ const UserLayout = (props: UserLayoutProps) => {
           style={{ textAlign: 'center' }}
         >
           <small>
-			      ©Show-Scheduler 2022
+			      ©Show-Scheduler 2024
           </small>
         </Footer>
       </Layout>

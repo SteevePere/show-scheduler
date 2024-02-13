@@ -1,10 +1,13 @@
 import {
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
+import { FavoritesService } from 'src/modules/favorites/services/favorites.service';
 import { FilesService } from 'src/modules/files/services/files.service';
 import { Connection, DeepPartial, Repository } from 'typeorm';
 import { DeleteObsoleteShowsData } from '../dtos/delete-obsolete-shows.dto';
@@ -45,6 +48,8 @@ export class ShowsService {
     private readonly showsRepository: Repository<ShowEntity>,
     @InjectRepository(GenreEntity)
     private readonly genresRepository: Repository<GenreEntity>,
+    @Inject(forwardRef(() => FavoritesService))
+    private readonly favoritesService: FavoritesService,
     private readonly dataProviderService: DataProviderService,
     private readonly seasonsService: SeasonsService,
     private readonly episodesService: EpisodesService,
@@ -56,26 +61,68 @@ export class ShowsService {
   }
 
   async findShow(data: FindShowData): Promise<FindShowResult> {
-    const { externalId, ignoreNotFound = false, onlyInternal = false } = data;
+    const {
+      externalId,
+      currentUser,
+      ignoreNotFound = false,
+      onlyInternal = false,
+    } = data;
 
     const savedShow = await this.findShowEntity({
       ...data,
       ignoreNotFound,
+      relations: ['seasons'],
+      order: {
+        seasons: {
+          number: 'ASC',
+        },
+      },
     });
+
     if (!savedShow) {
+      // The Show does not exist in DB
       if (!onlyInternal) {
-        return this.dataProviderService.findShow({ externalId });
+        // We want to fetch the Show from the third party
+        const { show } = await this.dataProviderService.findShow({
+          externalId,
+        });
+        const { seasons } = await this.seasonsService.findShowSeasons({
+          showExternalId: show.externalId,
+        });
+        show.seasons = seasons;
+        return { show };
       }
       return { show: null };
     }
 
-    return { show: createShowObjectFromEntity({ showEntity: savedShow }) };
+    const isFavoritedByUser = currentUser
+      ? await this.favoritesService.isShowUserFavorite({
+          showId: savedShow.id,
+          userId: currentUser.id,
+        })
+      : false;
+
+    return {
+      show: createShowObjectFromEntity({
+        showEntity: savedShow,
+        isFavoritedByUser,
+      }),
+    };
   }
 
   private async findShowEntity(data: FindShowData): Promise<ShowEntity> {
-    const { id, externalId, ignoreNotFound = false } = data;
+    const {
+      id,
+      externalId,
+      ignoreNotFound = false,
+      relations = [],
+      order,
+    } = data;
+
     const foundShow = await this.showsRepository.findOne({
       where: [{ id }, { externalId }],
+      relations,
+      order,
     });
 
     if (!foundShow && !ignoreNotFound) {
@@ -104,11 +151,13 @@ export class ShowsService {
       names: stringGenres,
     });
 
-    const { file: image } = imageUrl
+    const imageResult = imageUrl
       ? await this.filesService.saveFile({
           filePath: imageUrl,
         })
       : null;
+
+    const image = imageResult ? imageResult.file : null;
 
     const showToSave = this.showsRepository.create({
       externalId,
@@ -141,7 +190,7 @@ export class ShowsService {
     return this.episodesService.saveSeasonEpisodes(data);
   }
 
-  async findOrSaveShowGenreEntities(
+  private async findOrSaveShowGenreEntities(
     data: SaveShowGenreData,
   ): Promise<GenreEntity[]> {
     return await Promise.all(

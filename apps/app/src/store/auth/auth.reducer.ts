@@ -12,6 +12,11 @@ export const authReducer = {
     state.forgotPassError = null;
     state.success = false;
   },
+  resetAuthErrors(state: AuthState) {
+    state.signInError = null;
+    state.signUpError = null;
+    state.forgotPassError = null;
+  },
   setSuccess(state: AuthState, action: PayloadAction<boolean>) {
     state.success = action.payload;
   }

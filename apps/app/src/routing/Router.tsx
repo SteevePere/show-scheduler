@@ -1,3 +1,4 @@
+import AlertContainer from 'containers/Alerts/AlertContainer';
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -61,6 +62,7 @@ const protectedRoutes: RouteProps[] = [
   },
   {
 	  path: SHOW_ROUTE,
+	  exact: true,
 	  children: <ShowView/>,
   },
 ];
@@ -78,24 +80,27 @@ const AppRouter = () => {
   return (
 	  <BrowserRouter>
 	    <Switch>
-	      {routes.map(((route, index) => 
+	        {routes.map(((route, index) => 
           <Route
             key={index}
             exact={route.exact}
             path={route.path}
           >
             {route.children}
-          </Route>))}
+          </Route>
+        ))}
 	      <ProtectedRoute>
 		  	  <Switch>
-            {protectedRoutes.map(((route, index) => 
-              <UserLayoutRoute
-                key={index}
-                exact={route.exact}
-                path={route.path}
-              >
-                {route.children}
-              </UserLayoutRoute>))}
+            <AlertContainer>
+              {protectedRoutes.map(((route, index) => 
+                <UserLayoutRoute
+                  key={index}
+                  exact={route.exact}
+                  path={route.path}
+                >
+                  {route.children}
+                </UserLayoutRoute>))}
+            </AlertContainer>
 	        </Switch>
 	      </ProtectedRoute>
 	      <Route component={NotFound}/>

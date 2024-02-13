@@ -23,8 +23,6 @@ export const SignInView = () => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log(from);
-      
       history.push(from || routingConfig.home);
     }
   }, [currentUser, history, from]);

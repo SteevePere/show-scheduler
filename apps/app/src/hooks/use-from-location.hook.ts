@@ -9,7 +9,5 @@ type LocationState = {
 
 export const useFromLocation = () => {
   const route = useLocation<LocationState>();
-  console.log(route);
-  
-  return route.state?.from.pathname + route.state?.from.search;
+  return route.state?.from?.pathname + route.state?.from?.search;
 };

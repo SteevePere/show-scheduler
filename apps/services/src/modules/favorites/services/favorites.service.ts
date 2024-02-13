@@ -1,7 +1,9 @@
 import {
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
@@ -30,6 +32,7 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
   constructor(
     @InjectRepository(UserFavoriteShowEntity)
     private readonly userFavoriteShowsRepository: Repository<UserFavoriteShowEntity>,
+    @Inject(forwardRef(() => ShowsService))
     private readonly showsService: ShowsService,
   ) {
     super(userFavoriteShowsRepository);
@@ -113,7 +116,7 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
     return { show };
   }
 
-  private async findUserFavoriteShowEntity(
+  async findUserFavoriteShowEntity(
     data: FindUserFavoriteShowData,
   ): Promise<UserFavoriteShowEntity> {
     const { userId, showId } = data;
@@ -130,6 +133,18 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
     }
 
     return foundUserFavorite;
+  }
+
+  async isShowUserFavorite(data: FindUserFavoriteShowData): Promise<boolean> {
+    try {
+      await this.findUserFavoriteShowEntity(data);
+      return true;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return false;
+      }
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async removeFavorite(

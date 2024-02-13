@@ -18,7 +18,7 @@ import { FavoritesService } from './services/favorites.service';
     ShowsModule,
   ],
   providers: [FavoritesService, FavoriteCategoriesService],
-  exports: [],
+  exports: [FavoritesService],
   controllers: [FavoritesController, FavoriteCategoriesController],
 })
 export class FavoritesModule {}

@@ -1,21 +1,28 @@
-import { CreateFavoriteRequest, ShowObject } from '@scheduler/shared';
+import { CreateFavoriteRequest, RemoveFavoriteRequest, ShowObject } from '@scheduler/shared';
 import { Col, Empty, Row } from 'antd';
 import LoadingSpinner from 'components/shared/LoadingSpinner/LoadingSpinner';
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { createFavorite } from 'store/favorites/favorites.thunks';
+import { createFavorite, deleteFavorite } from 'store/favorites/favorites.thunks';
 import { selectShows } from 'store/shows/shows.slice';
+import { RootState } from 'store/store';
 
 import ShowCard from '../ShowCard/ShowCard';
 
 const ShowList = () => {
   const state = useSelector(selectShows);
+  const { loading: favoritesLoading } = useSelector((state: RootState) => state.favorites);
   const dispatch = useAppDispatch();
   
   const saveFavorite = useCallback((values: CreateFavoriteRequest) => {
     dispatch(createFavorite(values));
   }, []);
+
+  const removeFavorite = useCallback((values: RemoveFavoriteRequest) => {
+    dispatch(deleteFavorite(values));
+  }, []);
+
 
   return (
     <Row gutter={[24, 24]}>
@@ -30,6 +37,9 @@ const ShowList = () => {
           <ShowCard
             show={show}
             saveFavorite={saveFavorite}
+            removeFavorite={removeFavorite}
+            favoritesLoading={favoritesLoading}
+            showFullText={false}
           />
         </Col>
       )}

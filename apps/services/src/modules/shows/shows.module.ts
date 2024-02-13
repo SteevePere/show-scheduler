@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Module, forwardRef } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SchedulerConfig } from 'src/config/scheduler.config';
@@ -16,6 +16,7 @@ import { EpisodesService } from './services/episodes.service';
 import { SchedulerService } from './services/scheduler.service';
 import { SeasonsService } from './services/seasons.service';
 import { ShowsService } from './services/shows.service';
+import { FavoritesModule } from '../favorites/favorites.module';
 
 @Global()
 @Module({
@@ -33,6 +34,7 @@ import { ShowsService } from './services/shows.service';
     DataProviderModule,
     FilesModule,
     EmailsModule,
+    forwardRef(() => FavoritesModule),
   ],
   providers: [ShowsService, SeasonsService, EpisodesService, SchedulerService],
   exports: [ShowsService],

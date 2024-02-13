@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 const ProfileButton = () => {
   return (
     <NavLink to='/profile'>
-      <Button>
+      <Button type='link'>
         <UserOutlined/>
         My Profile
       </Button>

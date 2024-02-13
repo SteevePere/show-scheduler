@@ -12,36 +12,36 @@ export const showsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(searchShows.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.showsError = null;
       state.searched = true;
     })
     .addCase(searchShows.fulfilled, (state, action) => {
       state.loading = false;
-      state.error = null;
+      state.showsError = null;
       state.shows = action.payload;
     })
     .addCase(searchShows.rejected, (state) => {
-      state.error = 'An error occured';
+      state.showsError = 'Unable to find the requested Show(s)!';
       state.loading = false;
     });
 
     builder.addCase(findShow.pending, (state) => {
       state.loading = true;
-      state.error = null;
+      state.showsError = null;
     })
     .addCase(findShow.fulfilled, (state, action) => {
       state.loading = false;
-      state.error = null;
+      state.showsError = null;
       state.show = action.payload;
     })
     .addCase(findShow.rejected, (state) => {
-      state.error = 'An error occured';
+      state.showsError = 'Unable to find this Show!';
       state.loading = false;
     });
   }
 });
 
-export const { setLoading, setSuccess, setFailure } = showsSlice.actions;
+export const { setLoading, resetShowsState, setShowsError, setShowsSuccess } = showsSlice.actions;
 
 export const selectShows = (state: RootState) => state.shows;
 

@@ -15,7 +15,7 @@ const SignOutButton = () => {
   }, []);
 
   return (
-    <Button onClick={handleLogout}>
+    <Button type='link' onClick={handleLogout}>
       <LogoutOutlined/>
         Sign Out
     </Button>

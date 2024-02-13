@@ -1,19 +1,22 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
+  IsBoolean,
   IsDateString,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   IsUrl,
-  ValidateIf
+  ValidateIf,
+  ValidateNested
 } from 'class-validator';
 
 import {
   IsSafeInt
 } from '../../../decorators/validation/is-safe-integer.decorator';
 import { BaseEntityObject } from '../../shared/objects/base-entity.object';
+import { SeasonObject } from './season.object';
 
 export class ShowObject extends BaseEntityObject {
   @ApiProperty({
@@ -75,6 +78,15 @@ export class ShowObject extends BaseEntityObject {
   genres: string[];
 
   @ApiPropertyOptional({
+    description: 'Seasons of the Show',
+    type: [SeasonObject],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested()
+  seasons?: SeasonObject[];
+
+  @ApiPropertyOptional({
     description: 'Date of last time this Show was added to a User\'s Favorites',
     example: '1991-10-16T21:50:00.000Z',
     nullable: true,
@@ -85,4 +97,12 @@ export class ShowObject extends BaseEntityObject {
   @IsNotEmpty()
   @IsDateString()
   lastFavoritedAt?: Date | null;
+
+  @ApiPropertyOptional({
+    description: 'Whether current User has favorited this Show',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isFavoritedByUser?: boolean;
 }

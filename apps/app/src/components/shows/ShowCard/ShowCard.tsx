@@ -1,10 +1,13 @@
 import {
   EyeOutlined,
-  PlusOutlined,
+  HeartFilled,
+  HeartOutlined,
 } from '@ant-design/icons';
-import { CreateFavoriteRequest, ShowObject } from '@scheduler/shared';
-import { Card, Tooltip } from 'antd';
+import { CreateFavoriteRequest, RemoveFavoriteRequest, ShowObject } from '@scheduler/shared';
+import { Button, Card, Tooltip } from 'antd';
+import { useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
+import { FavoriteLoading } from 'store/favorites/favorites.model';
 
 import ShowCardBody from './ShowCardBody/ShowCardBody';
 import ShowCardHeader from './ShowCardHeader/ShowCardHeader';
@@ -12,11 +15,18 @@ import ShowCardHeader from './ShowCardHeader/ShowCardHeader';
 interface IShowCardProps {
   show: ShowObject;
   saveFavorite: (data: CreateFavoriteRequest) => void;
+  removeFavorite: (data: RemoveFavoriteRequest) => void;
+  favoritesLoading: FavoriteLoading;
   hideViewButton?: boolean;
+  showFullText?: boolean;
 };
 
 const ShowCard = (props: IShowCardProps) => {
-  const { show, saveFavorite, hideViewButton = false } = props;
+  const { show, saveFavorite, removeFavorite, hideViewButton = false, favoritesLoading } = props;
+
+  const isUserFavorite = useMemo(() => {
+    return show.isFavoritedByUser;
+  }, [show.isFavoritedByUser]);
 
   const ViewButton = () => {
     return (
@@ -24,8 +34,9 @@ const ShowCard = (props: IShowCardProps) => {
         <NavLink
           to={'/show/' + show.externalId}
         >
-          <EyeOutlined
+          <Button
             key='view_eye'
+            icon={<EyeOutlined/>}
           />
         </NavLink>
       </Tooltip>
@@ -34,14 +45,17 @@ const ShowCard = (props: IShowCardProps) => {
 
   const AddButton = () => {
     return (
-      <Tooltip title='Add To My Shows' placement='bottom'>
-        <PlusOutlined
+      <Tooltip title={isUserFavorite ? 'Remove from My Shows' : 'Add To My Shows'} placement='bottom'>
+        <Button
+          key='add_plus'
+          icon={isUserFavorite ? <HeartFilled className='primary'/> : <HeartOutlined/>}
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
-            saveFavorite({ showExternalId: show.externalId });
+            show.id && isUserFavorite ? removeFavorite({ showId: show.id })
+              : saveFavorite({ showExternalId: show.externalId });
           }}
-          key='add_plus'
+          loading={favoritesLoading.showExtId === show.externalId}
         />
       </Tooltip>
     );
@@ -66,10 +80,10 @@ const ShowCard = (props: IShowCardProps) => {
         style={{
           height: '100%',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
         }}
         bodyStyle={{
-          flexGrow: '1'
+          flexGrow: '1',
         }}
         actions={getActions()}
       >

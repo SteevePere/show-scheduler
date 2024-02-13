@@ -1,5 +1,5 @@
 import { ShowObject } from '@scheduler/shared';
-import { Avatar, Card, Divider, Space } from 'antd';
+import { Avatar, Card, Space } from 'antd';
 
 const { Meta } = Card;
 
@@ -16,24 +16,26 @@ const ShowCardHeader = (props: IProps) => {
   return (
     <>
       <Space
+        size={1}
         style={{
-          float: 'left',
+          display: 'flex',
+          marginBottom: 22,
+          textAlign: 'left'
         }}
       >
         <Meta
           avatar={
             <Avatar
-              src={show.imageUrl}
-              size='large'
+              src={show.imageUrl || './user_logo.png'}
+              size={80}
+              shape='square'
             />
           }
-          style={{ float: 'left' }}
         />
-        <h3>
+        <h1>
           {show.name}
-        </h3>
+        </h1>
       </Space>
-      <Divider style={{ marginTop: 50, marginBottom: 15 }}/>
     </>
   );
 };

@@ -75,7 +75,7 @@ export class SeasonObject extends BaseEntityObject {
   @IsString()
   @IsNotEmpty()
   @IsDateString()
-  premiereDate?: Date | null;
+  premiereDate?: Date | string | null;
 
   @ApiPropertyOptional({
     description: 'End date of the Season',
@@ -87,5 +87,5 @@ export class SeasonObject extends BaseEntityObject {
   @IsString()
   @IsNotEmpty()
   @IsDateString()
-  endDate?: Date | null;
+  endDate?: Date | string | null;
 }
