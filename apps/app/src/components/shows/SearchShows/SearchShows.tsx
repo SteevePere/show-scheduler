@@ -1,33 +1,38 @@
 import { SearchShowsRequest } from '@scheduler/shared';
 import { Input } from 'antd';
+import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { searchShows } from 'store/shows/shows.thunks';
+import { RootState } from 'store/store';
 
 const { Search } = Input;
 
-interface ISearchShowsProps {
-  searchShows: (values: SearchShowsRequest) => void;
-  loading: boolean;
-}
-
-const SearchShows = (props: ISearchShowsProps) => {
-  const { searchShows, loading } = props;
+const SearchShows = () => {
+  const dispatch = useAppDispatch();
   const { push, location } = useHistory();
-
+  const { loading } = useSelector((state: RootState) => state.shows);
   const [query, setQuery] = useState<string>();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-      
+
     if (searchParams.has('query')) {
-      setQuery(searchParams.get('query') || undefined);
+      const queryValue = searchParams.get('query') || undefined;
+      setQuery(queryValue);
+      searchTVShows({ query: queryValue });
     }
   }, []);
+
+  const searchTVShows = useCallback((values: SearchShowsRequest) => {
+    dispatch(searchShows(values));
+  }, [dispatch]);
   
   const search = useCallback((query: string) => {
     push({ search: `?query=${query}` });
-    searchShows({ query });
-  }, [searchShows]);
+    searchTVShows({ query });
+  }, [searchTVShows]);
 
   return (
     <Search

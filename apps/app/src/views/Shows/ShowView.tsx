@@ -1,4 +1,4 @@
-import { CreateFavoriteRequest, FindShowRequest, RemoveFavoriteRequest, SeasonObject } from '@scheduler/shared';
+import { FindShowRequest, SeasonObject } from '@scheduler/shared';
 import { Col, Divider, Empty, Row } from 'antd';
 import LoadingSpinner from 'components/shared/LoadingSpinner/LoadingSpinner';
 import SeasonCard from 'components/shows/SeasonCard/ShowCard/SeasonCard';
@@ -7,7 +7,6 @@ import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { createFavorite, deleteFavorite } from 'store/favorites/favorites.thunks';
 import { findShow } from 'store/shows/shows.thunks';
 import { RootState } from 'store/store';
 
@@ -18,7 +17,6 @@ interface IRouteParams {
 export const ShowView = () => {
   const { currentUser } = useSelector((state: RootState) => state.auth);
   const { loading, showsError, show } = useSelector((state: RootState) => state.shows);
-  const { loading: favoritesLoading } = useSelector((state: RootState) => state.favorites);
   const dispatch = useAppDispatch();
   const { showId } = useParams<IRouteParams>();
 
@@ -30,14 +28,6 @@ export const ShowView = () => {
   
   const fetchShow = useCallback((values: FindShowRequest) => {
     dispatch(findShow(values));
-  }, [dispatch]);
-
-  const saveFavorite = useCallback((values: CreateFavoriteRequest) => {
-    dispatch(createFavorite(values));
-  }, [dispatch]);
-
-  const removeFavorite = useCallback((values: RemoveFavoriteRequest) => {
-    dispatch(deleteFavorite(values));
   }, [dispatch]);
 
   if (!currentUser) {
@@ -55,9 +45,6 @@ export const ShowView = () => {
           {show && !loading &&
             <ShowCard
               show={show}
-              saveFavorite={saveFavorite}
-              removeFavorite={removeFavorite}
-              favoritesLoading={favoritesLoading}
               hideViewButton={true}
             />}
           {loading &&
