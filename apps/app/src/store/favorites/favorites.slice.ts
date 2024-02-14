@@ -23,11 +23,11 @@ export const favoritesSlice = createSlice({
         showExtId: null,
       };
       state.favoritesError = null;
-      state.favoritesSuccess = 'Favorite created successfully!';
+      state.favoritesSuccess = `${action.payload.name || 'This Show'} has been added to your Favorites!`;
       state.favorite = action.payload || null;
     })
     .addCase(createFavorite.rejected, (state, action) => {
-      state.favoritesError = action.payload === 409 ? 'Favorite already exists!' : 'Unable to create Favorite!';
+      state.favoritesError = action.payload === 409 ? 'This Show is already in your Favorites!' : 'Unable to add Show to Favorites!';
       state.loading = {
         state: false,
         showExtId: null,
@@ -47,11 +47,11 @@ export const favoritesSlice = createSlice({
         showId: null,
       };
       state.favoritesError = null;
-      state.favoritesSuccess = 'Favorite removed successfully!';
+      state.favoritesSuccess = `${action.payload.name || 'This Show'} has been removed from your Favorites!`;
       state.favorite = action.payload || null;
     })
     .addCase(deleteFavorite.rejected, (state) => {
-      state.favoritesError = 'Unable to remove Favorite!';
+      state.favoritesError = 'Unable to remove this Show from your Favorites!';
       state.loading = {
         state: false,
         showId: null,

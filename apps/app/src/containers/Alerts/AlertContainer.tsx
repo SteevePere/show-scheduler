@@ -43,7 +43,7 @@ const AlertContainer = ({ children }: AlertContainerProps) => {
   }, [openNotification]);
 
   const openSuccessNotification = useCallback((description: string) => {
-    openNotification({ type: 'success', message: 'Great!', description });
+    openNotification({ type: 'success', message: 'Done!', description });
   }, [openNotification]);
 
   return (

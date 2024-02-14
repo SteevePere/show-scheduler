@@ -6,6 +6,7 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ShowObject } from '@scheduler/shared';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FavoritesService } from 'src/modules/favorites/services/favorites.service';
 import { FilesService } from 'src/modules/files/services/files.service';
@@ -57,7 +58,24 @@ export class ShowsService {
   ) {}
 
   async searchExternalShows(data: SearchShowsData): Promise<SearchShowsResult> {
-    return this.dataProviderService.searchShows(data);
+    const { currentUser } = data;
+    const { shows } = await this.dataProviderService.searchShows(data);
+
+    const consolidatedShows = await Promise.all(
+      shows.map(async (externalShow: ShowObject) => {
+        const { show: internalShow } = await this.findShow({
+          externalId: externalShow.externalId,
+          currentUser,
+          ignoreNotFound: true, // Do not throw if not found
+          onlyInternal: true, // Do not fetch externally if not found
+        });
+        // If show found internally, return intern object with isFavorited.
+        // Otherwise, return external Show as is.
+        return internalShow || externalShow;
+      }),
+    );
+
+    return { shows: consolidatedShows };
   }
 
   async findShow(data: FindShowData): Promise<FindShowResult> {

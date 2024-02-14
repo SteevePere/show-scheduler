@@ -19,7 +19,6 @@ import { ShowsService } from '../services/shows.service';
 export class ShowsController {
   constructor(public showsService: ShowsService) {}
 
-  @Public()
   @Get('external/search')
   @ApiOperation({ summary: 'Search among all available Shows' })
   @ApiOkResponse({
@@ -27,10 +26,12 @@ export class ShowsController {
   })
   async searchExternalShows(
     @Query() data: SearchShowsRequest,
+    @CurrentAuthenticatedUser() currentUser: UserObject,
   ): Promise<SearchShowsResponse> {
     return this.showsService.searchExternalShows(
       createFromClass(SearchShowsData, {
         ...data,
+        currentUser,
       }),
     );
   }

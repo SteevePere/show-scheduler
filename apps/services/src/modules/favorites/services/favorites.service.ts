@@ -83,7 +83,12 @@ export class FavoritesService extends TypeOrmCrudService<UserFavoriteShowEntity>
         data: { lastFavoritedAt: new Date() },
       });
 
-      return { show };
+      return {
+        show: {
+          ...show,
+          isFavoritedByUser: true,
+        },
+      };
     } catch (error) {
       throw new InternalServerErrorException(
         'Error when trying to create favorite',

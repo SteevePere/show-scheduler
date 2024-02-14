@@ -55,7 +55,8 @@ const ShowCard = (props: IShowCardProps) => {
             show.id && isUserFavorite ? removeFavorite({ showId: show.id })
               : saveFavorite({ showExternalId: show.externalId });
           }}
-          loading={favoritesLoading.showExtId === show.externalId}
+          loading={(!!favoritesLoading.showId || !!favoritesLoading.showExtId) && 
+            (favoritesLoading.showExtId === show.externalId || favoritesLoading.showId === show.id)}
         />
       </Tooltip>
     );
