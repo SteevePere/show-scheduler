@@ -1,10 +1,14 @@
-import { FindShowRequest, SeasonObject } from '@scheduler/shared';
+import {
+  AlignRightOutlined,
+  PlayCircleOutlined,
+} from '@ant-design/icons';
+import { FindShowRequest } from '@scheduler/shared';
 import { Col, Divider, Empty, Row } from 'antd';
 import LoadingSpinner from 'components/shared/LoadingSpinner/LoadingSpinner';
-import SeasonCard from 'components/shows/SeasonCard/ShowCard/SeasonCard';
+import SeasonList from 'components/shows/SeasonList/SeasonList';
 import ShowCard from 'components/shows/ShowCard/ShowCard';
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { findShow } from 'store/shows/shows.thunks';
@@ -15,10 +19,10 @@ interface IRouteParams {
 }
 
 export const ShowView = () => {
-  const { currentUser } = useSelector((state: RootState) => state.auth);
-  const { loading, showsError, show } = useSelector((state: RootState) => state.shows);
+  const { loading, show } = useSelector((state: RootState) => state.shows);
   const dispatch = useAppDispatch();
   const { showId } = useParams<IRouteParams>();
+  const [isFetched, setIsFetched] = useState<boolean>(false);
 
   useEffect(() => {
     if (showId) {
@@ -28,57 +32,47 @@ export const ShowView = () => {
   
   const fetchShow = useCallback((values: FindShowRequest) => {
     dispatch(findShow(values));
+    setIsFetched(true);
   }, [dispatch]);
-
-  if (!currentUser) {
-    return null;
-  }
-
+  
+  const isNotFound = useMemo(() => {
+    return isFetched && !show && !loading;
+  }, [isFetched, show, loading]);
+  
   return (
     <Row>
-      <Col span={12}>
-        <h1>
-          Show Details
-        </h1>
-        <Col span={23}>
-          <Divider/>
-          {show && !loading &&
-            <ShowCard
-              show={show}
-              hideViewButton={true}
-            />}
-          {loading &&
-            <Col span={24}>
-              <LoadingSpinner marginTop='25vh' size='large'/>
-            </Col>}
-          {!!showsError && !loading &&
-            <Empty
-              description='Show not found'
-              style={{
-                margin: 'auto',
-                marginTop: '25vh',
-                marginBottom: '25vh',
-              }}
-            />}
+      {loading &&
+      <Col span={24}>
+        <LoadingSpinner marginTop='25vh' size='large'/>
+      </Col>}
+      {isNotFound &&
+      <Col span={24}>
+        <Empty
+          description='Show not found'
+          className='empty'
+        />
+      </Col>}
+      {!isNotFound && !loading &&
+      <>
+        <Col span={12}>
+          <h1>
+            <AlignRightOutlined/> Details
+          </h1>
+          <Col span={23}>
+            <Divider/>
+            {show && <ShowCard show={show} hideViewButton={true}/>}
+          </Col>
         </Col>
-      </Col>
-      <Col span={12}>
-        <h1>
-          Seasons
-        </h1>
-        <Col span={23}>
-          <Divider/>
-          {show && show.seasons && !loading && show.seasons.map((season: SeasonObject) =>
-            <Row key={`row_${season.externalId}`} style={{ marginBottom: 20 }}>
-              <SeasonCard key={`season_card_${season.externalId}`} season={season}/>
-            </Row>
-          )}
-          {loading &&
-            <Col span={24}>
-              <LoadingSpinner marginTop='25vh' size='large'/>
-            </Col>}
+        <Col span={12}>
+          <h1>
+            <PlayCircleOutlined /> Seasons
+          </h1>
+          <Col span={23}>
+            <Divider/>
+            <SeasonList show={show} loading={loading}/>
+          </Col>
         </Col>
-      </Col>
+      </>}
     </Row>
   );
 };

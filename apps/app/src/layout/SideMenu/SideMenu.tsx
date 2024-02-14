@@ -1,5 +1,4 @@
-import { Menu, Divider, MenuTheme } from 'antd';
-import React from 'react';
+import { Menu, MenuTheme } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { MenuItem } from '../UserLayout/UserLayout';
@@ -46,7 +45,6 @@ const SideMenu = (props: SideMenuProps) =>
           </NavLink>
         </Menu.Item>
       )}
-      <Divider/>
     </Menu>
   );
 };

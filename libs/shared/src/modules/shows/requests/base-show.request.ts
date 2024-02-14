@@ -1,10 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsUUID, ValidateIf } from 'class-validator';
+
 import {
-  IsNotEmpty,
-  IsNumberString,
-  IsUUID,
-  ValidateIf
-} from 'class-validator';
+  IsSafeInt
+} from '../../../decorators/validation/is-safe-integer.decorator';
 
 export class BaseShowRequest {
   @ApiPropertyOptional({
@@ -21,6 +20,6 @@ export class BaseShowRequest {
     example: 1,
   })
   @ValidateIf((request) => !request.id)
-  @IsNumberString()
+  @IsSafeInt()
   externalId?: number;
 }

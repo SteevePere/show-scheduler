@@ -11,7 +11,7 @@ export function IsSafeInt(validationOptions?: ValidationOptions): PropertyDecora
     {
       name: IS_INT,
       validator: {
-        validate: (value): boolean => isSafeInt(value),
+        validate: (value): boolean => isSafeInt(+value),
         defaultMessage: buildMessage(
           eachPrefix => eachPrefix + '$property must be an integer number',
           validationOptions

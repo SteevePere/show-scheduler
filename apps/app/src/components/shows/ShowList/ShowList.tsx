@@ -28,11 +28,7 @@ const ShowList = () => {
       {!!searched && !loading && !shows?.length &&
         <Empty
           description='No Shows were found'
-          style={{
-            margin: 'auto',
-            marginTop: '25vh',
-            marginBottom: '25vh',
-          }}
+          className='empty'
         />}
       {loading &&
       <Col span={24}>
