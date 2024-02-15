@@ -1,9 +1,8 @@
-import { EpisodeObject } from '@scheduler/shared';
+import {
+  FindSeasonEpisodesRequest,
+  FindSeasonEpisodesResponse,
+} from '@scheduler/shared';
 
-export class FindSeasonEpisodesData {
-  seasonExternalId: number;
-}
+export class FindSeasonEpisodesData extends FindSeasonEpisodesRequest {}
 
-export class FindSeasonEpisodesResult {
-  episodes: EpisodeObject[];
-}
+export class FindSeasonEpisodesResult extends FindSeasonEpisodesResponse {}

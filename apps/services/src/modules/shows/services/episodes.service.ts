@@ -1,12 +1,13 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { fromJsDateToHumanReadable } from '@scheduler/shared';
-import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files.service';
 import { UserEntity } from 'src/modules/users/entities/user.entity';
 import { Connection, DeepPartial, Repository } from 'typeorm';
@@ -34,6 +35,7 @@ import {
 import { EpisodeEntity } from '../entities/episode.entity';
 import { IUpcomingEpisode } from '../interfaces/upcoming-episode.interface';
 import { createEpisodeObjectFromEntity } from '../transformers/episode-object.transformer';
+import { SeasonsService } from './seasons.service';
 
 @Injectable()
 export class EpisodesService {
@@ -41,7 +43,8 @@ export class EpisodesService {
     private readonly databaseConnection: Connection,
     @InjectRepository(EpisodeEntity)
     private readonly episodesRepository: Repository<EpisodeEntity>,
-    private readonly dataProviderService: DataProviderService,
+    @Inject(forwardRef(() => SeasonsService))
+    private readonly seasonsService: SeasonsService,
     private readonly filesService: FilesService,
   ) {}
 
@@ -51,7 +54,7 @@ export class EpisodesService {
     const { seasonId, seasonExternalId } = data;
 
     const { episodes: externalEpisodes } =
-      await this.dataProviderService.findSeasonEpisodes({
+      await this.seasonsService.findSeasonEpisodes({
         seasonExternalId,
       });
 

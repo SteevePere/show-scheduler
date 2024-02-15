@@ -1,8 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files.service';
 import { Repository } from 'typeorm';
+import {
+  FindSeasonEpisodesData,
+  FindSeasonEpisodesResult,
+} from '../dtos/find-season-episodes.dto';
 import { FindSeasonData } from '../dtos/find-season.dto';
 import {
   FindShowSeasonsData,
@@ -26,6 +35,7 @@ export class SeasonsService {
     @InjectRepository(SeasonEntity)
     private readonly seasonsRepository: Repository<SeasonEntity>,
     private readonly dataProviderService: DataProviderService,
+    @Inject(forwardRef(() => EpisodesService))
     private readonly episodesService: EpisodesService,
     private readonly filesService: FilesService,
   ) {}
@@ -50,6 +60,15 @@ export class SeasonsService {
     const { showExternalId } = data;
     return await this.dataProviderService.findShowSeasons({
       showExternalId,
+    });
+  }
+
+  async findSeasonEpisodes(
+    data: FindSeasonEpisodesData,
+  ): Promise<FindSeasonEpisodesResult> {
+    const { seasonExternalId } = data;
+    return await this.dataProviderService.findSeasonEpisodes({
+      seasonExternalId,
     });
   }
 
