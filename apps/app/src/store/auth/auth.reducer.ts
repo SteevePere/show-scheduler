@@ -4,12 +4,13 @@ import { AuthState } from './auth.model';
 
 export const authReducer = {
   reset(state: AuthState) {
-    state.currentUser = null;
     state.isLoggedIn = localStorage.getItem('is-logged-in') === 'true' ? true : false;
     state.loading = false;
     state.signInError = null;
     state.signUpError = null;
     state.forgotPassError = null;
+    state.updateUserSuccess = null;
+    state.updateUserError = null;
     state.success = false;
   },
   resetAuthErrors(state: AuthState) {
@@ -17,7 +18,10 @@ export const authReducer = {
     state.signUpError = null;
     state.forgotPassError = null;
   },
-  setSuccess(state: AuthState, action: PayloadAction<boolean>) {
-    state.success = action.payload;
-  }
+  setUpdateUserSuccess: (state: AuthState, action: PayloadAction<string | null>) => {
+    state.updateUserSuccess = action.payload;
+  },
+  setUpdateUserError: (state: AuthState, action: PayloadAction<string | null>) => {
+    state.updateUserError = action.payload;
+  },
 };

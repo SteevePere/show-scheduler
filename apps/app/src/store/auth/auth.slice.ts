@@ -27,7 +27,6 @@ export const authSlice = createSlice({
       } else {
         state.signUpError = 'An error occured';
       }
-
       state.currentUser = null;
       state.isLoggedIn = false;
       state.loading = false;
@@ -59,14 +58,19 @@ export const authSlice = createSlice({
       localStorage.setItem('is-logged-in', 'false');
     });
 
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+    builder.addCase(getCurrentUser.pending, (state) => {
+      state.loadingCurrentUser = true;
+    })
+    .addCase(getCurrentUser.fulfilled, (state, action) => {
       state.currentUser = action.payload;
       state.isLoggedIn = true;
+      state.loadingCurrentUser = false;
       localStorage.setItem('is-logged-in', 'true');
     })
     .addCase(getCurrentUser.rejected, (state) => {
       state.currentUser = null;
       state.isLoggedIn = false;
+      state.loadingCurrentUser = false;
       localStorage.setItem('is-logged-in', 'false');
     });
 
@@ -104,23 +108,23 @@ export const authSlice = createSlice({
 
     builder.addCase(updateUser.pending, (state) => {
       state.loading = true;
+      state.updateUserSuccess = null;
       state.updateUserError = null;
       state.success = false;
     })
     .addCase(updateUser.fulfilled, (state, action) => {
       state.currentUser = action.payload.user;
       state.loading = false;
+      state.updateUserSuccess = 'Your profile is up-to-date!';
       state.updateUserError = null;
-      state.success = true;
     })
     .addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
-      state.updateUserError = action.error?.message || null;
-      state.success = false;
+      state.updateUserError = action.error?.message || 'Something went wrong!';
     });
   },
 });
 
-export const { reset, setSuccess, resetAuthErrors } = authSlice.actions;
+export const { reset, setUpdateUserSuccess, setUpdateUserError, resetAuthErrors } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -9,9 +9,9 @@ import { RootState } from '../../store/store';
 type ProtectedRouteProps = RouteProps;
 
 export const ProtectedRoute = (props: ProtectedRouteProps) => {
-  const { isLoggedIn, currentUser } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn, currentUser, loadingCurrentUser } = useSelector((state: RootState) => state.auth);
   
-  if (isLoggedIn && !currentUser) { // should call getcurrentuser here
+  if (loadingCurrentUser) {
     return (
       <Row justify='center' align='middle'>
         <LoadingSpinner size={'large'}/>

@@ -3,7 +3,7 @@ import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  BrowserRouter, Route, RouteProps, Switch
+  BrowserRouter, Redirect, Route, RouteProps, Switch
 } from 'react-router-dom';
 import { getCurrentUser } from 'store/auth/auth.thunks';
 import { RootState } from 'store/store';
@@ -18,6 +18,7 @@ import NotFound from './NotFound/NotFound';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
 import UserLayoutRoute from './UserLayoutRoute/UserLayoutRoute';
 
+export const HOME_ROUTE = '/';
 export const SIGN_IN_ROUTE = '/sign-in';
 export const SIGN_UP_ROUTE = '/sign-up';
 export const FORGOT_PASSWORD_ROUTE = '/forgot-password';
@@ -51,6 +52,11 @@ const routes: RouteProps[] = [
 
 const protectedRoutes: RouteProps[] = [
   {
+	  path: HOME_ROUTE,
+	  exact: true,
+	  children: <Redirect to={SEARCH_ROUTE}/>,
+  },
+  {
 	  path: PROFILE_ROUTE,
 	  exact: true,
 	  children: <ProfileView/>,
@@ -80,7 +86,7 @@ const AppRouter = () => {
   return (
 	  <BrowserRouter>
 	    <Switch>
-	        {routes.map(((route, index) => 
+        {routes.map(((route, index) => 
           <Route
             key={index}
             exact={route.exact}
@@ -103,7 +109,7 @@ const AppRouter = () => {
             </AlertContainer>
 	        </Switch>
 	      </ProtectedRoute>
-	      <Route component={NotFound}/>
+        <Route component={NotFound}/> (// fix this)
 	    </Switch>
 	  </BrowserRouter>
   );

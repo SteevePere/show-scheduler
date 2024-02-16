@@ -1,6 +1,7 @@
 import { RegistrationRequest, UpdateUserRequest, UserObject } from '@scheduler/shared';
 import { Button, DatePicker, Form, FormInstance, Input, Radio } from 'antd';
 import moment from 'moment';
+import { useState } from 'react';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
@@ -19,6 +20,8 @@ interface IUserFormProps {
 
 const UserForm = (props: IUserFormProps) => {
   const { form, user, fields, loading, disabled, extraInputs = [], handler } = props;
+
+  const [isTouched, setIsTouched] = useState<boolean>(false);
 
   const formInputs: IFormInput[] = [
     {
@@ -139,11 +142,19 @@ const UserForm = (props: IUserFormProps) => {
       onFinish={handler}
       autoComplete='on'
       disabled={disabled}
+      onFieldsChange={() => {
+        setIsTouched(true);
+      }}
     >
       {renderFields()}
-      <Button block type='primary' htmlType='submit' loading={loading}>
-        {!loading && 'Submit'}
-      </Button>
+      <Form.Item
+        noStyle
+        shouldUpdate
+      >
+        <Button disabled={!isTouched} block type='primary' htmlType='submit' loading={loading}>
+          {!loading && 'Submit'}
+        </Button>
+      </Form.Item>
     </Form> 
   );
 };

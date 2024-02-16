@@ -2,7 +2,7 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 import { UpdateUserRequest, UserObject } from '@scheduler/shared';
-import { Button, Col, Divider, Input, Row, Space } from 'antd';
+import { Button, Col, Divider, Form, Input, Row, Space } from 'antd';
 import { ChangeEvent, useCallback, useState } from 'react';
 
 import { IFormInput } from '../../models/form/form-input.interface';
@@ -20,10 +20,14 @@ interface IProfileProps {
 const Profile = (props: IProfileProps) => {
   const { currentUser, loading, editing, setEditing, updateUser } = props;
   const [passwordFilled, setPasswordFilled] = useState<boolean>(false);
+  const [form] = Form.useForm();
 
   const handleCancel = useCallback(() => {
     setEditing(!editing);
-  }, [editing]);
+    if (form) {
+      form.resetFields();
+    }
+  }, [editing, form]);
 
   if (!currentUser) return null;
 
@@ -84,6 +88,7 @@ const Profile = (props: IProfileProps) => {
         </h1>
         <Divider/>
         <UserForm
+          form={form}
           user={currentUser}
           loading={loading}
           disabled={!editing}
@@ -98,7 +103,7 @@ const Profile = (props: IProfileProps) => {
           handler={updateUser}
         />
         <Divider/>
-        <Button block type='primary' onClick={() => handleCancel()}>
+        <Button block type='primary' onClick={handleCancel}>
           {editing  ? 'Cancel' : 'Edit'}
         </Button>
       </Col>

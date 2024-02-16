@@ -1,6 +1,7 @@
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { setUpdateUserSuccess, setUpdateUserError } from 'store/auth/auth.slice';
 import { setFavoritesError, setFavoritesSuccess } from 'store/favorites/favorites.slice';
 import { setShowsError, setShowsSuccess } from 'store/shows/shows.slice';
 import { RootState } from 'store/store';
@@ -13,8 +14,21 @@ interface AlertContainerProps {
   
 const AlertContainer = ({ children }: AlertContainerProps) => {
   const dispatch = useAppDispatch();
+
+  const { updateUserError, updateUserSuccess } = useSelector((state: RootState) => state.auth);
   const { showsError, showsSuccess } = useSelector((state: RootState) => state.shows);
   const { favoritesError, favoritesSuccess } = useSelector((state: RootState) => state.favorites);
+
+  useEffect(() => {
+    if (updateUserSuccess) {
+      openSuccessNotification(updateUserSuccess);
+      dispatch(setUpdateUserSuccess(null));
+    }
+    else if (updateUserError) {
+      openErrorNotification(updateUserError);
+      dispatch(setUpdateUserError(null));
+    }
+  }, [updateUserSuccess, updateUserError]);
 
   useEffect(() => {
     if (showsSuccess) {
