@@ -1,5 +1,7 @@
 import { EpisodeObject, SeasonObject } from '@scheduler/shared';
 import { Divider, Row } from 'antd';
+import EpisodeCard from 'components/shows/EpisodeCard/EpisodeCard';
+import { useTruncatedText } from 'hooks/use-truncated-text.hook';
 
 const MAX_DESC_LEN = 450;
 
@@ -16,10 +18,11 @@ const SeasonCardBody = (props: ISeasonCardBodyProps) => {
     seasonFullText = true,
   } = props;
 
-  const truncatedSummary = !seasonFullText && !!season.summary
-    && season.summary.length > MAX_DESC_LEN
-    ? season.summary.substring(0, MAX_DESC_LEN) + '...'
-    : season.summary;
+  const truncatedSummary = useTruncatedText({
+    text: season.summary,
+    isFullText: seasonFullText,
+    maxLength: MAX_DESC_LEN,
+  });
 
   return (
     <>
@@ -30,7 +33,10 @@ const SeasonCardBody = (props: ISeasonCardBodyProps) => {
       <>
         <Divider/>
         {episodes.map((episode) => (
-          <Row key='row_ep'>{episode.externalId}</Row>
+          <>
+            <Row key='row_ep'><EpisodeCard episode={episode}/></Row>
+            <Divider/>
+          </>
         ))}
       </>
       }

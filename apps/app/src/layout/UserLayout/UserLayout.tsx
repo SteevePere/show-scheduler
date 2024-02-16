@@ -77,9 +77,7 @@ const UserLayout = (props: UserLayoutProps) => {
             textAlign: 'center',
           }}
         >
-          <>
-            {content}
-          </>
+          <>{content}</>
         </Content>
         <Footer
           style={{ textAlign: 'center' }}

@@ -2,7 +2,7 @@ import { SeasonObject, ShowObject } from '@scheduler/shared';
 import { Col, Row } from 'antd';
 import LoadingSpinner from 'components/shared/LoadingSpinner/LoadingSpinner';
 
-import SeasonCard from '../SeasonCard/ShowCard/SeasonCard';
+import SeasonCard from '../SeasonCard/SeasonCard';
 
 interface ISeasonListProps {
   show: ShowObject | null;

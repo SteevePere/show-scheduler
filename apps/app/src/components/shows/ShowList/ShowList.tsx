@@ -12,19 +12,12 @@ const ShowList = () => {
   return (
     <Row gutter={[24, 24]}>
       {!loading && shows?.map((show: ShowObject) =>
-        <Col
-          xl={8}
-          lg={24}
-          md={24}
-          xs={24}
-          key={'col_' + show.externalId}
-        >
+        <Col xl={8} lg={24} md={24} xs={24} key={'col_' + show.externalId}>
           <ShowCard
             show={show}
             showFullText={false}
           />
-        </Col>
-      )}
+        </Col>)}
       {!!searched && !loading && !shows?.length &&
         <Empty
           description='No Shows were found'
@@ -33,8 +26,7 @@ const ShowList = () => {
       {loading &&
       <Col span={24}>
         <LoadingSpinner marginTop='25vh' size='large'/>
-      </Col>
-      }
+      </Col>}
     </Row>
   );
 };

@@ -26,7 +26,7 @@ export const ProfileView = () => {
   }, []);
 
   useEffect(() => {
-    if (updateUserError) {
+    if (updateUserError) { // handle notifs in container
       setEditing(true);
       openNotification({
         type: 'error',

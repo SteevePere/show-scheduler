@@ -1,5 +1,6 @@
 import { ShowObject } from '@scheduler/shared';
 import { Empty } from 'components/shared/Empty/Empty';
+import { useTruncatedText } from 'hooks/use-truncated-text.hook';
 
 const MAX_DESC_LEN = 450;
 
@@ -14,10 +15,11 @@ const ShowCardBody = (props: IShowCardBodyProps) => {
     showFullText = true,
   } = props;
 
-  const truncatedSummary = !showFullText && !!show.summary
-    && show.summary.length > MAX_DESC_LEN
-    ? show.summary.substring(0, MAX_DESC_LEN) + '...'
-    : show.summary;
+  const truncatedSummary = useTruncatedText({
+    text: show.summary,
+    isFullText: showFullText,
+    maxLength: MAX_DESC_LEN,
+  });
 
   return (
     <div style={{ textAlign: 'left' }}>

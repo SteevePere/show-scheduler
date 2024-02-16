@@ -73,7 +73,6 @@ const SeasonCard = (props: ISeasonCardProps) => {
   const displayCard = () => {
     return (
       <Card
-        hoverable={!hideViewButton}
         style={{
           height: '100%',
           display: 'flex',

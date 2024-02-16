@@ -17,8 +17,7 @@ const SideMenu = (props: SideMenuProps) =>
 
   const location = useLocation();
 
-  const getCurrentRoute = () =>
-  {
+  const getCurrentRoute = () => {
     let currentRoute = location && location.pathname &&
 			location.pathname.replace('/', '');
 

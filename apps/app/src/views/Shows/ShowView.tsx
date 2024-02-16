@@ -45,6 +45,7 @@ export const ShowView = () => {
       <Col span={24}>
         <LoadingSpinner marginTop='25vh' size='large'/>
       </Col>}
+
       {isNotFound &&
       <Col span={24}>
         <Empty
@@ -52,6 +53,7 @@ export const ShowView = () => {
           className='empty'
         />
       </Col>}
+      
       {!isNotFound && !loading &&
       <>
         <Col span={12}>

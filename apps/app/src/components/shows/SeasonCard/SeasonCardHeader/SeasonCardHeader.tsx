@@ -1,6 +1,7 @@
 import { SeasonObject } from '@scheduler/shared';
 import { Avatar, Card, Space } from 'antd';
-import { DateTime } from 'luxon';
+import { useMemo } from 'react';
+import { formatDate } from 'utils/format-date.util';
 
 const { Meta } = Card;
 
@@ -14,9 +15,9 @@ const SeasonCardHeader = (props: IProps) => {
     season,
   } = props;
 
-  const seasonDate = !!season.premiereDate
-    && typeof season.premiereDate === 'string'
-    && DateTime.fromISO(season.premiereDate).toFormat('yyyy');
+  const seasonDate = useMemo(() => {
+    return formatDate({ date: season.premiereDate, format: 'yyyy' });
+  }, [season.premiereDate]);
 
   return (
     <>
