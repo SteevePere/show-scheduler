@@ -9,7 +9,7 @@ import { RootState } from '../../store/store';
 
 export const ProfileView = () => {
   const dispatch = useAppDispatch();
-  const { currentUser, loading } = useSelector((state: RootState) => state.auth);
+  const { currentUser, loading, updateUserSuccess } = useSelector((state: RootState) => state.auth);
   
   if (!currentUser) {
     return null;
@@ -27,6 +27,7 @@ export const ProfileView = () => {
   return (
     <Profile
       currentUser={currentUser}
+      success={updateUserSuccess}
       updateUser={updateUserHandler}
       loading={loading}
       editing={editing}

@@ -13,14 +13,20 @@ interface IProfileProps {
   currentUser: UserObject | null;
   loading: boolean;
   editing: boolean;
+  success?: string | null;
   updateUser: (values: UpdateUserRequest) => void;
   setEditing: (editing: boolean) => void;
 };
 
 const Profile = (props: IProfileProps) => {
-  const { currentUser, loading, editing, setEditing, updateUser } = props;
+  const { currentUser, loading, editing, success, setEditing, updateUser } = props;
   const [passwordFilled, setPasswordFilled] = useState<boolean>(false);
   const [form] = Form.useForm();
+
+  const handleUpdate = useCallback((values: UpdateUserRequest) => {
+    setEditing(false);
+    updateUser(values);
+  }, [editing, updateUser]);
 
   const handleCancel = useCallback(() => {
     setEditing(!editing);
@@ -35,7 +41,7 @@ const Profile = (props: IProfileProps) => {
     setPasswordFilled(!!value?.target?.value?.length);
   }, []);
 
-  const extraInputs: IFormInput[] = [
+  const extraInputs: IFormInput[] = [ // to be cleaned up
     {
       key: 'passwordInput',
       label: 'New Password',
@@ -99,8 +105,10 @@ const Profile = (props: IProfileProps) => {
             'birthDate',
             'gender',
           ]}
+          cta='Update my profile'
+          success={success}
           extraInputs={extraInputs}
-          handler={updateUser}
+          handler={handleUpdate}
         />
         <Divider/>
         <Button block type='primary' onClick={handleCancel}>

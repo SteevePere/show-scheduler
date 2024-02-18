@@ -6,6 +6,7 @@ export const authInitialState: AuthState = {
   loading: false,
   loadingCurrentUser: false,
   signInError: null,
+  signUpSuccess: null,
   signUpError: null,
   forgotPassError: null,
   updateUserSuccess: null,

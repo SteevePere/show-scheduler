@@ -1,11 +1,11 @@
 import { RegistrationRequest, UpdateUserRequest, UserObject } from '@scheduler/shared';
-import { Button, DatePicker, Form, FormInstance, Input, Radio } from 'antd';
+import { DatePicker, FormInstance, Input, Radio } from 'antd';
 import moment from 'moment';
-import { useState } from 'react';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
-  
+import Form from '../Form/Form';
+
 type HandlerType = RegistrationRequest & UpdateUserRequest;
 
 interface IUserFormProps {
@@ -13,17 +13,27 @@ interface IUserFormProps {
   user: UserObject | null;
   loading: boolean;
   disabled: boolean;
-  handler: (values: HandlerType) => void;
   fields?: string[] | undefined;
+  success?: string | null;
+  cta?: string | undefined;
   extraInputs?: IFormInput[] | undefined;
+  handler: (values: HandlerType) => void;
 }
 
 const UserForm = (props: IUserFormProps) => {
-  const { form, user, fields, loading, disabled, extraInputs = [], handler } = props;
+  const {
+    form,
+    user,
+    fields,
+    loading,
+    disabled,
+    extraInputs = [],
+    cta,
+    success,
+    handler
+  } = props;
 
-  const [isTouched, setIsTouched] = useState<boolean>(false);
-
-  const formInputs: IFormInput[] = [
+  const formInputs: IFormInput[] = [ // clean this up
     {
       key: 'firstNameInput',
       label: 'First Name',
@@ -109,53 +119,18 @@ const UserForm = (props: IUserFormProps) => {
     },
   ];
 
-  const renderFields = () => {
-    const getFormItem = (input: IFormInput) => {
-      return (<Form.Item
-        key={input.key}
-        label={input.label}
-        name={input.name}
-        initialValue={input.initialValue}
-        rules={input.rules}
-      >
-        {input.children}
-      </Form.Item>); 
-    };
-
-    const fieldsToRender = formInputs.map((input) => {
-      if (fields && fields.includes(input.name) || !fields) {
-        return getFormItem(input);
-      }
-      return null;
-    });
-
-    return fieldsToRender.concat(extraInputs.map((input) => getFormItem(input)));
-  };
-
   return (
     <Form
       form={form}
-      name='basic'
-      labelCol={{ span: 6 }}
-      labelAlign='left'
-      initialValues={{ remember: true }}
-      onFinish={handler}
-      autoComplete='on'
       disabled={disabled}
-      onFieldsChange={() => {
-        setIsTouched(true);
-      }}
-    >
-      {renderFields()}
-      <Form.Item
-        noStyle
-        shouldUpdate
-      >
-        <Button disabled={!isTouched} block type='primary' htmlType='submit' loading={loading}>
-          {!loading && 'Submit'}
-        </Button>
-      </Form.Item>
-    </Form> 
+      loading={loading}
+      fields={fields}
+      inputs={formInputs}
+      extraInputs={extraInputs}
+      cta={cta}
+      isSubmitSuccess={success}
+      handler={handler}
+    />
   );
 };
 

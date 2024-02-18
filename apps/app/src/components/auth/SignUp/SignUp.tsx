@@ -5,16 +5,19 @@ import UserForm from '../../shared/UserForm/UserForm';
 interface ISignUpProps {
   signUp: (values: RegistrationRequest) => void;
   loading: boolean;
+  signUpSuccess?: string | null;
 }
 
 const SignUp = (props: ISignUpProps) => {
-  const { signUp, loading } = props;
+  const { signUp, loading, signUpSuccess } = props;
 
   return (
     <UserForm
       user={null}
       loading={loading}
       disabled={false}
+      cta='Sign Up'
+      success={signUpSuccess}
       handler={signUp}
     />
   );

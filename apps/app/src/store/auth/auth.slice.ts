@@ -18,6 +18,7 @@ export const authSlice = createSlice({
       state.currentUser = action.payload.user;
       state.isLoggedIn = true;
       state.loading = false;
+      state.signUpSuccess = 'Sign up successful!';
       state.signUpError = null;
       localStorage.setItem('is-logged-in', 'true');
     })

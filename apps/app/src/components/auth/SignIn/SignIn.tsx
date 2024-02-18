@@ -39,7 +39,7 @@ const SignIn = (props: SignInProps) => {
         <Input.Password />
       </Form.Item>
       <Button block type='primary' htmlType='submit' loading={loading}>
-        {!loading && 'Submit'}
+        {!loading && 'Sign In'}
       </Button>
     </Form>
           

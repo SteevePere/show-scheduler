@@ -6,6 +6,7 @@ export interface AuthState {
   loading: boolean;
   loadingCurrentUser: boolean;
   signInError: string | null;
+  signUpSuccess: string | null;
   signUpError: string | null;
   forgotPassError: string | null;
   updateUserSuccess: string | null;

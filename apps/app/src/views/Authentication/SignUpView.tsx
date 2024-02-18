@@ -17,7 +17,7 @@ export const SignUpView = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const from = useFromLocation();
-  const { loading, signUpError, currentUser } = useSelector((state: RootState) => state.auth);
+  const { loading, signUpSuccess, signUpError, currentUser } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (currentUser) {
@@ -37,7 +37,7 @@ export const SignUpView = () => {
   
   return (
     <BaseLayout
-      content={<SignUp signUp={register} loading={loading}/>}
+      content={<SignUp signUp={register} loading={loading} signUpSuccess={signUpSuccess}/>}
       ctas={
         <SignInButton text='Sign In Instead'/>
       }
