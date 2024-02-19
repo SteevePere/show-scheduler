@@ -121,7 +121,11 @@ export const authSlice = createSlice({
     })
     .addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
-      state.updateUserError = action.error?.message || 'Something went wrong!';
+      if ((action.payload as AxiosResponse).data.statusCode === 409) {
+        state.updateUserError = 'This username is already in use!';
+      } else if ((action.payload as AxiosResponse).data.statusCode === 401) {
+        state.updateUserError = 'Wrong password!';
+      }
     });
   },
 });

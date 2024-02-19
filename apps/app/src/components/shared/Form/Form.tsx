@@ -11,10 +11,10 @@ const { Item: AntFormItem } = AntForm;
 
 interface IFormProps {
   inputs: IFormInput[];
-  form?: FormInstance;
   loading: boolean;
   disabled: boolean;
   fields: string[]; // generic
+  form?: FormInstance;
   isSubmitSuccess?: string | null;
   cta?: string | undefined;
   handler: (values: HandlerType) => void;
@@ -35,10 +35,10 @@ export const Form = (props: IFormProps) => {
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isSubmitSuccess) {
+    if (isSubmitSuccess || disabled) {
       setIsTouched(false);
     }
-  }, [isSubmitSuccess]);
+  }, [isSubmitSuccess, disabled]);
 
   const handleFieldsChange = useCallback((changedFields: FieldData[], allFields: FieldData[]) => {
     let isChanged = false;
@@ -59,15 +59,17 @@ export const Form = (props: IFormProps) => {
 
   const renderFields = () => {
     const getFormItem = (input: IFormInput) => {
-      return (<AntFormItem
-        key={input.key}
-        label={input.label}
-        name={input.name}
-        initialValue={input.initialValue}
-        rules={input.rules}
-      >
-        {input.children}
-      </AntFormItem>); 
+      return (
+        <AntFormItem
+          key={input.key}
+          label={input.label}
+          name={input.name}
+          initialValue={input.initialValue}
+          rules={input.rules}
+        >
+          {input.children}
+        </AntFormItem>
+      ); 
     };
 
     return inputs.map((input) => {

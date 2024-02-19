@@ -3,7 +3,7 @@ import {
 } from '@ant-design/icons';
 import { UpdateUserRequest, UserObject } from '@scheduler/shared';
 import { Button, Col, Divider, Form, Row, Space } from 'antd';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 
 import UserForm from '../shared/UserForm/UserForm';
@@ -21,14 +21,20 @@ const Profile = (props: IProfileProps) => {
 
   const [editing, setEditing] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (success && form) {
+      setEditing(false);
+      form.resetFields();
+    }
+  }, [success, form]);
+
   const handleUpdate = useCallback((values: UpdateUserRequest) => {
-    setEditing(false);
     updateUser(values);
   }, [editing, updateUser]);
 
-  const handleCancel = useCallback(() => {
-    setEditing(!editing);
+  const handleToggleForm = useCallback(() => {
     if (form) {
+      setEditing(!editing);
       form.resetFields();
     }
   }, [editing, form]);
@@ -65,7 +71,7 @@ const Profile = (props: IProfileProps) => {
           handler={handleUpdate}
         />
         <Divider/>
-        <Button block type='primary' onClick={handleCancel}>
+        <Button block type='primary' onClick={handleToggleForm}>
           {editing  ? 'Cancel' : 'Edit'}
         </Button>
       </Col>

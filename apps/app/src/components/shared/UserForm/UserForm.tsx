@@ -2,7 +2,7 @@ import { RegistrationRequest, UpdateUserRequest, UserObject } from '@scheduler/s
 import { DatePicker, FormInstance, Input, Radio } from 'antd';
 import { UserFormField } from 'models/form/user-form-field.type';
 import moment from 'moment';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
@@ -23,17 +23,16 @@ interface IUserFormProps {
 
 const UserForm = (props: IUserFormProps) => {
   const {
-    form,
     user,
-    fields,
-    loading,
     disabled,
-    cta,
     success,
-    handler,
   } = props;
 
   const [passwordFilled, setPasswordFilled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (disabled && passwordFilled) setPasswordFilled(false);
+  }, [disabled]);
 
   const onPasswordChange = useCallback((value: ChangeEvent<HTMLInputElement>) => {
     setPasswordFilled(!!value?.target?.value?.length);
@@ -166,14 +165,9 @@ const UserForm = (props: IUserFormProps) => {
 
   return (
     <Form
-      form={form}
-      disabled={disabled}
-      loading={loading}
-      fields={fields}
+      {...props}
       inputs={formInputs}
-      cta={cta}
       isSubmitSuccess={success}
-      handler={handler}
     />
   );
 };

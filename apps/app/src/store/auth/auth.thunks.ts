@@ -37,7 +37,14 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async (data:
   return await apiResetPassword(data);
 });
 
-export const updateUser = createAsyncThunk('auth/updateUser', async (data: WithId<UpdateUserRequest>) => {
+export const updateUser = createAsyncThunk('auth/updateUser', async (data: WithId<UpdateUserRequest>, { rejectWithValue }) => {
   const { id, ...rest } = data;
-  return await apiUpdateUser(id, rest);
+  try {
+    return await apiUpdateUser(id, rest);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.response);
+    }
+    throw error;
+  }
 });
