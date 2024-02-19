@@ -2,26 +2,24 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 import { UpdateUserRequest, UserObject } from '@scheduler/shared';
-import { Button, Col, Divider, Form, Input, Row, Space } from 'antd';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { Button, Col, Divider, Form, Row, Space } from 'antd';
+import { useCallback } from 'react';
+import { useState } from 'react';
 
-import { IFormInput } from '../../models/form/form-input.interface';
-import { MIN_PASSWORD_LENGTH } from '../../models/password.model';
 import UserForm from '../shared/UserForm/UserForm';
 
 interface IProfileProps {
   currentUser: UserObject | null;
   loading: boolean;
-  editing: boolean;
   success?: string | null;
   updateUser: (values: UpdateUserRequest) => void;
-  setEditing: (editing: boolean) => void;
 };
 
 const Profile = (props: IProfileProps) => {
-  const { currentUser, loading, editing, success, setEditing, updateUser } = props;
-  const [passwordFilled, setPasswordFilled] = useState<boolean>(false);
+  const { currentUser, loading, success, updateUser } = props;
   const [form] = Form.useForm();
+
+  const [editing, setEditing] = useState<boolean>(false);
 
   const handleUpdate = useCallback((values: UpdateUserRequest) => {
     setEditing(false);
@@ -36,52 +34,6 @@ const Profile = (props: IProfileProps) => {
   }, [editing, form]);
 
   if (!currentUser) return null;
-
-  const onPasswordChange = useCallback((value: ChangeEvent<HTMLInputElement>) => {
-    setPasswordFilled(!!value?.target?.value?.length);
-  }, []);
-
-  const extraInputs: IFormInput[] = [ // to be cleaned up
-    {
-      key: 'passwordInput',
-      label: 'New Password',
-      name: 'password',
-      rules: [
-        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
-      ],
-      children: <Input.Password onChange={onPasswordChange} key='passwordInput'/>,
-    },
-    {
-      key: 'passwordConfirmInput',
-      label: 'Confirm Password',
-      name: 'passwordConfirm',
-      dependencies: ['password'],
-      rules: [
-        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
-        { required: passwordFilled, message: 'Please confirm your password!' },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-              return Promise.resolve();
-            }
-            return Promise.reject(new Error('The two passwords that you have entered do not match!'));
-          },
-        }),
-      ],
-      children: <Input.Password key='passwordConfirm'/>,
-    },
-    {
-      key: 'oldPasswordInput',
-      label: 'Current Password',
-      name: 'oldPassword',
-      dependencies: ['password'],
-      rules: [
-        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
-        { required: passwordFilled, message: 'Please input your current password!' },
-      ],
-      children: <Input.Password key='oldPassword'/>,
-    },
-  ];
 
   return (
     <Row align='middle' justify='center'>
@@ -99,15 +51,17 @@ const Profile = (props: IProfileProps) => {
           loading={loading}
           disabled={!editing}
           fields={[
-            'email',
-            'firstName',
-            'lastName',
-            'birthDate',
-            'gender',
+            'emailInput',
+            'firstNameInput',
+            'lastNameInput',
+            'birthDateInput',
+            'genderInput',
+            'optionalPasswordInput',
+            'optionalPasswordConfirmInput',
+            'oldPasswordInput',
           ]}
           cta='Update my profile'
           success={success}
-          extraInputs={extraInputs}
           handler={handleUpdate}
         />
         <Divider/>

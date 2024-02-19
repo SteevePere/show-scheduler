@@ -1,6 +1,8 @@
 import { RegistrationRequest, UpdateUserRequest, UserObject } from '@scheduler/shared';
 import { DatePicker, FormInstance, Input, Radio } from 'antd';
+import { UserFormField } from 'models/form/user-form-field.type';
 import moment from 'moment';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 import { IFormInput } from '../../../models/form/form-input.interface';
 import { MIN_PASSWORD_LENGTH } from '../../../models/password.model';
@@ -13,10 +15,9 @@ interface IUserFormProps {
   user: UserObject | null;
   loading: boolean;
   disabled: boolean;
-  fields?: string[] | undefined;
+  fields: UserFormField[];
   success?: string | null;
   cta?: string | undefined;
-  extraInputs?: IFormInput[] | undefined;
   handler: (values: HandlerType) => void;
 }
 
@@ -27,13 +28,18 @@ const UserForm = (props: IUserFormProps) => {
     fields,
     loading,
     disabled,
-    extraInputs = [],
     cta,
     success,
-    handler
+    handler,
   } = props;
 
-  const formInputs: IFormInput[] = [ // clean this up
+  const [passwordFilled, setPasswordFilled] = useState<boolean>(false);
+
+  const onPasswordChange = useCallback((value: ChangeEvent<HTMLInputElement>) => {
+    setPasswordFilled(!!value?.target?.value?.length);
+  }, []);
+
+  const formInputs: IFormInput[] = [
     {
       key: 'firstNameInput',
       label: 'First Name',
@@ -95,7 +101,7 @@ const UserForm = (props: IUserFormProps) => {
           },
         }),
       ],
-      children: <Input.Password key='passwordConfirm'/>
+      children: <Input.Password key='passwordConfirmInput'/>
     },
     {
       key: 'genderInput',
@@ -115,7 +121,46 @@ const UserForm = (props: IUserFormProps) => {
       name: 'birthDate',
       initialValue: user ? moment(user?.birthDate) : undefined,
       rules: [{ required: true, message: 'Please input your birth date!' }],
-      children: <DatePicker key='birthDatePicker' style={{ width: '100%' }}/>
+      children: <DatePicker key='birthDateInput' style={{ width: '100%' }}/>
+    },
+    {
+      key: 'optionalPasswordInput',
+      label: 'New Password',
+      name: 'password',
+      rules: [
+        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
+      ],
+      children: <Input.Password onChange={onPasswordChange} key='optionalPasswordInput'/>,
+    },
+    {
+      key: 'optionalPasswordConfirmInput',
+      label: 'Confirm Password',
+      name: 'passwordConfirm',
+      dependencies: ['password'],
+      rules: [
+        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
+        { required: passwordFilled, message: 'Please confirm your password!' },
+        ({ getFieldValue }) => ({
+          validator(_, value) {
+            if (!value || getFieldValue('password') === value) {
+              return Promise.resolve();
+            }
+            return Promise.reject(new Error('The two passwords that you have entered do not match!'));
+          },
+        }),
+      ],
+      children: <Input.Password key='optionalPasswordConfirmInput'/>,
+    },
+    {
+      key: 'oldPasswordInput',
+      label: 'Current Password',
+      name: 'oldPassword',
+      dependencies: ['password'],
+      rules: [
+        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
+        { required: passwordFilled, message: 'Please input your current password!' },
+      ],
+      children: <Input.Password key='oldPasswordInput'/>,
     },
   ];
 
@@ -126,7 +171,6 @@ const UserForm = (props: IUserFormProps) => {
       loading={loading}
       fields={fields}
       inputs={formInputs}
-      extraInputs={extraInputs}
       cta={cta}
       isSubmitSuccess={success}
       handler={handler}

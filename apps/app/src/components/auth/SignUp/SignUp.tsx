@@ -16,6 +16,15 @@ const SignUp = (props: ISignUpProps) => {
       user={null}
       loading={loading}
       disabled={false}
+      fields={[
+        'emailInput',
+        'firstNameInput',
+        'lastNameInput',
+        'birthDateInput',
+        'genderInput',
+        'passwordInput',
+        'passwordConfirmInput',
+      ]}
       cta='Sign Up'
       success={signUpSuccess}
       handler={signUp}

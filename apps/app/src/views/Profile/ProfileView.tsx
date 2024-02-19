@@ -1,5 +1,5 @@
 import { UpdateUserRequest } from '@scheduler/shared';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import Profile from '../../components/profile/Profile';
@@ -15,8 +15,6 @@ export const ProfileView = () => {
     return null;
   }
 
-  const [editing, setEditing] = useState<boolean>(false);
-
   const updateUserHandler = useCallback((values: UpdateUserRequest) => {
     dispatch(updateUser({
       id: currentUser.id || '',
@@ -30,8 +28,6 @@ export const ProfileView = () => {
       success={updateUserSuccess}
       updateUser={updateUserHandler}
       loading={loading}
-      editing={editing}
-      setEditing={setEditing}
     />
   );
 };

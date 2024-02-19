@@ -9,26 +9,24 @@ type HandlerType = RegistrationRequest & UpdateUserRequest;
 
 const { Item: AntFormItem } = AntForm;
 
-interface IUserFormProps {
+interface IFormProps {
   inputs: IFormInput[];
   form?: FormInstance;
   loading: boolean;
   disabled: boolean;
-  fields?: string[] | undefined;
+  fields: string[]; // generic
   isSubmitSuccess?: string | null;
   cta?: string | undefined;
-  extraInputs?: IFormInput[] | undefined;
   handler: (values: HandlerType) => void;
 }
 
-export const Form = (props: IUserFormProps) => {
+export const Form = (props: IFormProps) => {
   const {
     inputs,
     form,
     fields,
     loading,
     disabled,
-    extraInputs = [],
     cta,
     isSubmitSuccess,
     handler
@@ -42,7 +40,7 @@ export const Form = (props: IUserFormProps) => {
     }
   }, [isSubmitSuccess]);
 
-  const handleFieldsChange = useCallback((changedFields: FieldData[], allFields: FieldData[]) => { // not updating after a submit, deps?
+  const handleFieldsChange = useCallback((changedFields: FieldData[], allFields: FieldData[]) => {
     let isChanged = false;
 
     allFields.forEach((field) => {
@@ -57,7 +55,7 @@ export const Form = (props: IUserFormProps) => {
     });
 
     setIsTouched(isChanged);
-  }, [setIsTouched]);
+  }, [inputs, setIsTouched]);
 
   const renderFields = () => {
     const getFormItem = (input: IFormInput) => {
@@ -72,14 +70,12 @@ export const Form = (props: IUserFormProps) => {
       </AntFormItem>); 
     };
 
-    const fieldsToRender = inputs.map((input) => {
-      if (fields && fields.includes(input.name) || !fields) {
+    return inputs.map((input) => {
+      if (fields && fields.includes(input.key)) {
         return getFormItem(input);
       }
       return null;
     });
-
-    return fieldsToRender.concat(extraInputs.map((input) => getFormItem(input)));
   };
 
   return (
