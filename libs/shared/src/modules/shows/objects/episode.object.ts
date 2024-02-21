@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDateString,
   IsNotEmpty,
   IsOptional,
@@ -74,4 +75,12 @@ export class EpisodeObject extends BaseEntityObject {
   @ValidateIf((object, value) => value !== null)
   @IsUrl()
   imageUrl: string | null;
+
+  @ApiPropertyOptional({
+    description: 'Whether current User has set this Episode as watched',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isWatchedByUser?: boolean;
 }

@@ -4,13 +4,16 @@ import {
   FindShowRequest,
   FindShowResponse,
   SearchShowsRequest,
-  SearchShowsResponse
+  SearchShowsResponse,
+  ToggleEpisodeWatchedRequest,
+  ToggleEpisodeWatchedResponse
 } from '@scheduler/shared';
 
 import { axiosInstance } from './axios/instance';
 
 const SHOWS_ENDPOINT = '/shows';
 const SEASONS_ENDPOINT = '/seasons';
+const EPISODES_ENDPOINT = '/episodes';
 
 export const apiSearchShows = async ({ query }: SearchShowsRequest) => {
   return await axiosInstance.get<SearchShowsResponse>(
@@ -36,4 +39,10 @@ export const apiFindSeasonEpisodes = async ({ seasonExternalId }: FindSeasonEpis
   return await axiosInstance.get<FindSeasonEpisodesResponse>(
     `${SEASONS_ENDPOINT}/${seasonExternalId}/episodes`,
   ).then((response) => response.data.episodes);
+};
+
+export const apiSetEpisodeWatched = async (data: ToggleEpisodeWatchedRequest) => {
+  return await axiosInstance.post<ToggleEpisodeWatchedResponse>(
+    `${EPISODES_ENDPOINT}/watched`, { ...data }
+  ).then((response) => response.data.episode);
 };

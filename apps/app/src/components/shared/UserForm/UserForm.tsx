@@ -44,7 +44,7 @@ const UserForm = (props: IUserFormProps) => {
       label: 'First Name',
       name: 'firstName',
       initialValue: user?.firstName,
-      rules: [{ required: true, message: 'Please input your first name!'}],
+      rules: [{ required: true, message: 'Please enter your first name!'}],
       children: <Input key='firstNameInput'/>
     },
     {
@@ -52,7 +52,7 @@ const UserForm = (props: IUserFormProps) => {
       label: 'Last Name',
       name: 'lastName',
       initialValue: user?.lastName,
-      rules: [{ required: true, message: 'Please input your last name!' }],
+      rules: [{ required: true, message: 'Please enter your last name!' }],
       children: <Input key='lastNameInput'/>
     },
     {
@@ -61,10 +61,10 @@ const UserForm = (props: IUserFormProps) => {
       name: 'email',
       initialValue: user?.email,
       rules: [
-        { required: true, message: 'Please input your email!' },
+        { required: true, message: 'Please enter your email!' },
         {
           type: 'email',
-          message: 'The input is not a valid e-mail!',
+          message: 'This is not a valid e-mail!',
         },
       ],
       children: <Input key='emailInput'/>
@@ -74,7 +74,7 @@ const UserForm = (props: IUserFormProps) => {
       label: 'Password',
       name: 'password',
       rules: [
-        { required: true, message: 'Please input your password!' },
+        { required: true, message: 'Please enter your password!' },
         { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
       ],
       children: <Input.Password key='passwordInput'/>
@@ -85,12 +85,8 @@ const UserForm = (props: IUserFormProps) => {
       name: 'passwordConfirm',
       dependencies: ['password'],
       rules: [
-        {
-          type: 'string',
-          required: true,
-          min: MIN_PASSWORD_LENGTH,
-          message: 'Please confirm your password!',
-        },
+        { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
+        { required: true, message: 'Please confirm your password!' },
         ({ getFieldValue }) => ({
           validator(_, value) {
             if (!value || getFieldValue('password') === value) {
@@ -119,7 +115,7 @@ const UserForm = (props: IUserFormProps) => {
       label: 'Birth Date',
       name: 'birthDate',
       initialValue: user ? moment(user?.birthDate) : undefined,
-      rules: [{ required: true, message: 'Please input your birth date!' }],
+      rules: [{ required: true, message: 'Please enter your birth date!' }],
       children: <DatePicker key='birthDateInput' style={{ width: '100%' }}/>
     },
     {
@@ -157,7 +153,7 @@ const UserForm = (props: IUserFormProps) => {
       dependencies: ['password'],
       rules: [
         { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
-        { required: passwordFilled, message: 'Please input your current password!' },
+        { required: passwordFilled, message: 'Please enter your current password!' },
       ],
       children: <Input.Password key='oldPasswordInput'/>,
     },

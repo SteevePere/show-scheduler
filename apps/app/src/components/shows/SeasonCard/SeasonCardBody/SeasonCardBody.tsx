@@ -34,7 +34,12 @@ const SeasonCardBody = (props: ISeasonCardBodyProps) => {
         <Divider/>
         {episodes.map((episode) => (
           <>
-            <Row key='row_ep'><EpisodeCard episode={episode}/></Row>
+            <Row key='row_ep'>
+              <EpisodeCard
+                key='card'
+                episode={episode}
+              />
+            </Row>
             <Divider/>
           </>
         ))}

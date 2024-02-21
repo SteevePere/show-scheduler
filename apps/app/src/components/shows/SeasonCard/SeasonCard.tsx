@@ -1,12 +1,15 @@
 import {
-  EyeOutlined,
   ArrowUpOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
-import { EpisodeObject, SeasonObject } from '@scheduler/shared';
+import { SeasonObject } from '@scheduler/shared';
 import { Button, Card } from 'antd';
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { setEpisodes } from 'store/shows/shows.slice';
 import { findSeasonEpisodes } from 'store/shows/shows.thunks';
+import { RootState } from 'store/store';
 
 import SeasonCardBody from './SeasonCardBody/SeasonCardBody';
 import SeasonCardHeader from './SeasonCardHeader/SeasonCardHeader';
@@ -20,39 +23,31 @@ interface ISeasonCardProps {
 const SeasonCard = (props: ISeasonCardProps) => {
   const { season, hideViewButton = false } = props;
   const dispatch = useAppDispatch();
+
+  const { episodes, episodesLoading } = useSelector((state: RootState) => state.shows);
+
+  const isEpisodesLoading = useMemo(() => {
+    return episodesLoading.state === true 
+      && episodesLoading.seasonExternalId === season.externalId;
+  }, [episodesLoading]);
   
-  const [episodes, setEpisodes] = useState<EpisodeObject[]>([]);
-  const [fetchingEpisodes, setFetchingEpisodes] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (fetchingEpisodes) {
-      fetchEpisodes();
-    }
-  }, [fetchingEpisodes]);
-
   const isEpisodesLoaded = useMemo(() => {
     return episodes.length > 0;
   }, [episodes.length]);
 
-  const fetchEpisodes = useCallback(async () => {
-    const episodes = await dispatch(findSeasonEpisodes({ seasonExternalId: season.externalId })).unwrap();
-    setEpisodes(episodes);
-    setFetchingEpisodes(false);
-  }, [setEpisodes, setFetchingEpisodes]);
-
-  const handleExpand = useCallback(() => {
-    setFetchingEpisodes(true);
-  }, [setFetchingEpisodes]);
+  const handleExpand = useCallback(async () => {
+    dispatch(findSeasonEpisodes({ seasonExternalId: season.externalId }));
+  }, [season, findSeasonEpisodes]);
 
   const handleCollapse = useCallback(() => {
-    setEpisodes([]);
+    dispatch(setEpisodes([]));
   }, [setEpisodes]);
 
   const ViewButton = () => {
     return (
       <Button
         onClick={isEpisodesLoaded ? handleCollapse : handleExpand}
-        loading={fetchingEpisodes}
+        loading={isEpisodesLoading}
         icon={isEpisodesLoaded ? <ArrowUpOutlined/> : <EyeOutlined/>}
       >
         {isEpisodesLoaded ? 'Hide Episodes' : 'View Episodes'}
@@ -60,15 +55,9 @@ const SeasonCard = (props: ISeasonCardProps) => {
     );
   };
 
-  const getActions = () => {
-    const actions = [];
-
-    if (!hideViewButton) {
-      actions.push(<ViewButton key='view'/>);
-    }
-
-    return actions;
-  };
+  const getActions = useCallback(() => {
+    return hideViewButton ? undefined : [<ViewButton key='view'/>];
+  }, [isEpisodesLoading, isEpisodesLoaded, hideViewButton]);
 
   const displayCard = () => {
     return (

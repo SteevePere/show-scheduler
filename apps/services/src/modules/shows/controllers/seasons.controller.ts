@@ -49,10 +49,12 @@ export class SeasonsController {
     type: FindSeasonEpisodesResponse,
   })
   async findSeasonEpisodes(
+    @CurrentAuthenticatedUser() currentUser: UserObject,
     @Param() data: FindSeasonEpisodesRequest,
   ): Promise<FindSeasonEpisodesResponse> {
     return this.seasonsService.findSeasonEpisodes(
       createFromClass(FindSeasonEpisodesData, {
+        currentUser,
         ...data,
       }),
     );

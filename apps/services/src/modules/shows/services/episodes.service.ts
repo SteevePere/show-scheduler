@@ -21,6 +21,10 @@ import {
   FindUpcomingEpisodesResult,
 } from '../dtos/find-upcoming-episodes.dto';
 import {
+  isEpisodeWatchedData,
+  isEpisodeWatchedResult,
+} from '../dtos/is-episode-watched.dto';
+import {
   SaveSeasonEpisodesData,
   SaveSeasonEpisodesResult,
 } from '../dtos/save-season-episodes.dto';
@@ -123,11 +127,29 @@ export class EpisodesService {
 
     await this.episodesRepository.save(episodeEntity);
 
-    return {
-      episode: createEpisodeObjectFromEntity({
-        episodeEntity,
-      }),
-    };
+    const episode = createEpisodeObjectFromEntity({
+      episodeEntity,
+    });
+
+    episode.isWatchedByUser = isWatched;
+
+    return { episode };
+  }
+
+  async isEpisodeWatched(
+    data: isEpisodeWatchedData,
+  ): Promise<isEpisodeWatchedResult> {
+    const { episodeExternalId: externalId, currentUser } = data;
+    // TODO: make custom, optimized query instead of find + Array.some()
+    const episodeEntity = await this.findEpisodeEntity({
+      externalId,
+      relations: ['watchedBy'],
+    });
+    const isWatchedByUser = episodeEntity.watchedBy.some(
+      (watcher) => watcher.id === currentUser.id,
+    );
+
+    return { isWatchedByUser };
   }
 
   async updateEpisode(data: UpdateEpisodeData): Promise<UpdateEpisodeResult> {

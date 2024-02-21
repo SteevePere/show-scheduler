@@ -16,7 +16,7 @@ const AlertContainer = ({ children }: AlertContainerProps) => {
   const dispatch = useAppDispatch();
 
   const { updateUserError, updateUserSuccess } = useSelector((state: RootState) => state.auth);
-  const { showsError, showsSuccess } = useSelector((state: RootState) => state.shows);
+  const { showsError, showsSuccess, epWatchedError, epWatchedSuccess  } = useSelector((state: RootState) => state.shows);
   const { favoritesError, favoritesSuccess } = useSelector((state: RootState) => state.favorites);
 
   useEffect(() => {
@@ -31,15 +31,18 @@ const AlertContainer = ({ children }: AlertContainerProps) => {
   }, [updateUserSuccess, updateUserError]);
 
   useEffect(() => {
-    if (showsSuccess) {
-      openSuccessNotification(showsSuccess);
+    const success = showsSuccess || epWatchedSuccess;
+    const error = showsError || epWatchedError;
+    
+    if (success) {
+      openSuccessNotification(success);
       dispatch(setShowsSuccess(null));
     }
-    else if (showsError) {
-      openErrorNotification(showsError);
+    else if (error) {
+      openErrorNotification(error);
       dispatch(setShowsError(null));
     }
-  }, [showsSuccess, showsError]);
+  }, [showsSuccess, showsError, epWatchedSuccess, epWatchedError]);
 
   useEffect(() => {
     if (favoritesError) {
