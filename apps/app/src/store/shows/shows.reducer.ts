@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { EpisodeObject } from '@scheduler/shared';
 
-import { ShowState } from './shows.model';
+import { EpisodeState, ShowState } from './shows.model';
 
 export const showsReducer = {
   setLoading: (state: ShowState) => {
@@ -19,7 +18,7 @@ export const showsReducer = {
   setEpWatchedSuccess: (state: ShowState, action: PayloadAction<string | null>) => {
     state.epWatchedSuccess = action.payload;
   },
-  setEpisodes: (state: ShowState, action: PayloadAction<EpisodeObject[]>) => {
+  setEpisodes: (state: ShowState, action: PayloadAction<EpisodeState>) => {
     state.episodes = action.payload;
   },
   resetShowsState: (state: ShowState) => {

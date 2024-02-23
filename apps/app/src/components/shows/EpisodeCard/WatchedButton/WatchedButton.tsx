@@ -3,7 +3,7 @@ import {
   CheckCircleOutlined,
 } from '@ant-design/icons';
 import { EpisodeObject, ToggleEpisodeWatchedRequest } from '@scheduler/shared';
-import { Button, Tooltip } from 'antd';
+import { Button } from 'antd';
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -43,16 +43,13 @@ export const WatchedButton = (props: IWatchedButtonProps) => {
   }, [isWatchedByUser]);
   
   return (
-    <Tooltip
-      title={isWatchedByUser ? 'Remove from watched Episodes' : 'Add to watched Episodes'}
-      placement='bottom'
+    <Button
+      key='add_plus'
+      icon={isWatchedByUser ? <CheckCircleFilled className='primary'/> : <CheckCircleOutlined/>}
+      onClick={handleClick}
+      loading={isLoading}
     >
-      <Button
-        key='add_plus'
-        icon={isWatchedByUser ? <CheckCircleFilled className='primary'/> : <CheckCircleOutlined/>}
-        onClick={handleClick}
-        loading={isLoading}
-      />
-    </Tooltip>
+      {isWatchedByUser ? 'Remove from watched Episodes' : 'Add to watched Episodes'}
+    </Button>
   );
 };

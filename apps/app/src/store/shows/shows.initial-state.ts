@@ -16,6 +16,9 @@ export const showsInitialState: ShowState = {
   epWatchedSuccess: null,
   epWatchedError: null,
   shows: [],
-  episodes: [],
+  episodes: {
+    seasonExternalId: null,
+    episodes: [],
+  },
   show: null,
 };

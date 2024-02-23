@@ -1,5 +1,10 @@
 import { EpisodeObject, ShowObject } from '@scheduler/shared';
 
+export interface EpisodeState {
+  seasonExternalId: number | null;
+  episodes: EpisodeObject[];
+}
+
 export interface ShowState {
   loading: boolean;
   episodesLoading: {
@@ -16,6 +21,6 @@ export interface ShowState {
   epWatchedSuccess: string | null;
   epWatchedError: string | null;
   shows: ShowObject[];
-  episodes: EpisodeObject[];
+  episodes: EpisodeState;
   show: ShowObject | null;
 }

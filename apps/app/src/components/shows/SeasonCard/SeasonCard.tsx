@@ -25,22 +25,30 @@ const SeasonCard = (props: ISeasonCardProps) => {
   const dispatch = useAppDispatch();
 
   const { episodes, episodesLoading } = useSelector((state: RootState) => state.shows);
+    
+  const isEpisodesLoaded = useMemo(() => {
+    return episodes.episodes.length > 0 &&
+      episodes.seasonExternalId === season.externalId;
+  }, [season, episodes]);
+
+  const seasonEpisodes = useMemo(() => {
+    return isEpisodesLoaded ? episodes.episodes : [];
+  }, [isEpisodesLoaded, episodes.episodes]);
 
   const isEpisodesLoading = useMemo(() => {
     return episodesLoading.state === true 
       && episodesLoading.seasonExternalId === season.externalId;
-  }, [episodesLoading]);
-  
-  const isEpisodesLoaded = useMemo(() => {
-    return episodes.length > 0;
-  }, [episodes.length]);
+  }, [season.externalId, episodesLoading]);
 
   const handleExpand = useCallback(async () => {
     dispatch(findSeasonEpisodes({ seasonExternalId: season.externalId }));
   }, [season, findSeasonEpisodes]);
 
   const handleCollapse = useCallback(() => {
-    dispatch(setEpisodes([]));
+    dispatch(setEpisodes({
+      seasonExternalId: null,
+      episodes: [],
+    }));
   }, [setEpisodes]);
 
   const ViewButton = () => {
@@ -79,7 +87,7 @@ const SeasonCard = (props: ISeasonCardProps) => {
         />
         <SeasonCardBody
           {...props}
-          episodes={episodes}
+          episodes={seasonEpisodes}
         />
       </Card>
     );

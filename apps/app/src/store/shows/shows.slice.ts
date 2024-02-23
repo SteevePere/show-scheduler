@@ -29,7 +29,7 @@ const updateIsFavorited = (state: ShowState, action: PayloadAction<ShowObject>) 
 const updateEpisode = (state: ShowState, action: PayloadAction<EpisodeObject>) => {
   const episodeData = action.payload;
   const episodeId = episodeData.externalId;
-  const episodes = state.episodes.map<EpisodeObject>((episode: EpisodeObject) => {
+  const episodes = state.episodes.episodes.map<EpisodeObject>((episode: EpisodeObject) => {
     if (episode.externalId === episodeId) {
       return {
         ...episode,
@@ -39,7 +39,7 @@ const updateEpisode = (state: ShowState, action: PayloadAction<EpisodeObject>) =
     return episode;
   });
 
-  state.episodes = episodes;
+  state.episodes.episodes = episodes;
 };
 
 export const showsSlice = createSlice({
@@ -84,7 +84,10 @@ export const showsSlice = createSlice({
     });
 
     builder.addCase(findSeasonEpisodes.pending, (state, action) => {
-      state.episodes = [];
+      state.episodes = {
+        seasonExternalId: null,
+        episodes: [],
+      };
       state.episodesLoading = {
         state: true,
         seasonExternalId: action.meta.arg.seasonExternalId,
@@ -97,7 +100,10 @@ export const showsSlice = createSlice({
         seasonExternalId: null,
       };
       state.showsError = null;
-      state.episodes = action.payload; // TODO: Need to store seasonId with episodes
+      state.episodes = {
+        seasonExternalId: action.meta.arg.seasonExternalId,
+        episodes: action.payload,
+      };
     })
     .addCase(findSeasonEpisodes.rejected, (state) => {
       state.showsError = 'Unable to find Season Episodes!';
