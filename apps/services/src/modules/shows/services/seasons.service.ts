@@ -5,7 +5,6 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EpisodeObject } from '@scheduler/shared';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files.service';
 import { Repository } from 'typeorm';
@@ -68,27 +67,14 @@ export class SeasonsService {
     data: FindSeasonEpisodesData,
   ): Promise<FindSeasonEpisodesResult> {
     const { seasonExternalId, currentUser } = data;
-    const { episodes } = await this.dataProviderService.findSeasonEpisodes({
-      // TODO: if currentuser, should try to fetch internally b4 going to dataprovider
-      seasonExternalId,
+    const season = await this.findSeasonEntity({
+      externalId: seasonExternalId, // will throw 404 if not found
     });
-    if (currentUser) {
-      const consolidatedEpisodes = await Promise.all(
-        episodes.map(async (episode: EpisodeObject) => {
-          const { isWatchedByUser } =
-            await this.episodesService.isEpisodeWatched({
-              episodeExternalId: episode.externalId,
-              currentUser,
-            });
-          return {
-            ...episode,
-            isWatchedByUser,
-          };
-        }),
-      );
-      return { episodes: consolidatedEpisodes };
-    }
-    return { episodes };
+    return this.episodesService.findSeasonEpisodes({
+      seasonExternalId,
+      season,
+      currentUser,
+    });
   }
 
   async saveShowSeasons(

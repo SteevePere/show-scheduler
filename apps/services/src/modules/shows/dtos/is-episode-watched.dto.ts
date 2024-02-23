@@ -1,8 +1,9 @@
 import { UserObject } from '@scheduler/shared';
+import { EpisodeEntity } from '../entities/episode.entity';
 
 export class isEpisodeWatchedData {
-  episodeExternalId: number;
-  currentUser: UserObject;
+  episodeEntity: EpisodeEntity;
+  currentUser: UserObject | undefined;
 }
 
 export class isEpisodeWatchedResult {

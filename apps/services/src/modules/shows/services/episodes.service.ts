@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { fromJsDateToHumanReadable } from '@scheduler/shared';
+import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files.service';
 import { UserEntity } from 'src/modules/users/entities/user.entity';
 import { Connection, DeepPartial, Repository } from 'typeorm';
@@ -16,6 +17,10 @@ import {
   FindEpisodesData,
   FindEpisodesResult,
 } from '../dtos/find-episodes.dto';
+import {
+  FindSeasonEpisodesData,
+  FindSeasonEpisodesResult,
+} from '../dtos/find-season-episodes.dto';
 import {
   FindUpcomingEpisodesData,
   FindUpcomingEpisodesResult,
@@ -50,6 +55,7 @@ export class EpisodesService {
     @Inject(forwardRef(() => SeasonsService))
     private readonly seasonsService: SeasonsService,
     private readonly filesService: FilesService,
+    private readonly dataProviderService: DataProviderService,
   ) {}
 
   async saveSeasonEpisodes(
@@ -96,11 +102,45 @@ export class EpisodesService {
     return { episodes };
   }
 
+  async findSeasonEpisodes(
+    data: FindSeasonEpisodesData,
+  ): Promise<FindSeasonEpisodesResult> {
+    const { season, currentUser } = data;
+    if (!season) {
+      throw new BadRequestException('Season entity not provided');
+    }
+    const { episodes } = await this.findEpisodeEntities({
+      where: [{ seasonId: season.id }],
+      relations: ['watchedBy'],
+    });
+    if (!episodes.length) {
+      // they can't be watched by current user since they're not even in db, so we can return directly
+      return this.dataProviderService.findSeasonEpisodes({
+        seasonExternalId: season.externalId,
+      });
+    }
+    const consolidatedEpisodes = await Promise.all(
+      episodes.map(async (episodeEntity: EpisodeEntity) => {
+        const { isWatchedByUser } = await this.isEpisodeWatched({
+          episodeEntity,
+          currentUser,
+        });
+        const episodeObject = createEpisodeObjectFromEntity({ episodeEntity });
+        episodeObject.isWatchedByUser = isWatchedByUser;
+
+        return episodeObject;
+      }),
+    );
+
+    return { episodes: consolidatedEpisodes };
+  }
+
   async toggleEpisodeWatched(
     data: ToggleEpisodeWatchedData,
   ): Promise<ToggleEpisodeWatchedResult> {
     const { currentUser, isWatched } = data;
 
+    // will throw if not found
     const episodeEntity = await this.findEpisodeEntity({
       ...data,
       relations: ['watchedBy'],
@@ -139,16 +179,14 @@ export class EpisodesService {
   async isEpisodeWatched(
     data: isEpisodeWatchedData,
   ): Promise<isEpisodeWatchedResult> {
-    const { episodeExternalId: externalId, currentUser } = data;
-    // TODO: make custom, optimized query instead of find + Array.some()
-    const episodeEntity = await this.findEpisodeEntity({
-      externalId,
-      relations: ['watchedBy'],
-    });
+    const { episodeEntity, currentUser } = data;
+    if (!currentUser) return { isWatchedByUser: false };
+    if (!episodeEntity.watchedBy) {
+      throw new BadRequestException('watchedBy relation is absent from entity');
+    }
     const isWatchedByUser = episodeEntity.watchedBy.some(
       (watcher) => watcher.id === currentUser.id,
     );
-
     return { isWatchedByUser };
   }
 
@@ -185,36 +223,15 @@ export class EpisodesService {
     return foundEpisode;
   }
 
-  async findEpisodes(data: FindEpisodesData): Promise<FindEpisodesResult> {
-    const { currentUser, startDate, endDate, limit, skip, showId } = data;
-    const query = this.databaseConnection
-      .createQueryBuilder()
-      .from(EpisodeEntity, 'episode')
-      .select('episode')
-      .innerJoinAndSelect('episode.season', 'season')
-      .innerJoinAndSelect('episode.image', 'image')
-      .innerJoinAndSelect('season.show', 'show')
-      .innerJoinAndSelect('show.userFavoriteReferences', 'favorites')
-      .where('favorites.userId = :userId', { userId: currentUser.id })
-      .andWhere('episode.airDate BETWEEN :startDate AND :endDate', {
-        startDate,
-        endDate,
-      })
-      .take(limit)
-      .skip(skip);
-
-    if (showId) {
-      query.andWhere('show.id = :showId', { showId });
-    }
-
-    const [episodes, count] = await query.getManyAndCount();
-
-    return {
-      episodes: episodes.map((episodeEntity) => {
-        return createEpisodeObjectFromEntity({ episodeEntity });
-      }),
-      count,
-    };
+  async findEpisodeEntities(
+    data: FindEpisodesData,
+  ): Promise<FindEpisodesResult> {
+    const { where, relations } = data;
+    const episodes = await this.episodesRepository.find({
+      where,
+      relations,
+    });
+    return { episodes };
   }
 
   async findUpcomingEpisodes(

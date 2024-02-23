@@ -1,14 +1,11 @@
-import {
-  EpisodeObject,
-  FindEpisodesRequest,
-  UserObject,
-} from '@scheduler/shared';
+import { FindOptionsWhere } from 'typeorm';
+import { EpisodeEntity } from '../entities/episode.entity';
 
-export class FindEpisodesData extends FindEpisodesRequest {
-  currentUser: UserObject;
+export class FindEpisodesData {
+  where?: FindOptionsWhere<EpisodeEntity>[];
+  relations?: [keyof EpisodeEntity];
 }
 
 export class FindEpisodesResult {
-  episodes: EpisodeObject[];
-  count: number;
+  episodes: EpisodeEntity[];
 }
