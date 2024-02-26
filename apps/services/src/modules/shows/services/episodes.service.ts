@@ -105,18 +105,19 @@ export class EpisodesService {
   async findSeasonEpisodes(
     data: FindSeasonEpisodesData,
   ): Promise<FindSeasonEpisodesResult> {
-    const { season, currentUser } = data;
-    if (!season) {
-      throw new BadRequestException('Season entity not provided');
+    const { season, seasonExternalId, currentUser } = data;
+    let episodes = [];
+    if (season) {
+      const findEpisodesResult = await this.findEpisodeEntities({
+        where: [{ seasonId: season.id }],
+        relations: ['watchedBy'],
+      });
+      episodes = findEpisodesResult.episodes;
     }
-    const { episodes } = await this.findEpisodeEntities({
-      where: [{ seasonId: season.id }],
-      relations: ['watchedBy'],
-    });
-    if (!episodes.length) {
+    if (!season || !episodes.length) {
       // they can't be watched by current user since they're not even in db, so we can return directly
       return this.dataProviderService.findSeasonEpisodes({
-        seasonExternalId: season.externalId,
+        seasonExternalId,
       });
     }
     const consolidatedEpisodes = await Promise.all(

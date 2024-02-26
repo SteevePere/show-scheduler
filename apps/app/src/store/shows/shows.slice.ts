@@ -8,8 +8,9 @@ import { ShowState } from './shows.model';
 import { showsReducer } from './shows.reducer';
 import { findSeasonEpisodes, findShow, searchShows, setEpisodeWatched } from './shows.thunks';
 
-const updateIsFavorited = (state: ShowState, action: PayloadAction<ShowObject>) => {
-  if (state.show && state.show.id === action.payload.id) {
+const updateShow = (state: ShowState, action: PayloadAction<ShowObject>) => {
+  if (state.show && (state.show.id === action.payload.id || !state.show.id)) {
+    state.show.id = action.payload.id;
     state.show.isFavoritedByUser = action.payload.isFavoritedByUser;
   }
   if (state.shows) {
@@ -17,6 +18,7 @@ const updateIsFavorited = (state: ShowState, action: PayloadAction<ShowObject>) 
       if (show.externalId === action.payload.externalId) {
         return {
           ...show,
+          id: action.payload.id,
           isFavoritedByUser: action.payload.isFavoritedByUser,
         };
       }
@@ -77,10 +79,10 @@ export const showsSlice = createSlice({
     });
 
     builder.addCase(createFavorite.fulfilled, (state, action) => {
-      updateIsFavorited(state, action);
+      updateShow(state, action);
     });
     builder.addCase(deleteFavorite.fulfilled, (state, action) => {
-      updateIsFavorited(state, action);
+      updateShow(state, action);
     });
 
     builder.addCase(findSeasonEpisodes.pending, (state, action) => {

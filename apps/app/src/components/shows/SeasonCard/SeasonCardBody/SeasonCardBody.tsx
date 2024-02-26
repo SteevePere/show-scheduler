@@ -3,6 +3,8 @@ import { Divider, Row } from 'antd';
 import EpisodeCard from 'components/shows/EpisodeCard/EpisodeCard';
 import { useTruncatedText } from 'hooks/use-truncated-text.hook';
 
+import ExpandEpisodesButton from '../ExpandEpisodesButton/ExpandEpisodesButton';
+
 const MAX_DESC_LEN = 450;
 
 interface ISeasonCardBodyProps {
@@ -32,11 +34,13 @@ const SeasonCardBody = (props: ISeasonCardBodyProps) => {
       {!!episodes.length && 
       <>
         <Divider/>
+        <ExpandEpisodesButton season={season}/>
         {episodes.map((episode) => (
           <>
             <Row key='row_ep' style={{ marginBottom: 12 }}>
               <EpisodeCard
                 key='card'
+                season={season}
                 episode={episode}
               />
             </Row>

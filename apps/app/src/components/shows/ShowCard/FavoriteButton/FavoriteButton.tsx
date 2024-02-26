@@ -24,10 +24,10 @@ export const FavoriteButton = (props: IFavoriteButtonProps) => {
   }, [show]);
 
   const isLoading = useMemo(() => {
-    return (!!favoritesLoading.showId || !!favoritesLoading.showExtId) && 
-    (favoritesLoading.showExtId === show.externalId || favoritesLoading.showId === show.id);
+    return (!!favoritesLoading.showExtId && favoritesLoading.showExtId === show.externalId) 
+      || (!!favoritesLoading.showId && !!show.id && favoritesLoading.showId === show.id);
   }, [show, favoritesLoading]);
-
+  
   const saveFavorite = useCallback((values: CreateFavoriteRequest) => {
     dispatch(createFavorite(values));
   }, [dispatch, createFavorite]);

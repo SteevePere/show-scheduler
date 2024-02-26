@@ -68,7 +68,8 @@ export class SeasonsService {
   ): Promise<FindSeasonEpisodesResult> {
     const { seasonExternalId, currentUser } = data;
     const season = await this.findSeasonEntity({
-      externalId: seasonExternalId, // will throw 404 if not found
+      externalId: seasonExternalId,
+      ignoreNotFound: true,
     });
     return this.episodesService.findSeasonEpisodes({
       seasonExternalId,
