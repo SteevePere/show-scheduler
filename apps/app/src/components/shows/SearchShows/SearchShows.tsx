@@ -39,7 +39,7 @@ const SearchShows = () => {
       value={query}
       onChange={(event) => setQuery(event.target.value)}
       onSearch={(value) => search(value)}
-      loading = { loading }
+      loading={loading}
       placeholder='Find a Show'
       enterButton
       size='large'

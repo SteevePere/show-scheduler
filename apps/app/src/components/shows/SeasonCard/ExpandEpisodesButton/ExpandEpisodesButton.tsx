@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { setEpisodes } from 'store/shows/shows.slice';
 import { findSeasonEpisodes } from 'store/shows/shows.thunks';
 import { RootState } from 'store/store';
@@ -18,6 +19,7 @@ interface IExpandEpisodesButton {
 const ExpandEpisodesButton = (props: IExpandEpisodesButton) => {
   const { season } = props;
   const dispatch = useAppDispatch();
+  const { push } = useHistory();
   
   const { episodes, episodesLoading } = useSelector((state: RootState) => state.shows);
       
@@ -32,10 +34,12 @@ const ExpandEpisodesButton = (props: IExpandEpisodesButton) => {
   }, [season.externalId, episodesLoading]);
   
   const handleExpand = useCallback(async () => {
+    push({ search: `?expandedSeason=${season.externalId}` });
     dispatch(findSeasonEpisodes({ seasonExternalId: season.externalId }));
   }, [season, findSeasonEpisodes]);
   
   const handleCollapse = useCallback(() => {
+    push({ search: undefined });
     dispatch(setEpisodes({
       seasonExternalId: null,
       episodes: [],

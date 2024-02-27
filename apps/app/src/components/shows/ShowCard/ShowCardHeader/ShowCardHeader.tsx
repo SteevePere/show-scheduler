@@ -27,7 +27,7 @@ const ShowCardHeader = (props: IProps) => {
           avatar={
             <Avatar
               src={show.imageUrl || './user_logo.png'}
-              size={80}
+              size={100}
               shape='square'
             />
           }

@@ -11,7 +11,7 @@ import { useAppDispatch } from 'hooks/use-app-dispatch.hook';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { findShow } from 'store/shows/shows.thunks';
+import { findSeasonEpisodes, findShow } from 'store/shows/shows.thunks';
 import { RootState } from 'store/store';
 
 interface IRouteParams {
@@ -23,6 +23,16 @@ export const ShowView = () => {
   const dispatch = useAppDispatch();
   const { showId } = useParams<IRouteParams>();
   const [isFetched, setIsFetched] = useState<boolean>(false);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('expandedSeason')) {
+      const expandedSeason = searchParams.get('expandedSeason');
+      if (expandedSeason) {
+        dispatch(findSeasonEpisodes({ seasonExternalId: +expandedSeason }));
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (showId) {
