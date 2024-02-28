@@ -17,7 +17,7 @@ interface ISeasonCardProps {
 const SeasonCard = (props: ISeasonCardProps) => {
   const { season, hideViewButton = false } = props;
 
-  const { episodes } = useSelector((state: RootState) => state.shows);
+  const { show, episodes } = useSelector((state: RootState) => state.shows);
     
   const isEpisodesLoaded = useMemo(() => {
     return episodes.episodes.length > 0 &&
@@ -49,7 +49,8 @@ const SeasonCard = (props: ISeasonCardProps) => {
       >
         <SeasonCardHeader
           {...props}
-          backgroundPosition='0 -70px'
+          show={show}
+          backgroundPosition={'0 -70px'}
         />
         <SeasonCardBody
           {...props}
