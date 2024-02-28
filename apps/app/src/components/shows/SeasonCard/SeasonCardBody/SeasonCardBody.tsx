@@ -36,15 +36,13 @@ const SeasonCardBody = (props: ISeasonCardBodyProps) => {
         <Divider/>
         <ExpandEpisodesButton season={season}/>
         {episodes.map((episode) => (
-          <>
-            <Row key='row_ep' style={{ marginBottom: 12 }}>
-              <EpisodeCard
-                key='card'
-                season={season}
-                episode={episode}
-              />
-            </Row>
-          </>
+          <Row key={`row_ep_${episode.number}`} style={{ marginBottom: 12 }}>
+            <EpisodeCard
+              key={`card_ep_${episode.number}`}
+              season={season}
+              episode={episode}
+            />
+          </Row>
         ))}
       </>
       }
