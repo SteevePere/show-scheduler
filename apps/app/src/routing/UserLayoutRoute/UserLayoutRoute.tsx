@@ -9,7 +9,7 @@ interface UserLayoutRouteProps {
   exact?: boolean | undefined;
 };
 
-const UserLayoutRoute = ({ children, ...rest }: UserLayoutRouteProps) => { // find out why mounted twice per route
+const UserLayoutRoute = ({ children, ...rest }: UserLayoutRouteProps) => {
   return (
     <Route
       {...rest}

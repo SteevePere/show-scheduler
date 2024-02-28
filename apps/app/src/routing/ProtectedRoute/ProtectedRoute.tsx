@@ -1,34 +1,37 @@
-import { Row } from 'antd';
-import React from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { SIGN_IN_ROUTE } from 'routing/Router';
 
-import LoadingSpinner from '../../components/shared/LoadingSpinner/LoadingSpinner';
 import { RootState } from '../../store/store';
+import { AppLoader } from './AppLoader/AppLoader';
 
 type ProtectedRouteProps = RouteProps;
 
 export const ProtectedRoute = (props: ProtectedRouteProps) => {
-  const { isLoggedIn, currentUser, loadingCurrentUser } = useSelector((state: RootState) => state.auth);
+  const {
+    isLoggedIn,
+    currentUser,
+    loadingCurrentUser: isUserLoading
+  } = useSelector((state: RootState) => state.auth);
+
+  const isUserUnknown = useMemo(() => isLoggedIn && !currentUser, [isLoggedIn, currentUser]);
+  const isUserSignedOut = useMemo(() => !isLoggedIn && !currentUser, [isLoggedIn, currentUser]);
   
-  if (loadingCurrentUser) {
-    return (
-      <Row justify='center' align='middle'>
-        <LoadingSpinner size={'large'}/>
-      </Row>
-    );
+  if (isUserUnknown || isUserLoading) {
+    return <AppLoader/>;
   }
 
-  if (!isLoggedIn && !currentUser) {
+  if (isUserSignedOut) {
     return (
       <Redirect
         to={{
-          pathname: '/sign-in',
+          pathname: SIGN_IN_ROUTE,
           state: { from: props.location },
         }}
       />
     );
   }
 
-  return <Route {...props} />;
+  return <Route {...props}/>;
 };
