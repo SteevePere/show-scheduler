@@ -27,7 +27,7 @@ const EpisodeCardHeader = (props: IEpisodeCardHeaderProps) => {
   }, [episode.name, episode.number]);
 
   const episodeDate = useMemo(() => {
-    return formatDate({ date: episode.airDate, format: 'dd/MM/yy' });
+    return formatDate({ date: episode.airDate, format: 'dd/MM/yyyy' });
   }, [episode.airDate]);
 
   return (
