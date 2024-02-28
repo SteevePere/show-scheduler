@@ -22,7 +22,7 @@ const SignIn = (props: SignInProps) => {
         label='Email'
         name='email'
         rules={[
-          { required: true, message: 'Please input your username!' },
+          { required: true, message: 'Please enter your username!' },
           {
             type: 'email',
             message: 'The input is not a valid e-mail!',
@@ -34,7 +34,7 @@ const SignIn = (props: SignInProps) => {
       <Form.Item
         label='Password'
         name='password'
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: 'Please enter your password!' }]}
       >
         <Input.Password />
       </Form.Item>

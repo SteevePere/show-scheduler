@@ -18,7 +18,7 @@ const ForgotPassword = (props: IResetPasswordProps) => {
       label: 'Email',
       name: 'email',
       rules: [
-        { required: true, message: 'Please input your email!' },
+        { required: true, message: 'Please enter your email!' },
         {
           type: 'email',
           message: 'The input is not a valid e-mail!',
@@ -31,7 +31,7 @@ const ForgotPassword = (props: IResetPasswordProps) => {
       label: 'New Password',
       name: 'password',
       rules: [
-        { required: true, message: 'Please input your password!' },
+        { required: true, message: 'Please enter your password!' },
         { type: 'string', min: MIN_PASSWORD_LENGTH, message: 'Password is too short!' },
       ],
       children: <Input.Password key='passwordInput'/>

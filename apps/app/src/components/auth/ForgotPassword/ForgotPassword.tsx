@@ -22,7 +22,7 @@ const ForgotPassword = (props: IForgotPasswordProps) => {
         label='Email'
         name='email'
         rules={[
-          { required: true, message: 'Please input your email!' },
+          { required: true, message: 'Please enter your email!' },
           {
             type: 'email',
             message: 'The input is not a valid e-mail!',
