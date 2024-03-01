@@ -67,11 +67,20 @@ export const showsSlice = createSlice({
     builder.addCase(findShow.pending, (state) => {
       state.loading = true;
       state.showsError = null;
+      state.seasons = {
+        showExternalId: null,
+        seasons: [],
+      };
     })
     .addCase(findShow.fulfilled, (state, action) => {
+      const show = action.payload;
       state.loading = false;
       state.showsError = null;
-      state.show = action.payload;
+      state.show = show;
+      state.seasons = {
+        showExternalId: show.externalId,
+        seasons: show.seasons || [],
+      };
     })
     .addCase(findShow.rejected, (state) => {
       state.showsError = 'Unable to find this Show!';

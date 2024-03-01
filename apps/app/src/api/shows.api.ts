@@ -6,7 +6,9 @@ import {
   SearchShowsRequest,
   SearchShowsResponse,
   ToggleEpisodeWatchedRequest,
-  ToggleEpisodeWatchedResponse
+  ToggleEpisodeWatchedResponse,
+  ToggleSeasonWatchedRequest,
+  ToggleSeasonWatchedResponse
 } from '@scheduler/shared';
 
 import { axiosInstance } from './axios/instance';
@@ -45,4 +47,10 @@ export const apiSetEpisodeWatched = async (data: ToggleEpisodeWatchedRequest) =>
   return await axiosInstance.post<ToggleEpisodeWatchedResponse>(
     `${EPISODES_ENDPOINT}/watched`, { ...data }
   ).then((response) => response.data.episode);
+};
+
+export const apiSetSeasonWatched = async (data: ToggleSeasonWatchedRequest) => {
+  return await axiosInstance.post<ToggleSeasonWatchedResponse>(
+    `${SEASONS_ENDPOINT}/watched`, { ...data }
+  ).then((response) => response.data.season);
 };

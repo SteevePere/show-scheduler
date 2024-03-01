@@ -5,6 +5,7 @@ import { SeasonEntity } from '../entities/season.entity';
 interface ISeasonTransformerData {
   seasonEntity: SeasonEntity;
   imageUrl?: string | null;
+  isWatchedByUser?: boolean;
 }
 
 export function createSeasonObjectFromEntity(data: ISeasonTransformerData) {
@@ -23,6 +24,7 @@ export function createSeasonObjectFromEntity(data: ISeasonTransformerData) {
       updatedAt,
     },
     imageUrl,
+    isWatchedByUser,
   } = data;
 
   return createFromClass(SeasonObject, {
@@ -35,6 +37,7 @@ export function createSeasonObjectFromEntity(data: ISeasonTransformerData) {
     imageUrl: imageUrl || image?.filePath || null,
     premiereDate,
     endDate,
+    isWatchedByUser,
     createdAt,
     updatedAt,
   });

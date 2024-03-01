@@ -40,6 +40,8 @@ import { ShowEntity } from '../entities/show.entity';
 import { createShowObjectFromEntity } from '../transformers/show-object.transformer';
 import { EpisodesService } from './episodes.service';
 import { SeasonsService } from './seasons.service';
+import { SeasonEntity } from '../entities/season.entity';
+import { createSeasonObjectFromEntity } from '../transformers/season-object.transformer';
 
 @Injectable()
 export class ShowsService {
@@ -113,6 +115,21 @@ export class ShowsService {
       return { show: null };
     }
 
+    const seasons = await Promise.all(
+      savedShow.seasons.map(async (seasonEntity: SeasonEntity) => {
+        const { isWatchedByUser } = currentUser
+          ? await this.seasonsService.isSeasonWatched({
+              seasonEntity,
+              currentUser,
+            })
+          : { isWatchedByUser: false };
+        return createSeasonObjectFromEntity({
+          seasonEntity,
+          isWatchedByUser,
+        });
+      }),
+    );
+
     const isFavoritedByUser = currentUser
       ? await this.favoritesService.isShowUserFavorite({
           showId: savedShow.id,
@@ -120,12 +137,14 @@ export class ShowsService {
         })
       : false;
 
-    return {
-      show: createShowObjectFromEntity({
-        showEntity: savedShow,
-        isFavoritedByUser,
-      }),
-    };
+    const show = createShowObjectFromEntity({
+      showEntity: savedShow,
+      isFavoritedByUser,
+    });
+
+    show.seasons = seasons;
+
+    return { show };
   }
 
   private async findShowEntity(data: FindShowData): Promise<ShowEntity> {

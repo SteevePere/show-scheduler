@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataProviderService } from 'src/modules/data-provider/services/data-provider.service';
 import { FilesService } from 'src/modules/files/services/files.service';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import {
   FindSeasonEpisodesData,
   FindSeasonEpisodesResult,
@@ -18,6 +18,10 @@ import {
   FindShowSeasonsResult,
 } from '../dtos/find-show-seasons.dto';
 import {
+  IsSeasonWatchedData,
+  IsSeasonWatchedResult,
+} from '../dtos/is-season-watched.dto';
+import {
   SaveShowSeasonsData,
   SaveShowSeasonsResult,
 } from '../dtos/save-show-seasons.dto';
@@ -25,6 +29,7 @@ import {
   ToggleSeasonWatchedData,
   ToggleSeasonWatchedResult,
 } from '../dtos/toggle-season-watched.dto';
+import { EpisodeEntity } from '../entities/episode.entity';
 import { SeasonEntity } from '../entities/season.entity';
 import { createSeasonObjectFromEntity } from '../transformers/season-object.transformer';
 import { EpisodesService } from './episodes.service';
@@ -32,6 +37,7 @@ import { EpisodesService } from './episodes.service';
 @Injectable()
 export class SeasonsService {
   constructor(
+    private readonly databaseConnection: Connection,
     @InjectRepository(SeasonEntity)
     private readonly seasonsRepository: Repository<SeasonEntity>,
     private readonly dataProviderService: DataProviderService,
@@ -154,5 +160,35 @@ export class SeasonsService {
         seasonEntity,
       }),
     };
+  }
+
+  async isSeasonWatched(
+    data: IsSeasonWatchedData,
+  ): Promise<IsSeasonWatchedResult> {
+    const {
+      currentUser,
+      seasonEntity: { id: seasonId },
+    } = data;
+
+    if (!currentUser) return { isWatchedByUser: false };
+
+    const seasonEpisodeCount = await this.databaseConnection
+      .createQueryBuilder()
+      .from(EpisodeEntity, 'episode')
+      .select('episode')
+      .where('episode.seasonId = :seasonId', { seasonId })
+      .getCount();
+
+    const watchedEpisodesCount = await this.databaseConnection
+      .createQueryBuilder()
+      .from(EpisodeEntity, 'episode')
+      .select('episode')
+      .leftJoin('episode.season', 'season')
+      .leftJoin('episode.watchedBy', 'user')
+      .where('user.id = :userId', { userId: currentUser.id })
+      .andWhere('season.id = :seasonId', { seasonId })
+      .getCount();
+
+    return { isWatchedByUser: seasonEpisodeCount === watchedEpisodesCount };
   }
 }

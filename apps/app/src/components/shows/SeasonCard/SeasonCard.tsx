@@ -7,15 +7,15 @@ import { RootState } from 'store/store';
 import ExpandEpisodesButton from './ExpandEpisodesButton/ExpandEpisodesButton';
 import SeasonCardBody from './SeasonCardBody/SeasonCardBody';
 import SeasonCardHeader from './SeasonCardHeader/SeasonCardHeader';
+import { WatchedButton } from './WatchedButton/WatchedButton';
 
 interface ISeasonCardProps {
   season: SeasonObject;
-  hideViewButton?: boolean;
   SeasonFullText?: boolean;
 };
 
 const SeasonCard = (props: ISeasonCardProps) => {
-  const { season, hideViewButton = false } = props;
+  const { season } = props;
 
   const { show, episodes } = useSelector((state: RootState) => state.shows);
     
@@ -29,8 +29,15 @@ const SeasonCard = (props: ISeasonCardProps) => {
   }, [isEpisodesLoaded, episodes.episodes]);
 
   const getActions = () => {
-    return hideViewButton ? 
-      undefined : [<ExpandEpisodesButton key={'expand_btn'} season={season}/>];
+    const actions = [
+      <ExpandEpisodesButton key='expand_btn' season={season}/>
+    ];
+    if (show?.isFavoritedByUser) {
+      actions.push(
+        <WatchedButton season={season} episodes={seasonEpisodes}/>
+      );
+    };
+    return actions;
   };
 
   const displayCard = () => {

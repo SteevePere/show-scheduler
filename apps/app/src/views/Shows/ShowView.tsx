@@ -19,7 +19,7 @@ interface IRouteParams {
 }
 
 export const ShowView = () => {
-  const { loading, show } = useSelector((state: RootState) => state.shows);
+  const { loading, show, seasons } = useSelector((state: RootState) => state.shows);
   const dispatch = useAppDispatch();
   const { showId } = useParams<IRouteParams>();
   const [isFetched, setIsFetched] = useState<boolean>(false);
@@ -81,7 +81,7 @@ export const ShowView = () => {
           </h1>
           <Col span={23}>
             <Divider/>
-            <SeasonList show={show} loading={loading}/>
+            <SeasonList seasons={seasons.seasons} loading={loading}/>
           </Col>
         </Col>
       </>}

@@ -1,5 +1,6 @@
 import { ShowObject } from '@scheduler/shared';
 import { Avatar, Card, Space } from 'antd';
+import { useMemo } from 'react';
 
 const { Meta } = Card;
 
@@ -8,10 +9,14 @@ interface IProps {
   backgroundPosition: string;
 };
 
+const defautShowImage = process.env.PUBLIC_URL + '/user_logo.png';
+
 const ShowCardHeader = (props: IProps) => {
   const {
     show,
   } = props;
+
+  const showImage = useMemo(() => show?.imageUrl || defautShowImage, [show.imageUrl]);
 
   return (
     <>
@@ -26,7 +31,7 @@ const ShowCardHeader = (props: IProps) => {
         <Meta
           avatar={
             <Avatar
-              src={show.imageUrl || './user_logo.png'}
+              src={showImage}
               size={100}
               shape='square'
             />

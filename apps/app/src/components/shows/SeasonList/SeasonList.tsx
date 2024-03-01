@@ -1,20 +1,20 @@
-import { SeasonObject, ShowObject } from '@scheduler/shared';
+import { SeasonObject } from '@scheduler/shared';
 import { Col, Row } from 'antd';
 import LoadingSpinner from 'components/shared/LoadingSpinner/LoadingSpinner';
 
 import SeasonCard from '../SeasonCard/SeasonCard';
 
 interface ISeasonListProps {
-  show: ShowObject | null;
+  seasons: SeasonObject[];
   loading: boolean;
 }
 
 const SeasonList = (props: ISeasonListProps) => {
-  const { show, loading } = props;
+  const { seasons, loading } = props;
 
   return (
     <>
-      {show && show.seasons && !loading && show.seasons.map((season: SeasonObject) =>
+      {seasons && !loading && seasons.map((season: SeasonObject) =>
         <Row key={`row_${season.externalId}`} style={{ marginBottom: 20 }}>
           <SeasonCard key={`season_card_${season.externalId}`} season={season}/>
         </Row>

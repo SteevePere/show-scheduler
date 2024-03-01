@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDateString,
   IsNotEmpty,
   IsOptional,
@@ -88,4 +89,12 @@ export class SeasonObject extends BaseEntityObject {
   @IsNotEmpty()
   @IsDateString()
   endDate?: Date | string | null;
+
+  @ApiPropertyOptional({
+    description: 'Whether current User has set this Season as watched',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isWatchedByUser?: boolean;
 }

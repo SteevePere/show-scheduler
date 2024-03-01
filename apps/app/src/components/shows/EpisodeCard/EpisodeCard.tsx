@@ -47,7 +47,7 @@ const EpisodeCard = (props: IEpisodeCardProps) => {
         bordered={false}
         actions={getActions()}
       >
-        <EpisodeCardHeader episode={episode}/>
+        <EpisodeCardHeader show={show} season={season} episode={episode}/>
         <EpisodeCardBody episode={episode}/>
       </Card>
     );

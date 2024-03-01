@@ -1,4 +1,9 @@
-import { EpisodeObject, ShowObject } from '@scheduler/shared';
+import { EpisodeObject, SeasonObject, ShowObject } from '@scheduler/shared';
+
+export interface SeasonState {
+  showExternalId: number | null;
+  seasons: SeasonObject[];
+}
 
 export interface EpisodeState {
   seasonExternalId: number | null;
@@ -13,7 +18,8 @@ export interface ShowState {
   };
   toggleWatchedLoading: {
     state: boolean; 
-    episodeExternalId: number | null;
+    episodeExternalId?: number | null;
+    seasonExternalId?: number | null;
   };
   searched: boolean;
   showsError: string | null;
@@ -21,6 +27,7 @@ export interface ShowState {
   epWatchedSuccess: string | null;
   epWatchedError: string | null;
   shows: ShowObject[];
-  episodes: EpisodeState;
   show: ShowObject | null;
+  seasons: SeasonState;
+  episodes: EpisodeState;
 }

@@ -9,6 +9,7 @@ export const showsInitialState: ShowState = {
   toggleWatchedLoading: {
     state: false, 
     episodeExternalId: null,
+    seasonExternalId: null,
   },
   searched: false,
   showsError: null,
@@ -16,9 +17,13 @@ export const showsInitialState: ShowState = {
   epWatchedSuccess: null,
   epWatchedError: null,
   shows: [],
+  show: null,
+  seasons: {
+    showExternalId: null,
+    seasons: [],
+  },
   episodes: {
     seasonExternalId: null,
     episodes: [],
   },
-  show: null,
 };

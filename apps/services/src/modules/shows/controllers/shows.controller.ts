@@ -8,7 +8,6 @@ import {
   UserObject,
 } from '@scheduler/shared';
 import { CurrentAuthenticatedUser } from 'src/core/decorators/authenticated-user.decorator';
-import { Public } from 'src/core/decorators/public.decorator';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { FindShowData } from '../dtos/find-show.dto';
 import { SearchShowsData } from '../dtos/search-shows.dto';

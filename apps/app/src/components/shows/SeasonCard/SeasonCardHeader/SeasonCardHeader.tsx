@@ -11,6 +11,8 @@ interface IProps {
   backgroundPosition: string;
 };
 
+const defautSeasonImage = process.env.PUBLIC_URL + '/user_logo.png';
+
 const SeasonCardHeader = (props: IProps) => {
   const {
     show,
@@ -22,7 +24,7 @@ const SeasonCardHeader = (props: IProps) => {
   }, [season.premiereDate]);
 
   const seasonImage = useMemo(
-    () => season.imageUrl || show?.imageUrl || './user_logo.png',
+    () => season.imageUrl || show?.imageUrl || defautSeasonImage,
     [show, season]
   );
 

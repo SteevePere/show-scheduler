@@ -1,4 +1,4 @@
-import { EpisodeObject } from '@scheduler/shared';
+import { EpisodeObject, SeasonObject, ShowObject } from '@scheduler/shared';
 import { Avatar, Card, Space } from 'antd';
 import { useMemo } from 'react';
 import { formatDate } from 'utils/format-date.util';
@@ -6,11 +6,17 @@ import { formatDate } from 'utils/format-date.util';
 const { Meta } = Card;
 
 interface IEpisodeCardHeaderProps {
+  show: ShowObject | null;
+  season: SeasonObject;
   episode: EpisodeObject;
 };
 
+const defautEpisodeImage = process.env.PUBLIC_URL + '/user_logo.png';
+
 const EpisodeCardHeader = (props: IEpisodeCardHeaderProps) => {
   const {
+    show,
+    season,
     episode,
   } = props;
 
@@ -26,6 +32,11 @@ const EpisodeCardHeader = (props: IEpisodeCardHeaderProps) => {
     }
   }, [episode.name, episode.number]);
 
+  const episodeImage = useMemo(
+    () => episode.imageUrl || season.imageUrl || show?.imageUrl || defautEpisodeImage,
+    [show?.imageUrl, season.imageUrl, episode.imageUrl]
+  );
+    
   const episodeDate = useMemo(() => {
     return formatDate({ date: episode.airDate, format: 'dd/MM/yyyy' });
   }, [episode.airDate]);
@@ -43,7 +54,7 @@ const EpisodeCardHeader = (props: IEpisodeCardHeaderProps) => {
         <Meta
           avatar={
             <Avatar
-              src={episode.imageUrl || './user_logo.png'}
+              src={episodeImage}
               size={60}
               shape='square'
             />
