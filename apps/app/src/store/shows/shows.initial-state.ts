@@ -14,6 +14,8 @@ export const showsInitialState: ShowState = {
   searched: false,
   showsError: null,
   showsSuccess: null,
+  seasonWatchedSuccess: null,
+  seasonWatchedError: null,
   epWatchedSuccess: null,
   epWatchedError: null,
   shows: [],

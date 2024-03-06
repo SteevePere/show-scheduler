@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setUpdateUserSuccess, setUpdateUserError } from 'store/auth/auth.slice';
 import { setFavoritesError, setFavoritesSuccess } from 'store/favorites/favorites.slice';
-import { setShowsError, setShowsSuccess } from 'store/shows/shows.slice';
+import { setEpWatchedError, setEpWatchedSuccess, setSeasonWatchedError, setSeasonWatchedSuccess, setShowsError, setShowsSuccess } from 'store/shows/shows.slice';
 import { RootState } from 'store/store';
 import { openNotification } from 'utils/notification.util';
 
@@ -16,7 +16,14 @@ const AlertContainer = ({ children }: AlertContainerProps) => {
   const dispatch = useAppDispatch();
 
   const { updateUserError, updateUserSuccess } = useSelector((state: RootState) => state.auth);
-  const { showsError, showsSuccess, epWatchedError, epWatchedSuccess  } = useSelector((state: RootState) => state.shows);
+  const {
+    showsError,
+    showsSuccess,
+    epWatchedError,
+    epWatchedSuccess,
+    seasonWatchedSuccess,
+    seasonWatchedError
+  } = useSelector((state: RootState) => state.shows);
   const { favoritesError, favoritesSuccess } = useSelector((state: RootState) => state.favorites);
 
   useEffect(() => {
@@ -31,18 +38,29 @@ const AlertContainer = ({ children }: AlertContainerProps) => {
   }, [updateUserSuccess, updateUserError]);
 
   useEffect(() => {
-    const success = showsSuccess || epWatchedSuccess;
-    const error = showsError || epWatchedError;
+    const success = showsSuccess || seasonWatchedSuccess || epWatchedSuccess;
+    const error = showsError || seasonWatchedError || epWatchedError;
     
     if (success) {
       openSuccessNotification(success);
       dispatch(setShowsSuccess(null));
+      dispatch(setSeasonWatchedSuccess(null));
+      dispatch(setEpWatchedSuccess(null));
     }
     else if (error) {
       openErrorNotification(error);
       dispatch(setShowsError(null));
+      dispatch(setSeasonWatchedError(null));
+      dispatch(setEpWatchedError(null));
     }
-  }, [showsSuccess, showsError, epWatchedSuccess, epWatchedError]);
+  }, [
+    showsSuccess,
+    showsError,
+    epWatchedSuccess,
+    epWatchedError,
+    seasonWatchedSuccess,
+    seasonWatchedError,
+  ]);
 
   useEffect(() => {
     if (favoritesError) {

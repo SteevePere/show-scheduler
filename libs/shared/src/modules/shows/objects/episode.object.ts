@@ -6,13 +6,15 @@ import {
   IsOptional,
   IsString,
   IsUrl,
-  ValidateIf
+  ValidateIf,
+  ValidateNested
 } from 'class-validator';
 
 import {
   IsSafeInt
 } from '../../../decorators/validation/is-safe-integer.decorator';
 import { BaseEntityObject } from '../../shared/objects/base-entity.object';
+import { SeasonObject } from './season.object';
 
 export class EpisodeObject extends BaseEntityObject {
   @ApiPropertyOptional({
@@ -83,4 +85,12 @@ export class EpisodeObject extends BaseEntityObject {
   @IsOptional()
   @IsBoolean()
   isWatchedByUser?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Parent Season of the Episode',
+    type: SeasonObject,
+  })
+  @IsOptional()
+  @ValidateNested()
+  season?: SeasonObject;
 }

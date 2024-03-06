@@ -1,9 +1,10 @@
-import { EpisodeObject } from '@scheduler/shared';
+import { EpisodeObject, SeasonObject } from '@scheduler/shared';
 import { createFromClass } from 'src/core/utils/transformers.util';
 import { EpisodeEntity } from '../entities/episode.entity';
 
 interface IEpisodeTransformerData {
   episodeEntity: EpisodeEntity;
+  season?: SeasonObject;
   imageUrl?: string | null;
 }
 
@@ -21,6 +22,7 @@ export function createEpisodeObjectFromEntity(data: IEpisodeTransformerData) {
       createdAt,
       updatedAt,
     },
+    season,
     imageUrl,
   } = data;
 
@@ -33,6 +35,7 @@ export function createEpisodeObjectFromEntity(data: IEpisodeTransformerData) {
     summary,
     imageUrl: imageUrl || image?.filePath || null,
     airDate,
+    season,
     createdAt,
     updatedAt,
   });

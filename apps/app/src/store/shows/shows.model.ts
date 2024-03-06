@@ -24,6 +24,8 @@ export interface ShowState {
   searched: boolean;
   showsError: string | null;
   showsSuccess: string | null;
+  seasonWatchedSuccess: string | null;
+  seasonWatchedError: string | null;
   epWatchedSuccess: string | null;
   epWatchedError: string | null;
   shows: ShowObject[];

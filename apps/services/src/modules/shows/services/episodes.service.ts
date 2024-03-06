@@ -145,8 +145,7 @@ export class EpisodesService {
   async toggleEpisodeWatched(
     data: ToggleEpisodeWatchedData,
   ): Promise<ToggleEpisodeWatchedResult> {
-    const { currentUser, isWatched } = data;
-
+    const { currentUser, isWatched, fetchSeason = true } = data;
     // will throw if not found
     const episodeEntity = await this.findEpisodeEntity({
       ...data,
@@ -174,8 +173,16 @@ export class EpisodesService {
 
     await this.episodesRepository.save(episodeEntity);
 
+    const seasonResult = fetchSeason
+      ? await this.seasonsService.findSeason({
+          id: episodeEntity.seasonId,
+          currentUser,
+        })
+      : undefined;
+
     const episode = createEpisodeObjectFromEntity({
       episodeEntity,
+      season: seasonResult?.season,
     });
 
     episode.isWatchedByUser = isWatched;

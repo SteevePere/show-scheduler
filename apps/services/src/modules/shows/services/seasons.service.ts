@@ -12,7 +12,7 @@ import {
   FindSeasonEpisodesData,
   FindSeasonEpisodesResult,
 } from '../dtos/find-season-episodes.dto';
-import { FindSeasonData } from '../dtos/find-season.dto';
+import { FindSeasonData, FindSeasonResult } from '../dtos/find-season.dto';
 import {
   FindShowSeasonsData,
   FindShowSeasonsResult,
@@ -58,6 +58,26 @@ export class SeasonsService {
     }
 
     return foundSeason;
+  }
+
+  async findSeason(data: FindSeasonData): Promise<FindSeasonResult> {
+    const { currentUser } = data;
+    let isWatchedByUser = false;
+
+    const seasonEntity = await this.findSeasonEntity(data);
+
+    if (currentUser) {
+      isWatchedByUser = (
+        await this.isSeasonWatched({
+          seasonEntity,
+          currentUser,
+        })
+      ).isWatchedByUser;
+    }
+
+    return {
+      season: createSeasonObjectFromEntity({ seasonEntity, isWatchedByUser }),
+    };
   }
 
   async findShowSeasons(
@@ -151,6 +171,7 @@ export class SeasonsService {
           id: episode.id,
           currentUser,
           isWatched,
+          fetchSeason: false,
         });
       }),
     );

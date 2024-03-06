@@ -52,6 +52,7 @@ export * from './modules/shows/responses/base-episode.response';
 export * from './modules/shows/responses/base-season.response';
 export * from './modules/shows/responses/base-show.response';
 export * from './modules/shows/responses/find-season-episodes.response';
+export * from './modules/shows/responses/find-season.response';
 export * from './modules/shows/responses/find-show.response';
 export * from './modules/shows/responses/search-shows.response';
 export * from './modules/shows/responses/toggle-episode-watched.response';

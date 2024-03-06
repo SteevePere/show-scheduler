@@ -12,11 +12,17 @@ export const showsReducer = {
   setShowsSuccess: (state: ShowState, action: PayloadAction<string | null>) => {
     state.showsSuccess = action.payload;
   },
-  setEpWatchedError: (state: ShowState, action: PayloadAction<string | null>) => {
-    state.epWatchedError = action.payload;
+  setSeasonWatchedSuccess: (state: ShowState, action: PayloadAction<string | null>) => {
+    state.seasonWatchedSuccess = action.payload;
+  },
+  setSeasonWatchedError: (state: ShowState, action: PayloadAction<string | null>) => {
+    state.seasonWatchedError = action.payload;
   },
   setEpWatchedSuccess: (state: ShowState, action: PayloadAction<string | null>) => {
     state.epWatchedSuccess = action.payload;
+  },
+  setEpWatchedError: (state: ShowState, action: PayloadAction<string | null>) => {
+    state.epWatchedError = action.payload;
   },
   setEpisodes: (state: ShowState, action: PayloadAction<EpisodeState>) => {
     state.episodes = action.payload;
