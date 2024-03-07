@@ -1,63 +1,18 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { EpisodeObject, SeasonObject, ShowObject } from '@scheduler/shared';
+import { createSlice } from '@reduxjs/toolkit';
+import { SeasonObject } from '@scheduler/shared';
 import { createFavorite, deleteFavorite } from 'store/favorites/favorites.thunks';
 
 import { RootState } from '../store';
 import { showsInitialState } from './shows.initial-state';
-import { ShowState } from './shows.model';
 import { showsReducer } from './shows.reducer';
 import { findSeasonEpisodes, findShow, searchShows, setEpisodeWatched, setSeasonWatched } from './shows.thunks';
-
-const updateShow = (state: ShowState, action: PayloadAction<ShowObject>) => {
-  if (state.show && (state.show.id === action.payload.id || !state.show.id)) {
-    state.show.id = action.payload.id;
-    state.show.isFavoritedByUser = action.payload.isFavoritedByUser;
-  }
-  if (state.shows) {
-    const shows = state.shows.map<ShowObject>((show: ShowObject) => {
-      if (show.externalId === action.payload.externalId) {
-        return {
-          ...show,
-          id: action.payload.id,
-          isFavoritedByUser: action.payload.isFavoritedByUser,
-        };
-      }
-      return show;
-    });
-    state.shows = shows;
-  }
-};
-
-const updateEpisode = (state: ShowState, action: PayloadAction<EpisodeObject>) => {
-  const episodeData = action.payload;
-  const episodeId = episodeData.externalId;
-  const episodes = state.episodes.episodes.map<EpisodeObject>((episode: EpisodeObject) => {
-    if (episode.externalId === episodeId) {
-      return {
-        ...episode,
-        ...episodeData,
-      };
-    }
-    return episode;
-  });
-
-  state.episodes.episodes = episodes;
-};
-
-const updateEpisodes = (episodes: EpisodeObject[], data: Partial<EpisodeObject>) => {
-  return episodes.map<EpisodeObject>((episode: EpisodeObject) => {
-    return {
-      ...episode,
-      ...data,
-    };
-  });
-};
 
 export const showsSlice = createSlice({
   name: 'shows',
   initialState: showsInitialState,
   reducers: showsReducer,
   extraReducers: (builder) => {
+    // searchShows
     builder.addCase(searchShows.pending, (state) => {
       state.loading = true;
       state.showsError = null;
@@ -73,6 +28,7 @@ export const showsSlice = createSlice({
       state.loading = false;
     });
 
+    // findShow
     builder.addCase(findShow.pending, (state) => {
       state.loading = true;
       state.showsError = null;
@@ -82,7 +38,7 @@ export const showsSlice = createSlice({
       };
     })
     .addCase(findShow.fulfilled, (state, action) => {
-      const show = action.payload;
+      const { payload: show } = action;
       state.loading = false;
       state.showsError = null;
       state.show = show;
@@ -96,13 +52,7 @@ export const showsSlice = createSlice({
       state.loading = false;
     });
 
-    builder.addCase(createFavorite.fulfilled, (state, action) => {
-      updateShow(state, action);
-    });
-    builder.addCase(deleteFavorite.fulfilled, (state, action) => {
-      updateShow(state, action);
-    });
-
+    // findSeasonEpisodes
     builder.addCase(findSeasonEpisodes.pending, (state, action) => {
       state.episodes = {
         seasonExternalId: null,
@@ -133,6 +83,7 @@ export const showsSlice = createSlice({
       };
     });
 
+    // setEpisodeWatched
     builder.addCase(setEpisodeWatched.pending, (state, action) => {
       state.toggleWatchedLoading = {
         state: true,
@@ -145,7 +96,7 @@ export const showsSlice = createSlice({
       const epSeason = action.payload.season;
 
       if (externalId) {
-        updateEpisode(state, action);
+        showsSlice.caseReducers.updateEpisode(state, action);
       }
 
       state.seasons.seasons = state.seasons.seasons.map((season: SeasonObject) => {
@@ -170,6 +121,7 @@ export const showsSlice = createSlice({
         'Unable to add to watched Episodes!' : 'Unable to remove from watched Episodes!';
     });
 
+    // setSeasonWatched
     builder.addCase(setSeasonWatched.pending, (state, action) => {
       state.toggleWatchedLoading = {
         state: true,
@@ -184,8 +136,7 @@ export const showsSlice = createSlice({
       });
 
       if (state.episodes.seasonExternalId === externalId) {
-        const updatedEps = updateEpisodes(state.episodes.episodes, { isWatchedByUser });
-        state.episodes.episodes = updatedEps;
+        showsSlice.caseReducers.updateAllEpisodes(state, { payload: { isWatchedByUser }, type: '' });
       }
 
       state.toggleWatchedLoading = {
@@ -204,6 +155,16 @@ export const showsSlice = createSlice({
       state.seasonWatchedError = isWatchedByUser ? 
         'Unable to add to watched Seasons!' : 'Unable to remove from watched Seasons!';
     });
+
+    // createFavorite
+    builder.addCase(createFavorite.fulfilled, (state, action) => {
+      showsSlice.caseReducers.updateShow(state, action);
+    });
+
+    // deleteFavorite
+    builder.addCase(deleteFavorite.fulfilled, (state, action) => {
+      showsSlice.caseReducers.updateShow(state, action);
+    });
   }
 });
 
@@ -217,6 +178,9 @@ export const {
   setSeasonWatchedSuccess,
   setSeasonWatchedError,
   setEpisodes,
+  updateShow,
+  updateEpisode,
+  updateAllEpisodes,
 } = showsSlice.actions;
 
 export const selectShows = (state: RootState) => state.shows;
