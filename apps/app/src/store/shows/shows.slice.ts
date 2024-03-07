@@ -44,6 +44,15 @@ const updateEpisode = (state: ShowState, action: PayloadAction<EpisodeObject>) =
   state.episodes.episodes = episodes;
 };
 
+const updateEpisodes = (episodes: EpisodeObject[], data: Partial<EpisodeObject>) => {
+  return episodes.map<EpisodeObject>((episode: EpisodeObject) => {
+    return {
+      ...episode,
+      ...data,
+    };
+  });
+};
+
 export const showsSlice = createSlice({
   name: 'shows',
   initialState: showsInitialState,
@@ -173,6 +182,12 @@ export const showsSlice = createSlice({
       state.seasons.seasons = state.seasons.seasons.map((season: SeasonObject) => {
         return externalId === season.externalId ? { ...season, isWatchedByUser } : season;
       });
+
+      if (state.episodes.seasonExternalId === externalId) {
+        const updatedEps = updateEpisodes(state.episodes.episodes, { isWatchedByUser });
+        state.episodes.episodes = updatedEps;
+      }
+
       state.toggleWatchedLoading = {
         state: false,
         seasonExternalId: null,
